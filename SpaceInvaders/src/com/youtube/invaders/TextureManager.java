@@ -1,21 +1,12 @@
 package com.youtube.invaders;
 
-import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.assets.AssetErrorListener;
 import com.badlogic.gdx.assets.AssetManager;
-import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.utils.Disposable;
 
 public class TextureManager implements Disposable, AssetErrorListener {
 
-	public static Texture PLAYER = new Texture(Gdx.files.internal("player.png"));
-	public static Texture MISSILE = new Texture(
-			Gdx.files.internal("missile.png"));
-	public static Texture ENEMY0 = new Texture(Gdx.files.internal("enemy0.png"));
-	public static Texture ENEMY1 = new Texture(Gdx.files.internal("enemy1.png"));
-	public static Texture ENEMY2 = new Texture(Gdx.files.internal("enemy2.png"));
-	public static Texture ENEMY3 = new Texture(Gdx.files.internal("enemy3.png"));
 
 	// ==========================================================================
 	// Texture atlas Management
@@ -46,7 +37,7 @@ public class TextureManager implements Disposable, AssetErrorListener {
 	}
 
 	@Override
-	public void error(String fileName, Class type, Throwable throwable) {
+	public void error(String fileName, @SuppressWarnings("rawtypes") Class type, Throwable throwable) {
 		// TODO Auto-generated method stub
 
 	}

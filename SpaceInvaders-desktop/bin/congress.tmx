@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<map version="1.0" orientation="isometric" renderorder="right-down" width="100" height="100" tilewidth="64" tileheight="32">
+ <tileset firstgid="1" name="grid" tilewidth="64" tileheight="64">
+  <image source="grid.png" width="256" height="64"/>
+ </tileset>
+ <tileset firstgid="5" name="congreso" tilewidth="320" tileheight="256">
+  <image source="congreso.png" width="322" height="257"/>
+ </tileset>
+ <tileset firstgid="6" name="trees" tilewidth="64" tileheight="128">
+  <image source="trees.png" width="128" height="129"/>
+ </tileset>
+ <tileset firstgid="8" name="valla" tilewidth="128" tileheight="128">
+  <image source="valla.png" width="256" height="128"/>
+ </tileset>
+ <tileset firstgid="10" name="wall" tilewidth="320" tileheight="256">
+  <image source="wall.png" width="321" height="257"/>
+ </tileset>
+ <tileset firstgid="11" name="furgon" tilewidth="128" tileheight="128">
+  <image source="furgon.png" width="258" height="130"/>
+ </tileset>
+ <layer name="Capa de Patrones 1" width="100" height="100">
+  <data encoding="base64" compression="zlib">
+   eJzt2dFOgzAUgOFuesX7P7DZxWKDcwNaOAf6XXyJJhjb/rIj4VZKuQEArPSVYA38tpiLXtOoXrXQJGcPTY5zX9hDEz1G8jxfPeLV57u2x73D7+dvi9Ye7h89rkiPXPTIY+rYg/YW83Nv6fH9RvRes5uqr90feVr07LH0et7TIxefV7kcMc/N9+N71EqCfZ1Rz+ePJdebKe9b1N/rkadFbe18Ns/3a1Gf79K5vGWejzjjp398+rn533tZeT3tIue5mfK6hR457PH8wTY9nz9a5/lo8/1Vi/m5t/R4KAn2dUZ7vP/oOT9GmiOR7z9G7rH0+cM8z8U8z8X9kUum+RF9FtHm//PqEd/iyedVnha1I+d59DlksPT9R4/7oyTYb0Zr3n887T0/os/kbPbqEb2vM+vdI3o/V9CrR/Q+rqS1R/T6r2hrj+h1X50euazpEb3WUXzqEb2+kemRy7xH9HoAAAAAAAAAAAAAAAAAAAAAAM7gB0a8Lwo=
+  </data>
+ </layer>
+ <objectgroup name="Capa de Objetos 1"/>
+ <layer name="Capa de patrones 2" width="100" height="100">
+  <data encoding="base64" compression="zlib">
+   eJztzjENAAAIA7A9+LeMjJHQKmgCAAAAAAAAAAAAAADAN9MOAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAActq36AAY=
+  </data>
+ </layer>
+ <layer name="Capa de patrones 4" width="100" height="100">
+  <data encoding="base64" compression="zlib">
+   eJzt2MEJADAMA7E82/0XzgyFUBOQJrifwVUAAAAAAAC8uukAAOA7+w8AACScdAAAAAzztwMAAAAAAAAAAAAAAAAAAAAAAAAAAAAAALBFA3n0ACQ=
+  </data>
+ </layer>
+ <layer name="Capa de patrones 3" width="100" height="100">
+  <data encoding="base64" compression="zlib">
+   eJzt2EsKhDAQBUBXunDuf15BCIyDCSJMOk2qICs3gUd/zLIAAADMY42+AGcG5QCMTL8ax28GMoklj7HII8bW+GZ+MLtWfcDszI8c7FcxavXRymP/OvShPmKYHwD8yyf6AlyUPO72Wztvf+qDWXnfzcP/YH/qA+q8X0Gd+ZGHftWf+oB39CsgC/0KyEK/AgAAAAAAAAAAAAAAAAAAAAAAAACeOgAa1AG2
+  </data>
+ </layer>
+</map>

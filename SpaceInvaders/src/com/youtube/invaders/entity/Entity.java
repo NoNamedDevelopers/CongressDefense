@@ -16,7 +16,7 @@ public abstract class Entity {
 		this.texture = texture;
 		this.pos = pos;
 		this.direction = direction;
-		this.type = -1;
+		Entity.type = -1;
 		
 	}
 	

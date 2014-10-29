@@ -1,6 +1,5 @@
 package com.youtube.invaders.screen;
 
-import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
@@ -10,19 +9,16 @@ import com.yutube.invaders.camera.OrthoCamera;
 
 public class GameOverScreen extends Screen {
 	private OrthoCamera camera;
-	private Texture texture;
 	protected Sprite sprite;
 
 	public GameOverScreen(boolean won) {
 
 		if (won) {
-			texture = TextureManager.PLAYER;
 			TextureRegion AR = (TextureManager.instance.atlas
 					.findRegion("player"));
 			sprite = new Sprite(AR);
 		} else {
 
-			texture = TextureManager.ENEMY0;
 			TextureRegion AR = (TextureManager.instance.atlas.findRegion("enemy3"));
 			 sprite = new Sprite(AR);
 		}

@@ -3,16 +3,21 @@ package com.youtube.invaders.screen;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.OrthographicCamera;
-import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.badlogic.gdx.math.Vector2;
+import com.badlogic.gdx.graphics.g2d.tiled.TileMapRenderer;
+import com.badlogic.gdx.graphics.g2d.tiled.TiledMap;
 import com.youtube.invaders.MainGame;
 import com.youtube.invaders.entity.EntityManager;
-import com.youtube.invaders.entity.Player;
 import com.yutube.invaders.camera.OrthoCamera;
 
 public class GameScreen extends Screen {
 
+	
+	TiledMap tiledMap;
+	TileMapRenderer tiledMapRenderer;
+	
+	
+	
 	private OrthoCamera camera;
 	private OrthographicCamera cameraGUI;
 	// private OrthographicCamera cameraFPS;
@@ -24,6 +29,10 @@ public class GameScreen extends Screen {
 	@Override
 	public void create() {
 		// System.out.println("Created");
+		//** TILED MAP LOADING **/
+		
+		tiledMap = new TiledMap();
+		
 		camera = new OrthoCamera();
 		entityManager = new EntityManager(100, camera);
 		gameLoopSound = Gdx.audio.newSound(Gdx.files
@@ -33,7 +42,7 @@ public class GameScreen extends Screen {
 		cameraGUI = new OrthographicCamera(MainGame.VIEWPORT_GUI_WIDTH,
 				MainGame.VIEWPORT_GUI_HEIGHT);
 		cameraGUI.position.set(0, 0, 0);
-		cameraGUI.setToOrtho(true);
+		cameraGUI.setToOrtho(false);
 		cameraGUI.update();
 
 	}

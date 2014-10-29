@@ -2,7 +2,6 @@ package com.youtube.invaders.entity;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input.Keys;
-import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Vector2;
@@ -12,14 +11,12 @@ import com.yutube.invaders.camera.OrthoCamera;
 
 public class Player extends Entity {
 
-	private EntityManager entityManager;
 	private long lastFire;
 	private OrthoCamera camera;
 
 	public Player(Vector2 pos, Vector2 direction, EntityManager entityManager,
 			OrthoCamera camera) {
-		super(TextureManager.PLAYER, pos, direction);
-		this.entityManager = entityManager;
+		super(TextureManager.instance.atlas.findRegion("player").getTexture(), pos, direction);
 		this.camera = camera;
 		TextureRegion AR = (TextureManager.instance.atlas.findRegion("player"));
 		sprite = new Sprite(AR);
@@ -53,8 +50,7 @@ public class Player extends Entity {
 		{
 			if (System.currentTimeMillis() - lastFire >= 500) {
 
-				entityManager.addEntity(new Missile(new Vector2(pos.x
-						+ TextureManager.PLAYER.getWidth() / 4, pos.y)));
+				
 				lastFire = System.currentTimeMillis();
 			}
 		}

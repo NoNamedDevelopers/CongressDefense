@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<pre-dex-items>
+
+    <item
+        dex="D:\congressdefense\android\build\intermediates\pre-dexed\release\gdx-backend-android-1.4.1-dc0749b9335735ebaabf3087df9be11274ce8ebd.jar"
+        jar="C:\Users\LuisEmilio\.gradle\caches\modules-2\files-2.1\com.badlogicgames.gdx\gdx-backend-android\1.4.1\eca2621f18b162c03992bd3ecc226e8a477dc6f9\gdx-backend-android-1.4.1.jar"
+        jumboMode="false"
+        revision="21.0.2"
+        sha1="eca2621f18b162c03992bd3ecc226e8a477dc6f9"/>
+    <item
+        dex="D:\congressdefense\android\build\intermediates\pre-dexed\release\gdx-box2d-1.4.1-384e11129aa9d7a9444e06a10c226e264d53b62f.jar"
+        jar="C:\Users\LuisEmilio\.gradle\caches\modules-2\files-2.1\com.badlogicgames.gdx\gdx-box2d\1.4.1\9e6453d244896698694a7f3059f15ae509044101\gdx-box2d-1.4.1.jar"
+        jumboMode="false"
+        revision="21.0.2"
+        sha1="9e6453d244896698694a7f3059f15ae509044101"/>
+    <item
+        dex="D:\congressdefense\android\build\intermediates\pre-dexed\release\core-1.0-e93e1283984da8ec538ba954d5b71dc3c8beb030.jar"
+        jar="D:\congressdefense\core\build\libs\core-1.0.jar"
+        jumboMode="false"
+        revision="21.0.2"
+        sha1="1d3367204a33ecf0f431afda94b6c0104990fe94"/>
+    <item
+        dex="D:\congressdefense\android\build\intermediates\pre-dexed\release\gdx-1.4.1-b571d977af46a23ed13b1b217138bb6e5f186cf0.jar"
+        jar="C:\Users\LuisEmilio\.gradle\caches\modules-2\files-2.1\com.badlogicgames.gdx\gdx\1.4.1\df470d263438048af74860ca51fc497c16a0c76a\gdx-1.4.1.jar"
+        jumboMode="false"
+        revision="21.0.2"
+        sha1="df470d263438048af74860ca51fc497c16a0c76a"/>
+
+</pre-dex-items>

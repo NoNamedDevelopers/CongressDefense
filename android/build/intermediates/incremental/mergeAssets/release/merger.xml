@@ -1,0 +1,2 @@
+<?xml version="1.0" encoding="utf-8"?>
+<merger version="3"><dataSet config="main"><source path="D:\congressdefense\android\assets"><file name="data/protester.g3db" path="D:\congressdefense\android\assets\data\protester.g3db"/></source></dataSet><dataSet config="release"><source path="D:\congressdefense\android\src\release\assets"/></dataSet></merger>

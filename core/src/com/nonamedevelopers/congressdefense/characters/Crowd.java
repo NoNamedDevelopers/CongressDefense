@@ -42,4 +42,8 @@ public class Crowd {
 		for (Protester man : crowd)
 			man.draw(batch);
 	}
+	
+	public Array<Protester> getProtesters() {
+		return crowd;
+	}
 }

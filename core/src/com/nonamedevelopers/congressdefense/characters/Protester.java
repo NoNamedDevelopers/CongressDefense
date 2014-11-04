@@ -1,5 +1,7 @@
 package com.nonamedevelopers.congressdefense.characters;
 
+import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.math.Circle;
 import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.utils.ObjectMap;
 import com.badlogic.gdx.utils.ObjectMap.Entry;
@@ -7,9 +9,9 @@ import com.nonamedevelopers.congressdefense.CongressDefense;
 
 public class Protester extends GameCharacter {
 	
-	
 	private static final float SPEED_X = 0.4f; 
 	private static final float SPEED_Y = 0.4f/1.5f; 
+	private Circle boundingCircle;
 	
 	private ObjectMap<int[], Short> points;	
 	
@@ -31,6 +33,9 @@ public class Protester extends GameCharacter {
 		
 		stateTime = 0f;
 		
+		boundingCircle = new Circle();
+		
+		
 		points.put(new int[]{76,561}, DOWN_LEFT);
 		points.put(new int[]{215,469}, DOWN_RIGHT);
 		points.put(new int[]{144,422}, DOWN_LEFT);
@@ -44,8 +49,6 @@ public class Protester extends GameCharacter {
 		updateAnimation();
 	}
 	
-	
-	
 	public void update(float delta) {		
 		stateTime += delta;		
 		if (stateTime < appearTime)
@@ -57,6 +60,8 @@ public class Protester extends GameCharacter {
 				direction = point.value;
 	
 		updateAnimation();
+		
+		boundingCircle.set(x+16, y+16, 20f);
 	}
 	
 	
@@ -89,6 +94,14 @@ public class Protester extends GameCharacter {
 		}
 	}
 	
+
+	public void draw(SpriteBatch batch) {
+		batch.draw(currentFrame, x, y);
+		game.font.setScale(0.6f);
+		game.font.draw(batch, "|"+life+"|", x+5, y+40);
+		game.font.setScale(1.5f);
+	}
+	
 	public void hurt(int damage) {
 		life -= damage;
 		if (life <= 0)
@@ -107,6 +120,9 @@ public class Protester extends GameCharacter {
 		return isDead;
 	}
 	
+	public Circle getBoundingCircle() {
+		return boundingCircle;
+	}
 	
 	
 }

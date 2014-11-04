@@ -53,4 +53,9 @@ public class PoliceCaller {
 		else
 			police.draw(batch);
 	}
+	
+	public void checkCollision(Crowd crowd) {
+		if (police!=null)
+			police.checkCollision(crowd);
+	}
 }

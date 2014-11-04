@@ -14,7 +14,6 @@ public class GameScreen implements Screen {
 	private static final int WORLD_WIDTH = 1000;
 	private static final int WORLD_HEIGHT = 1000;
 	
-	
 	private final CongressDefense game;
 
 	private GameCamera camera;
@@ -26,12 +25,11 @@ public class GameScreen implements Screen {
 	
 	public GameScreen(final CongressDefense game) {
 		this.game = game;
-		
 		camera = new GameCamera(1000,100);		
 		
 		map = new Sprite(new Texture(Gdx.files.internal("map.jpg")));
 		map.setPosition(0, 0);
-		map.setSize(WORLD_WIDTH, WORLD_HEIGHT);				
+		map.setSize(WORLD_WIDTH, WORLD_HEIGHT);		
 		
 		crowd = new Crowd(game,10);
 		
@@ -47,6 +45,8 @@ public class GameScreen implements Screen {
 		crowd.update(delta);
 		shield.update(delta);
 		
+		shield.checkCollision(crowd);
+		
 		
 		game.batch.setProjectionMatrix(camera.combined);
 		game.batch.begin();
@@ -55,7 +55,7 @@ public class GameScreen implements Screen {
 		game.font.draw(game.batch, "Life: "+game.life, 20, 200);
 		crowd.draw(game.batch);
 		shield.draw(game.batch);
-		game.batch.end();		
+		game.batch.end();	
 	}
 
 	@Override

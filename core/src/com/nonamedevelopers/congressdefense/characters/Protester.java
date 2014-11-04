@@ -1,5 +1,7 @@
 package com.nonamedevelopers.congressdefense.characters;
 
+import java.util.Random;
+
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Circle;
 import com.badlogic.gdx.math.MathUtils;
@@ -12,16 +14,21 @@ public class Protester extends GameCharacter {
 	private static final float SPEED_X = 0.4f; 
 	private static final float SPEED_Y = 0.4f/1.5f; 
 	private Circle boundingCircle;
+	private static Random r;
 	
 	private ObjectMap<int[], Short> points;	
 	
 	private int life;	
 	private float appearTime;	
 	private boolean isDead = false;
+	
+	static {
+		r = new Random();
+	}
 
 	
 	public Protester(final CongressDefense game, float x, float y, float appearTime) {
-		super(game,x,y, "protester", 4, 5, 0.06f);
+		super(game,x,y, "protester"+r.nextInt(3), 4, 5, 0.06f);
 
 		direction = UP_LEFT;
 		

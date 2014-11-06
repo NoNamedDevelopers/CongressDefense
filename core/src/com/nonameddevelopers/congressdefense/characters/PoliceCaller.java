@@ -12,6 +12,7 @@ public class PoliceCaller {
 
 	private final CongressDefense game;
 	
+	
 	private int x ,y ;
 	private Sprite sprite;
 	private boolean touched = false;
@@ -39,6 +40,9 @@ public class PoliceCaller {
 					&& touchPos.y > y && touchPos.y < y+32) {
 					touched = true;
 					police = new Cop(game, x+32, y+32);
+					System.out.println(game.collisionManager);
+					game.collisionManager.addCop(police);
+					
 				}
 				
 			}

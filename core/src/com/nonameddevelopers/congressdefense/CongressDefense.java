@@ -9,11 +9,13 @@ public class CongressDefense extends Game {
 	
 	public SpriteBatch batch;
 	public BitmapFont font;
+	public final CollissionManager collisionManager = new CollissionManager();
 	
 	public int life;
 	
 	@Override
 	public void create () {
+		 
 		life = 100;
 		batch = new SpriteBatch();
 		font = new BitmapFont();

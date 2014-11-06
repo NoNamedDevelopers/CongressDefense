@@ -22,6 +22,8 @@ public class GameScreen implements Screen {
 	private PoliceCaller shield;
 	
 	private Crowd crowd;
+	private Crowd crowd2;
+	
 	
 	public GameScreen(final CongressDefense game) {
 		this.game = game;
@@ -32,6 +34,7 @@ public class GameScreen implements Screen {
 		map.setSize(WORLD_WIDTH, WORLD_HEIGHT);		
 		
 		crowd = new Crowd(game,10);
+		crowd2 = new Crowd(game, 20);
 		
 		shield = new PoliceCaller(game, 150,350, camera);
 	}	
@@ -44,6 +47,7 @@ public class GameScreen implements Screen {
 		camera.update();			
 		crowd.update(delta);
 		shield.update(delta);
+		crowd2.update(delta);
 		
 		shield.checkCollision(crowd);
 		
@@ -54,6 +58,8 @@ public class GameScreen implements Screen {
 		
 		game.font.draw(game.batch, "Life: "+game.life, 20, 200);
 		crowd.draw(game.batch);
+		crowd2.draw(game.batch);
+
 		shield.draw(game.batch);
 		game.batch.end();	
 	}

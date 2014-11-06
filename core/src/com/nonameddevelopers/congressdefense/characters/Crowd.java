@@ -1,6 +1,7 @@
 package com.nonameddevelopers.congressdefense.characters;
 
 import java.util.Iterator;
+import java.util.Random;
 
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.utils.Array;
@@ -18,12 +19,13 @@ public class Crowd {
 	}
 	
 	private Array<Protester> populateCrowd(int size) {
-		float x = -32f;
-		float y = 490f;
 		
 		
+		Random r = new Random();
+		float x = r.nextFloat()*100;
+		float y = r.nextFloat()*100;
 		for (int i = 0; i<size; i++)
-			crowd.insert(0,new Protester(game, x, y, i*0.5f)); 		
+			crowd.insert(0,new Protester(game, r.nextFloat()*100 + x, r.nextFloat()*100+y, i*0.5f)); 		
 		return crowd;
 	}
 	

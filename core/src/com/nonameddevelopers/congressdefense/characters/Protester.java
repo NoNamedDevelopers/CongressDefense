@@ -56,7 +56,7 @@ public class Protester extends GameCharacter {
 		updateAnimation();
 	}
 	
-	public void update(float delta) {		
+	public void update(float delta) {
 		stateTime += delta;		
 		if (stateTime < appearTime)
 			return;

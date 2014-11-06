@@ -3,7 +3,7 @@ package com.nonameddevelopers.congressdefense;
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.nonameddevelopers.congressdefense.screens.MainMenuScreen;
+import com.nonameddevelopers.congressdefense.screens.StartScreen;
 
 public class CongressDefense extends Game {
 	
@@ -18,7 +18,7 @@ public class CongressDefense extends Game {
 		batch = new SpriteBatch();
 		font = new BitmapFont();
 		font.setScale(1.5f);
-		this.setScreen(new MainMenuScreen(this));
+		this.setScreen(new StartScreen(this));
 	}
 	
 

@@ -137,13 +137,19 @@ public class Protester extends GameCharacter {
 		Vector2 Goal = new Vector2(xGoal, yGoal);
 		Vector2 position = new Vector2(x, y);
 		Vector2 direction = new Vector2();
-		if ((random.nextInt(5000) % 8) == 0) {
-			if (random.nextInt(100) % 2 == 0) {
-				direction.set(Goal).sub(position).nor();
-				x += direction.x * random.nextInt(5);
-				y += direction.y * random.nextInt(4);
-			}
+		
+		int n = random.nextInt(1000);
+		
+		if(n % 2 == 0){
+			Goal = new Vector2(xGoal,yGoal);
+		}else{
+			Goal = new Vector2(random.nextInt(800),random.nextInt(480));
 		}
+				direction.set(Goal).sub(position).nor();
+				x += direction.x * random.nextInt(2);
+				y += direction.y * random.nextInt(2);
+			
+		
 
 	}
 

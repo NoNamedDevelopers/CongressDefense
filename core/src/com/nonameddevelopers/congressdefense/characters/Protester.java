@@ -135,24 +135,53 @@ public class Protester extends GameCharacter {
 
 	private void approach() {
 
+		arrived();
+		
 		Random random = new Random();
 		Vector2 Goal = new Vector2(xGoal, yGoal);
 		Vector2 position = new Vector2(x, y);
 		Vector2 direction = new Vector2();
 		
-		int n = random.nextInt(1000);
+		int n = random.nextInt(100);
 		
-		if(n % 2 == 0){
+		if(n<60){
 			Goal = new Vector2(xGoal,yGoal);
-		}else{
-			Goal = new Vector2(random.nextInt(800),random.nextInt(480));
+			direction.set(Goal).sub(position).nor();
+			x += direction.x * (random.nextInt(3));
+			y += direction.y * (random.nextInt(3));
 		}
-				direction.set(Goal).sub(position).nor();
-				x += direction.x * random.nextInt(2);
-				y += direction.y * random.nextInt(2);
+		else if (n < 80){
+			Goal = new Vector2(xGoal,0);
+			position = new Vector2(x, 0);
+			direction.set(Goal).sub(position).nor();
+			x += direction.x * (random.nextInt(3));
+			y += direction.y * (random.nextInt(3));
+		}
+		else
+		{
+			Goal = new Vector2(0, yGoal);
+			position = new Vector2(0, y);
+			direction.set(Goal).sub(position).nor();
+			x += direction.x * (random.nextInt(3));
+			y += direction.y * (random.nextInt(3));
+		}
+		
+				
 			
 		
 
+	}
+
+	private void arrived() {
+		if (x>803 && x<823)
+		{
+			if (y < 379 && y >359)
+			{
+				attack();
+				kill();
+			}
+		}
+		
 	}
 
 }

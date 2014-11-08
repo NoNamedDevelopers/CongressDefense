@@ -6,6 +6,7 @@ import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.nonameddevelopers.congressdefense.CongressDefense;
+import com.nonameddevelopers.congressdefense.CrowdManager;
 import com.nonameddevelopers.congressdefense.GameCamera;
 import com.nonameddevelopers.congressdefense.characters.Crowd;
 import com.nonameddevelopers.congressdefense.characters.PoliceCaller;
@@ -21,22 +22,24 @@ public class GameScreen implements Screen {
 	
 	private PoliceCaller shield;
 	
+	private CrowdManager crowdMan;
 	private Crowd crowd;
 	private Crowd crowd2;
 	
 	
 	public GameScreen(final CongressDefense game) {
 		this.game = game;
-		camera = new GameCamera(1000,100);		
+		camera = new GameCamera(1000,100);
 		
 		map = new Sprite(new Texture(Gdx.files.internal("map.jpg")));
 		map.setPosition(0, 0);
-		map.setSize(WORLD_WIDTH, WORLD_HEIGHT);		
+		map.setSize(WORLD_WIDTH, WORLD_HEIGHT);
 		
-		crowd = new Crowd(game,10);
-		crowd2 = new Crowd(game, 20);
+		crowdMan = new CrowdManager(game, 10);
+		//crowd = new Crowd(game,10);
+		//crowd2 = new Crowd(game, 20);
 		
-		shield = new PoliceCaller(game, 150,350, camera);
+		//shield = new PoliceCaller(game, 150,350, camera);
 	}	
 
 	@Override
@@ -45,11 +48,10 @@ public class GameScreen implements Screen {
 		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 		
 		camera.update();			
-		crowd.update(delta);
-		shield.update(delta);
-		crowd2.update(delta);
+		crowdMan.update(delta);
+		//shield.update(delta);
 		
-		shield.checkCollision(crowd);
+		//shield.checkCollision(crowd);
 		
 		
 		game.batch.setProjectionMatrix(camera.combined);
@@ -57,10 +59,10 @@ public class GameScreen implements Screen {
 		map.draw(game.batch);
 		
 		game.font.draw(game.batch, "Life: "+game.life, 20, 200);
-		crowd.draw(game.batch);
-		crowd2.draw(game.batch);
+		crowdMan.draw(game.batch);
+		//crowd2.draw(game.batch);
 
-		shield.draw(game.batch);
+		//shield.draw(game.batch);
 		game.batch.end();	
 	}
 

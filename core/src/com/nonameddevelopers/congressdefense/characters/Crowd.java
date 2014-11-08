@@ -22,11 +22,26 @@ public class Crowd {
 		
 		
 		Random r = new Random();
-		float x = r.nextFloat()*100;
-		float y = r.nextFloat()*100;
-		for (int i = 0; i<size; i++)
-			crowd.insert(0,new Protester(game, r.nextFloat()*100 + x, r.nextFloat()*100+y, i*0.5f)); 		
-		return crowd;
+		int lado = r.nextInt(1000);
+		if (lado%2==0)
+		{
+			int otroLado = r.nextInt(900)-100;
+			float x = r.nextInt(200)-100;
+			float y = r.nextInt(200)-100;
+			for (int i = 0; i<size; i++)
+				crowd.insert(0,new Protester(game, -100 + x, otroLado + y, i*0.25f)); 		
+			return crowd;
+		}
+		else
+		{
+			int otroLado = r.nextInt(900)-100;
+			float x = r.nextInt(200)-100;
+			float y = r.nextInt(200)-100;
+			for (int i = 0; i<size; i++)
+				crowd.insert(0,new Protester(game, otroLado + x, -100 + y, i*0.25f)); 		
+			return crowd;
+		}
+		
 	}
 	
 	public void update(float delta) {
@@ -37,7 +52,6 @@ public class Crowd {
 			if (protester.isDead())
 				iter.remove();				
 		}
-			
 	}
 	
 	public void draw(SpriteBatch batch) {
@@ -47,5 +61,14 @@ public class Crowd {
 	
 	public Array<Protester> getProtesters() {
 		return crowd;
+	}
+	
+	public int getNumberOfProtesters()
+	{
+		int i = 0;
+		for (Protester man : crowd)
+			i++;
+		return i;
+		
 	}
 }

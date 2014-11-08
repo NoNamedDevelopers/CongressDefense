@@ -13,10 +13,14 @@ public class CongressDefense extends Game {
 	public final CollissionManager collisionManager = new CollissionManager();
 	
 	public int life;
+	public int score;
+	public int money;
 	
 	@Override
 	public void create () {
 		 
+		money = 80;
+		score = 0;
 		life = 100;
 		batch = new SpriteBatch();
 		font = new BitmapFont();

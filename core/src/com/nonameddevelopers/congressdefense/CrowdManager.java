@@ -19,7 +19,9 @@ public class CrowdManager {
 	
 	
 	//Para una versión con niveles y no infinita
-	private int maxNumWaves; 
+	private int maxNumWaves;  // Número de oleadas de ese nivel
+	private int increaseProtestant; // Cantidad a elevar del número de protestantes por crowd por oleada
+	private int[][] composition; // array de tipos de manifestantes por oleada (si llegamos a tener distintos tipos)
 	
 	
 

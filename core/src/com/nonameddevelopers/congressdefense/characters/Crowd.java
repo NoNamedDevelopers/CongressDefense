@@ -26,19 +26,23 @@ public class Crowd {
 		if (lado%2==0)
 		{
 			int otroLado = r.nextInt(900)-100;
-			float x = r.nextInt(200)-100;
-			float y = r.nextInt(200)-100;
 			for (int i = 0; i<size; i++)
-				crowd.insert(0,new Protester(game, -100 + x, otroLado + y, i*0.25f)); 		
+			{
+				float x = r.nextInt(100)-50;
+				float y = r.nextInt(100)-50;
+				crowd.insert(0,new Protester(game, -100 + x, otroLado + y, i*0.25f)); 	
+			}
 			return crowd;
 		}
 		else
 		{
 			int otroLado = r.nextInt(900)-100;
-			float x = r.nextInt(200)-100;
-			float y = r.nextInt(200)-100;
 			for (int i = 0; i<size; i++)
-				crowd.insert(0,new Protester(game, otroLado + x, -100 + y, i*0.25f)); 		
+			{
+				float x = r.nextInt(100)-50;
+				float y = r.nextInt(100)-50;
+				crowd.insert(0,new Protester(game, otroLado + x, -100 + y, i*0.25f)); 	
+			}
 			return crowd;
 		}
 		

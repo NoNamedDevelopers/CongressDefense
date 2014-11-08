@@ -34,7 +34,7 @@ public class Protester extends GameCharacter {
 			float appearTime) {
 		super(game, x, y, "protester" + r.nextInt(3), 4, 5, 0.06f);
 
-		direction = UP_LEFT;
+	    direction = UP_RIGHT;
 
 		this.appearTime = appearTime;
 
@@ -46,16 +46,6 @@ public class Protester extends GameCharacter {
 
 		boundingCircle = new Circle();
 
-		points.put(new int[] { 76, 561 }, DOWN_LEFT);
-		points.put(new int[] { 215, 469 }, DOWN_RIGHT);
-		points.put(new int[] { 144, 422 }, DOWN_LEFT);
-		points.put(new int[] { 249, 352 }, UP_LEFT);
-		points.put(new int[] { 387, 445 }, DOWN_LEFT);
-		points.put(new int[] { 490, 376 }, DOWN_RIGHT);
-		points.put(new int[] { 389, 310 }, DOWN_LEFT);
-		points.put(new int[] { 556, 198 }, UP_LEFT);
-		points.put(new int[] { 813, 369 }, REMOVE);
-
 		updateAnimation();
 	}
 	
@@ -64,37 +54,30 @@ public class Protester extends GameCharacter {
 		if (stateTime < appearTime)
 			return;
 
-		for (Entry<int[], Short> point : points)
-			if (point.key[0] == MathUtils.floor(x)
-					&& point.key[1] == MathUtils.floor(y))
-				direction = point.value;
+		//for (Entry<int[], Short> point : points)
+		//	if (point.key[0] == MathUtils.floor(x)
+		//			&& point.key[1] == MathUtils.floor(y))
+		//		direction = point.value;
 
 		approach();
+		updateAnimation();
 
-		currentFrame = ulAnimation.getKeyFrame(stateTime, true);
+		//currentFrame = ulAnimation.getKeyFrame(stateTime, true);
 		boundingCircle.set(x + 16, y + 16, 20f);
 	}
 
 	private void updateAnimation() {
 		switch (direction) {
-		case UP_LEFT:
-			x += 1 * SPEED_X;
-			y += 1 * SPEED_Y;
+		case UP_RIGHT:
 			currentFrame = ulAnimation.getKeyFrame(stateTime, true);
 			break;
-		case DOWN_LEFT:
-			x += 1 * SPEED_X;
-			y += -1 * SPEED_Y;
+		case DOWN_RIGHT:
 			currentFrame = dlAnimation.getKeyFrame(stateTime, true);
 			break;
-		case UP_RIGHT:
-			x += -1 * SPEED_X;
-			y += 1 * SPEED_Y;
+		case UP_LEFT:
 			currentFrame = urAnimation.getKeyFrame(stateTime, true);
 			break;
-		case DOWN_RIGHT:
-			x += -1 * SPEED_X;
-			y += -1 * SPEED_Y;
+		case DOWN_LEFT:
 			currentFrame = drAnimation.getKeyFrame(stateTime, true);
 			break;
 		case REMOVE:
@@ -114,7 +97,11 @@ public class Protester extends GameCharacter {
 	public void hurt(int damage) {
 		life -= damage;
 		if (life <= 0)
+		{
+			game.score += 5;
+			game.money += 10;
 			kill();
+		}
 	}
 
 	private void attack() {
@@ -140,30 +127,96 @@ public class Protester extends GameCharacter {
 		Random random = new Random();
 		Vector2 Goal = new Vector2(xGoal, yGoal);
 		Vector2 position = new Vector2(x, y);
-		Vector2 direction = new Vector2();
+		Vector2 direction2 = new Vector2();
 		
 		int n = random.nextInt(100);
 		
 		if(n<60){
 			Goal = new Vector2(xGoal,yGoal);
-			direction.set(Goal).sub(position).nor();
+			direction2.set(Goal).sub(position).nor();
+			x += direction2.x * (random.nextInt(3));
+			y += direction2.y * (random.nextInt(3));
+			if (direction2.x>=0 && direction2.y >= 0)
+				this.direction = UP_RIGHT;
+			else if (direction2.x>=0 && direction2.y< 0)
+			{
+				this.direction = DOWN_RIGHT;
+			}
+			else if (direction2.x<0 && direction2.y >= 0)
+			{
+				this.direction = UP_LEFT;
+			}
+			else
+				this.direction = DOWN_LEFT;
+		}
+		/*
+		else if (n < 70)
+		{
+			direction.set(1,0);
 			x += direction.x * (random.nextInt(3));
 			y += direction.y * (random.nextInt(3));
 		}
-		else if (n < 80){
-			Goal = new Vector2(xGoal,0);
-			position = new Vector2(x, 0);
-			direction.set(Goal).sub(position).nor();
+		else if (n < 80)
+		{
+			direction.set(-1,0);
+			x += direction.x * (random.nextInt(3));
+			y += direction.y * (random.nextInt(3));
+		}
+		else if (n < 90)
+		{
+			direction.set(0,1);
 			x += direction.x * (random.nextInt(3));
 			y += direction.y * (random.nextInt(3));
 		}
 		else
 		{
-			Goal = new Vector2(0, yGoal);
-			position = new Vector2(0, y);
-			direction.set(Goal).sub(position).nor();
+			direction.set(0,-1);
 			x += direction.x * (random.nextInt(3));
 			y += direction.y * (random.nextInt(3));
+		}
+		*/
+		else if (n < 80){
+			//float modif = random.nextFloat();
+			Goal = new Vector2(xGoal,0);
+			position = new Vector2(x, 0);
+			direction2.set(Goal).sub(position).nor();
+			//direction.set(direction.x, modif).nor();
+			x += direction2.x * (random.nextInt(3));
+			y += direction2.y * (random.nextInt(3));
+			if (direction2.x>=0 && direction2.y >= 0)
+				this.direction = UP_RIGHT;
+			else if (direction2.x>=0 && direction2.y< 0)
+			{
+				this.direction = DOWN_RIGHT;
+			}
+			else if (direction2.x<0 && direction2.y >= 0)
+			{
+				this.direction = UP_LEFT;
+			}
+			else
+				this.direction = DOWN_LEFT;
+		}
+		else
+		{
+			//float modif = random.nextFloat();
+			Goal = new Vector2(0, yGoal);
+			position = new Vector2(0, y);
+			direction2.set(Goal).sub(position).nor();
+			//direction.set(modif, direction.y).nor();
+			x += direction2.x * (random.nextInt(3));
+			y += direction2.y * (random.nextInt(3));
+			if (direction2.x>=0 && direction2.y >= 0)
+				this.direction = UP_RIGHT;
+			else if (direction2.x>=0 && direction2.y< 0)
+			{
+				this.direction = DOWN_RIGHT;
+			}
+			else if (direction2.x<0 && direction2.y >= 0)
+			{
+				this.direction = UP_LEFT;
+			}
+			else
+				this.direction = DOWN_LEFT;
 		}
 		
 				

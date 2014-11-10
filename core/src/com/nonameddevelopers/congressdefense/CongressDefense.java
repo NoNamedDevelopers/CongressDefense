@@ -21,7 +21,7 @@ public class CongressDefense extends Game {
 		 
 		money = 80;
 		score = 0;
-		life = 100;
+		life = 30;
 		batch = new SpriteBatch();
 		font = new BitmapFont();
 		font.setScale(1.5f);

@@ -9,6 +9,7 @@ import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.utils.ObjectMap;
 import com.badlogic.gdx.utils.ObjectMap.Entry;
 import com.nonameddevelopers.congressdefense.CongressDefense;
+import com.nonameddevelopers.congressdefense.screens.GameOverScreen;
 
 public class Protester extends GameCharacter {
 
@@ -105,7 +106,10 @@ public class Protester extends GameCharacter {
 	}
 
 	private void attack() {
-		game.life--;
+		if (game.life - 1 <= 0)
+			game.setScreen(new GameOverScreen(game));
+		else
+			game.life--;
 	}
 
 	private void kill() {

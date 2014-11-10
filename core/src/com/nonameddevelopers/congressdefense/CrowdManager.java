@@ -77,4 +77,14 @@ public class CrowdManager {
 	{
 		numCrowds = wave/coef +1;
 	}
+
+	public ArrayList<Crowd> getCrowds() {
+		return crowds;
+	}
+
+	public void setCrowds(ArrayList<Crowd> crowds) {
+		this.crowds = crowds;
+	}
+	
+	
 }

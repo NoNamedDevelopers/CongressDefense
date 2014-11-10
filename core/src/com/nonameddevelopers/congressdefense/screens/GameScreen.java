@@ -1,5 +1,7 @@
 package com.nonameddevelopers.congressdefense.screens;
 
+import java.util.ArrayList;
+
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.GL20;
@@ -8,6 +10,8 @@ import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.nonameddevelopers.congressdefense.CongressDefense;
 import com.nonameddevelopers.congressdefense.CrowdManager;
 import com.nonameddevelopers.congressdefense.GameCamera;
+import com.nonameddevelopers.congressdefense.CopDisplayer;
+import com.nonameddevelopers.congressdefense.characters.Cop;
 import com.nonameddevelopers.congressdefense.characters.Crowd;
 import com.nonameddevelopers.congressdefense.characters.PoliceCaller;
 
@@ -20,11 +24,13 @@ public class GameScreen implements Screen {
 	private GameCamera camera;
 	private Sprite map;
 	
-	private PoliceCaller shield;
+	//private PoliceCaller shield;
 	
 	private CrowdManager crowdMan;
-	private Crowd crowd;
-	private Crowd crowd2;
+	//private Crowd crowd;
+	//private Crowd crowd2;
+	
+	private CopDisplayer copDisp;
 	
 	
 	public GameScreen(final CongressDefense game) {
@@ -36,6 +42,7 @@ public class GameScreen implements Screen {
 		map.setSize(WORLD_WIDTH, WORLD_HEIGHT);
 		
 		crowdMan = new CrowdManager(game, 10);
+		copDisp = new CopDisplayer(game, camera);
 		//crowd = new Crowd(game,10);
 		//crowd2 = new Crowd(game, 20);
 		
@@ -49,6 +56,7 @@ public class GameScreen implements Screen {
 		
 		camera.update();			
 		crowdMan.update(delta);
+		
 		//shield.update(delta);
 		
 		//shield.checkCollision(crowd);
@@ -60,6 +68,8 @@ public class GameScreen implements Screen {
 		
 		game.font.draw(game.batch, "Life: "+game.life, 20, 200);
 		crowdMan.draw(game.batch);
+		copDisp.update(delta, game.batch);
+		checkCollitions();
 		//crowd2.draw(game.batch);
 
 		//shield.draw(game.batch);
@@ -99,6 +109,17 @@ public class GameScreen implements Screen {
 	public void dispose() {
 		// TODO Auto-generated method stub
 		
+	}
+	
+	public void checkCollitions()
+	{
+		for (Crowd crowd: crowdMan.getCrowds())
+		{
+			for (Cop cop: copDisp.getCops())
+			{
+				cop.checkCollision(crowd);
+			}
+		}
 	}
 
 }

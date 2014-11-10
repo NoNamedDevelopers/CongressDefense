@@ -9,6 +9,8 @@ import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Vector3;
 import com.nonameddevelopers.congressdefense.CongressDefense;
+import com.nonameddevelopers.congressdefense.CopDisplayer;
+import com.nonameddevelopers.congressdefense.CrowdManager;
 import com.nonameddevelopers.congressdefense.GameCamera;
 
 public class PoliceVan {
@@ -28,7 +30,7 @@ public class PoliceVan {
 		this.y = y;
 		polices = new ArrayList<Cop>();
 		sprite = new Sprite(new Texture(Gdx.files.internal("police-car.png")));
-		sprite.setSize(32, 32);
+		sprite.setSize(52, 52);
 		sprite.setPosition(x, y);
 	}
 
@@ -44,7 +46,7 @@ public class PoliceVan {
 					touched = true;
 					addPolices();
 					System.out.println(game.collisionManager);
-					setCollisions();
+					//setCollisions();
 				}
 			}
 		} else
@@ -73,13 +75,20 @@ public class PoliceVan {
 		else {
 			for (Cop cop : polices)
 				cop.draw(batch);
+			sprite.draw(batch);
 		}
 	}
 
 	public void checkCollision(Crowd crowd) {
-		if (!polices.isEmpty()) {
+		if (!polices.isEmpty() && touched) {
 			for (Cop cop : polices)
 				cop.checkCollision(crowd);
 		}
+	}
+
+	public CopDisplayer updatePolices(CopDisplayer copDisplayer) {
+		for (Cop cop : polices)
+			copDisplayer.addCop(cop);
+		return copDisplayer;
 	}
 }

@@ -14,6 +14,7 @@ import com.nonameddevelopers.congressdefense.CopDisplayer;
 import com.nonameddevelopers.congressdefense.characters.Cop;
 import com.nonameddevelopers.congressdefense.characters.Crowd;
 import com.nonameddevelopers.congressdefense.characters.PoliceCaller;
+import com.nonameddevelopers.congressdefense.characters.PoliceVan;
 
 public class GameScreen implements Screen {
 	private static final int WORLD_WIDTH = 1000;
@@ -31,7 +32,8 @@ public class GameScreen implements Screen {
 	//private Crowd crowd2;
 	
 	private CopDisplayer copDisp;
-	
+	private PoliceVan policeCar;
+	private PoliceVan policeCar2;
 	
 	public GameScreen(final CongressDefense game) {
 		this.game = game;
@@ -47,6 +49,8 @@ public class GameScreen implements Screen {
 		//crowd2 = new Crowd(game, 20);
 		
 		//shield = new PoliceCaller(game, 150,350, camera);
+		policeCar = new PoliceVan(game, 150,350, camera);
+		policeCar2 = new PoliceVan(game, 200,180, camera);
 	}	
 
 	@Override
@@ -58,9 +62,10 @@ public class GameScreen implements Screen {
 		crowdMan.update(delta);
 		
 		//shield.update(delta);
+		policeCar.update(delta);
 		
 		//shield.checkCollision(crowd);
-		
+		copDisp= policeCar.updatePolices(copDisp);
 		
 		game.batch.setProjectionMatrix(camera.combined);
 		game.batch.begin();
@@ -68,6 +73,8 @@ public class GameScreen implements Screen {
 		
 		game.font.draw(game.batch, "Life: "+game.life, 20, 200);
 		crowdMan.draw(game.batch);
+		policeCar.draw(game.batch);
+		policeCar2.draw(game.batch);
 		copDisp.update(delta, game.batch);
 		checkCollitions();
 		//crowd2.draw(game.batch);

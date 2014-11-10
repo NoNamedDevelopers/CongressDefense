@@ -48,9 +48,8 @@ public class CopDisplayer {
 		}
 	}
 
-	private void addCop(Cop cop) {
-		cops.add(cop);
-		
+	public void addCop(Cop cop) {
+		cops.add(cop);	
 	}
 
 	public ArrayList<Cop> getCops() {

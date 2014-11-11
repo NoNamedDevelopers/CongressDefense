@@ -56,16 +56,30 @@ public class Cop extends GameCharacter {
 		for (Protester protester : crowd.getProtesters())
 			if (Intersector.overlaps(protester.getBoundingCircle(), boundingCircle)) {
 			atLeastOne = true;
-				if (stateTime-elapsedTime >= 0.5f) {
+			System.out.println(" PRE state - elapsed: " +(stateTime-elapsedTime));
+
+				if (stateTime-elapsedTime >= 0.5) {
 					elapsedTime = stateTime;
 					punch.play();
 					protester.hurt(40);
 				}
 			}		
 		if (!atLeastOne) {
-			stateTime = 0;
-			elapsedTime = -0.5f;
+			// EL ERROR DE LOS POLICIAS SUPER ASESINO ESTABA AQIO
+//			stateTime = 0;
+//			elapsedTime = -0.5f;
 		}
+	}
+
+	@Override
+	public String toString() {
+		return "Cop [boundingCircle=" + boundingCircle + ", punch=" + punch
+				+ ", elapsedTime=" + elapsedTime + ", game=" + game
+				+ ", ulAnimation=" + ulAnimation + ", dlAnimation="
+				+ dlAnimation + ", urAnimation=" + urAnimation
+				+ ", drAnimation=" + drAnimation + ", currentFrame="
+				+ currentFrame + ", stateTime=" + stateTime + ", x=" + x
+				+ ", y=" + y + ", direction=" + direction + "]";
 	}
 	
 	

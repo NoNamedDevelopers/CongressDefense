@@ -23,7 +23,7 @@ public class Protester extends GameCharacter {
 
 	private ObjectMap<int[], Short> points;
 
-	private int life;
+	public int life;
 	private float appearTime;
 	private boolean isDead = false;
 

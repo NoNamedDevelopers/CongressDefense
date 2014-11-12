@@ -1,16 +1,22 @@
 package com.nonameddevelopers.congressdefense;
 
 import com.badlogic.gdx.Game;
+import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.audio.Music;
+import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.nonameddevelopers.congressdefense.screens.MainMenuScreen;
-import com.nonameddevelopers.congressdefense.screens.StartScreen;
 
 public class CongressDefense extends Game {
 	
 	public SpriteBatch batch;
 	public BitmapFont font;
 	public final CollissionManager collisionManager = new CollissionManager();
+	private Music bgMusic;
+	private Sound touchSound;
+	
+	private boolean isMuted = false;
 	
 	public int life;
 	public int score;
@@ -18,7 +24,14 @@ public class CongressDefense extends Game {
 	
 	@Override
 	public void create () {
+		
+
+		bgMusic = Gdx.audio.newMusic(Gdx.files.internal("bg.mp3"));
+		bgMusic.setLooping(true);
+		bgMusic.setVolume(0.08f);
 		 
+		touchSound = Gdx.audio.newSound(Gdx.files.internal("sounds/punch.mp3"));
+		
 		money = 80;
 		score = 0;
 		life = 30;
@@ -38,5 +51,24 @@ public class CongressDefense extends Game {
 	public void dispose () {
 		batch.dispose();
 		font.dispose();
+		bgMusic.dispose();
+		touchSound.dispose();
+	}
+	
+	public void playBackground() {
+		bgMusic.play();
+	}
+	
+	public void stopBackground() {
+		bgMusic.stop();
+	}
+	
+	public void playTouch() {
+		if (!isMuted) 
+			touchSound.play(0.3f);
+	}
+	
+	public void muteSound() {
+		isMuted = true;
 	}
 }

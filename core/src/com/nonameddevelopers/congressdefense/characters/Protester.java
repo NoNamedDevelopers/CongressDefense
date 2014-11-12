@@ -4,24 +4,19 @@ import java.util.Random;
 
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Circle;
-import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.utils.ObjectMap;
-import com.badlogic.gdx.utils.ObjectMap.Entry;
 import com.nonameddevelopers.congressdefense.CongressDefense;
 import com.nonameddevelopers.congressdefense.screens.GameOverScreen;
 
 public class Protester extends GameCharacter {
 
-	private static final float SPEED_X = 0.4f;
-	private static final float SPEED_Y = 0.4f / 1.5f;
 	private Circle boundingCircle;
 	private static Random r;
 
 	private int xGoal = 813;
 	private int yGoal = 369;
 
-	private ObjectMap<int[], Short> points;
 
 	private int life;
 	private float appearTime;
@@ -41,8 +36,6 @@ public class Protester extends GameCharacter {
 
 		life = 100;
 
-		points = new ObjectMap<int[], Short>();
-
 		stateTime = 0f;
 
 		boundingCircle = new Circle();
@@ -55,15 +48,10 @@ public class Protester extends GameCharacter {
 		if (stateTime < appearTime)
 			return;
 
-		//for (Entry<int[], Short> point : points)
-		//	if (point.key[0] == MathUtils.floor(x)
-		//			&& point.key[1] == MathUtils.floor(y))
-		//		direction = point.value;
 
 		approach();
 		updateAnimation();
 
-		//currentFrame = ulAnimation.getKeyFrame(stateTime, true);
 		boundingCircle.set(x + 16, y + 16, 20f);
 	}
 

@@ -33,10 +33,10 @@ public abstract class GameCharacter {
 		
 		stateTime = 0f;
 
-		ulAnimation = loadAnimation(type+"/up_left.png", columns, rows, animationSpeed);
-		dlAnimation = loadAnimation(type+"/down_left.png", columns, rows, animationSpeed);	
-		urAnimation = loadAnimation(type+"/up_right.png", columns, rows, animationSpeed);	
-		drAnimation = loadAnimation(type+"/down_right.png", columns, rows, animationSpeed);			
+		ulAnimation = loadAnimation("sprites/"+type+"/up_left.png", columns, rows, animationSpeed);
+		dlAnimation = loadAnimation("sprites/"+type+"/down_left.png", columns, rows, animationSpeed);	
+		urAnimation = loadAnimation("sprites/"+type+"/up_right.png", columns, rows, animationSpeed);	
+		drAnimation = loadAnimation("sprites/"+type+"/down_right.png", columns, rows, animationSpeed);			
 	}
 	
 	private Animation loadAnimation(String src, int columns, int rows, float speed) {

@@ -1,6 +1,5 @@
 package com.nonameddevelopers.congressdefense.characters;
 
-import java.awt.List;
 import java.util.ArrayList;
 
 import com.badlogic.gdx.Gdx;
@@ -10,7 +9,6 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Vector3;
 import com.nonameddevelopers.congressdefense.CongressDefense;
 import com.nonameddevelopers.congressdefense.CopDisplayer;
-import com.nonameddevelopers.congressdefense.CrowdManager;
 import com.nonameddevelopers.congressdefense.GameCamera;
 
 public class PoliceVan {
@@ -29,8 +27,8 @@ public class PoliceVan {
 		this.x = x;
 		this.y = y;
 		polices = new ArrayList<Cop>();
-		sprite = new Sprite(new Texture(Gdx.files.internal("police-car.png")));
-		sprite.setSize(52, 52);
+		sprite = new Sprite(new Texture(Gdx.files.internal("sprites/van/0000.png")));
+		sprite.setSize(64, 64);
 		sprite.setPosition(x, y);
 	}
 

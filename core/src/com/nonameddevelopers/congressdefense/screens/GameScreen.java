@@ -62,10 +62,10 @@ public class GameScreen implements Screen {
 		crowdMan.update(delta);
 
 		// shield.update(delta);
-		policeCar.update(delta);
+		policeCar.update(delta, copDisp);
 
 		// shield.checkCollision(crowd);
-		copDisp = policeCar.updatePolices(copDisp);
+		//copDisp = policeCar.updatePolices(copDisp);
 
 		game.batch.setProjectionMatrix(camera.combined);
 		game.batch.begin();

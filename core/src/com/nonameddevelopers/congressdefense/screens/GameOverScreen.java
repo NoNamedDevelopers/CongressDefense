@@ -43,7 +43,10 @@ private final CongressDefense game;
 		game.batch.end();
 		
 		if(Gdx.input.isTouched()) {
-			game.setScreen(new GameScreen(game));
+			game.setScreen(new MainMenuScreen(game));
+			game.setLife(30);
+			game.setMoney(80);
+			game.setScore(0);
 			dispose();
 		}
 	}

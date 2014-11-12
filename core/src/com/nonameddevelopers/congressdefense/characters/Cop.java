@@ -29,9 +29,8 @@ public class Cop extends GameCharacter {
 		updateAnimation();
 	}
 		
-	public void update(float delta) {		
+	public void update(float delta) {
 		stateTime += delta;		
-		updateAnimation();		
 	}
 	
 	private void updateAnimation() {		
@@ -57,11 +56,13 @@ public class Cop extends GameCharacter {
 			if (Intersector.overlaps(protester.getBoundingCircle(), boundingCircle)) {
 			atLeastOne = true;
 			System.out.println(" PRE state - elapsed: " +(stateTime-elapsedTime));
+			updateAnimation();	
 
-				if (stateTime-elapsedTime >= 0.5) {
+				if (Math.abs(stateTime-elapsedTime) >= 0.5) {
 					elapsedTime = stateTime;
 					punch.play();
 					protester.hurt(40);
+					
 				}
 			}		
 		if (!atLeastOne) {

@@ -32,7 +32,7 @@ public class PoliceVan {
 		sprite.setPosition(x, y);
 	}
 
-	public void update(float delta) {
+	public void update(float delta, CopDisplayer copDisp) {
 		if (!touched) {
 			if (Gdx.input.isTouched()) {
 				Vector3 touchPos = new Vector3();
@@ -45,10 +45,10 @@ public class PoliceVan {
 					addPolices();
 					System.out.println(game.collisionManager);
 					//setCollisions();
+					updatePolices(copDisp);
 				}
 			}
-		} else
-			updatePolices(delta);
+		} 
 	}
 
 	private void updatePolices(float delta) {

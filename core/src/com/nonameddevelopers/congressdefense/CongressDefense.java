@@ -71,4 +71,36 @@ public class CongressDefense extends Game {
 	public void muteSound() {
 		isMuted = true;
 	}
+
+
+	public int getLife() {
+		return life;
+	}
+
+
+	public void setLife(int life) {
+		this.life = life;
+	}
+
+
+	public int getScore() {
+		return score;
+	}
+
+
+	public void setScore(int score) {
+		this.score = score;
+	}
+
+
+	public int getMoney() {
+		return money;
+	}
+
+
+	public void setMoney(int money) {
+		this.money = money;
+	}
+	
+	
 }

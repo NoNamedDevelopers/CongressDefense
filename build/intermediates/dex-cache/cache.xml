@@ -18,7 +18,7 @@
         jar="D:\congressdefense\core\build\libs\core-1.0.jar"
         jumboMode="false"
         revision="21.0.2"
-        sha1="1d3367204a33ecf0f431afda94b6c0104990fe94"/>
+        sha1="0b5265ff983ff83c0daa5346d605853bbfed9860"/>
     <item
         dex="D:\congressdefense\android\build\intermediates\pre-dexed\release\gdx-1.4.1-b571d977af46a23ed13b1b217138bb6e5f186cf0.jar"
         jar="C:\Users\LuisEmilio\.gradle\caches\modules-2\files-2.1\com.badlogicgames.gdx\gdx\1.4.1\df470d263438048af74860ca51fc497c16a0c76a\gdx-1.4.1.jar"

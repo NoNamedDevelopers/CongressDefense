@@ -14,7 +14,7 @@
         android:label="@string/app_name"
         android:theme="@style/GdxTheme" >
         <activity
-            android:name="com.nonamedevelopers.congressdefense.android.AndroidLauncher"
+            android:name="com.nonameddevelopers.congressdefense.android.AndroidLauncher"
             android:configChanges="keyboard|keyboardHidden|orientation|screenSize"
             android:label="@string/app_name"
             android:screenOrientation="landscape" >

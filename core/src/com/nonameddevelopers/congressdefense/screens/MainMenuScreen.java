@@ -2,13 +2,11 @@ package com.nonameddevelopers.congressdefense.screens;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
-import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.InputListener;
 import com.badlogic.gdx.scenes.scene2d.Stage;
-import com.badlogic.gdx.scenes.scene2d.actions.Actions;
 import com.badlogic.gdx.utils.viewport.FillViewport;
 import com.nonameddevelopers.congressdefense.CongressDefense;
 import com.nonameddevelopers.congressdefense.ui.ImageActor;
@@ -39,12 +37,10 @@ private final CongressDefense game;
 			@Override
 			public boolean touchDown (InputEvent event, float x, float y, int pointer, int button) {
 				game.playTouch();
-				startButton.addAction(Actions.color(Color.BLACK, 0.01f));
 				return true;
 			}
 			
 			public void touchUp (InputEvent event, float x, float y, int pointer, int button) {
-				startButton.addAction(Actions.color(Color.WHITE));
 				game.setScreen(new GameScreen(game));
 				stage.dispose();
 				dispose();

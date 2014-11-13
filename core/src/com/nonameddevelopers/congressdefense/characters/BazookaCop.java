@@ -6,6 +6,7 @@ import com.badlogic.gdx.math.Circle;
 import com.badlogic.gdx.math.Intersector;
 import com.badlogic.gdx.math.Vector2;
 import com.nonameddevelopers.congressdefense.CongressDefense;
+import com.nonameddevelopers.congressdefense.EntityManager;
 
 public class BazookaCop extends Cop {
 	
@@ -17,7 +18,7 @@ public class BazookaCop extends Cop {
 		direction = UP_LEFT;
 
 		boundingCircle = new Circle();
-		boundingCircle.set(x+90, y+90, 10f);
+		boundingCircle.set(x+400, y+400, 10f);
 		
 		ulAnimation = loadAnimation("sprites/copgun/up_left.png", 5, 5, 0.02f);
 		dlAnimation = loadAnimation("sprites/copgun/down_left.png", 5, 5, 0.02f);	
@@ -48,8 +49,10 @@ public class BazookaCop extends Cop {
 	
 	@Override
 	public void checkCollision(Crowd crowd) {
+		System.out.println("toy llegandooooo");
 		boolean atLeastOne = false;
 		for (Protester protester : crowd.getProtesters())
+			//ESTA ES LA CONDICION QUE NO CUMPLE.
 			if (Intersector.overlaps(protester.getBoundingCircle(), boundingCircle)) {
 			atLeastOne = true;
 			System.out.println(" PRE state - elapsed: " +(stateTime-elapsedTime));
@@ -68,6 +71,7 @@ public class BazookaCop extends Cop {
 					//shoot.play();
 					protester.hurt(40);
 					shoot(protester);
+					System.out.println("disparandooooooooooooooooooooo");
 				}
 			}		
 		if (!atLeastOne) {
@@ -79,6 +83,7 @@ public class BazookaCop extends Cop {
 	
 	private void shoot(Protester protester)
 	{
+		EntityManager.getInstance().getProyectileL().addProyectile(new Proyectile(game, x, y, protester));
 		//proyectileL.add(new Proyectile(game, x, y, protester));
 	}
 

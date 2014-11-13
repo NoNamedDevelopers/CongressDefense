@@ -47,7 +47,8 @@ public class GameScreen implements Screen {
 		map.setPosition(0, 0);
 		map.setSize(WORLD_WIDTH, WORLD_HEIGHT);
 
-		entityManager = new EntityManager(game, camera);
+		entityManager = EntityManager.getInstance(game,camera);
+		entityManager.setCamera(camera);
 		copDisp = new CopDisplayer(entityManager.getCopManager(),game, camera);
 		// crowd = new Crowd(game,10);
 		// crowd2 = new Crowd(game, 20);

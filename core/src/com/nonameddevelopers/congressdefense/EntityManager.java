@@ -8,23 +8,39 @@ public class EntityManager {
 	private ProyectileLauncher proyectileL;
 	private final CongressDefense game;
 	private GameCamera camera;
+	private static EntityManager instance;
 	
-	public EntityManager(final CongressDefense game, GameCamera camera){
-		this.game=game;
-		this.camera=camera;
+	
+	private EntityManager(final CongressDefense game, GameCamera camera) {
+		this.game = game;
 		crowdMan = new CrowdManager(game, 10);
 		copManager = new CopManager(game, camera);
 		proyectileL = new ProyectileLauncher(game, camera);
 	}
-	
-	public void update(float delta, SpriteBatch batch){
+
+	public static EntityManager getInstance(final CongressDefense game,
+			GameCamera camera) {
+		return (instance == null ? instance = new EntityManager(game, camera)
+				: instance);
+
+	}
+
+	public static EntityManager getInstance() {
+			return instance;
+	}
+
+	public void update(float delta, SpriteBatch batch) {
 		crowdMan.update(delta);
 		copManager.update(delta, batch);
 		proyectileL.update(batch);
 		draw(batch);
 	}
-	
-	public void draw(SpriteBatch batch){
+
+	public void setCamera(GameCamera camera) {
+		this.camera = camera;
+	}
+
+	public void draw(SpriteBatch batch) {
 		crowdMan.draw(batch);
 	}
 
@@ -51,6 +67,5 @@ public class EntityManager {
 	public void setProyectileL(ProyectileLauncher proyectileL) {
 		this.proyectileL = proyectileL;
 	}
-	
-	
+
 }

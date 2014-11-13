@@ -7,19 +7,19 @@ import com.badlogic.gdx.math.Intersector;
 import com.nonameddevelopers.congressdefense.CongressDefense;
 
 
-public class Cop extends GameCharacter {
+public abstract class Cop extends GameCharacter {
 	
-	private Circle boundingCircle;
+	protected Circle boundingCircle;
 	
-	private Sound punch;
+
 	
-	private float elapsedTime;
+	protected float elapsedTime;
 	
 	public Cop(CongressDefense game, float x, float y) {
 		super(game, x, y, "cop", 4, 6, 0.02f);
 		
 		
-		punch = Gdx.audio.newSound(Gdx.files.internal("sounds/punch.mp3"));
+		
 		
 		direction = UP_LEFT;
 		
@@ -50,32 +50,11 @@ public class Cop extends GameCharacter {
 		}
 	}
 	
-	public void checkCollision(Crowd crowd) {
-		boolean atLeastOne = false;
-		for (Protester protester : crowd.getProtesters())
-			if (Intersector.overlaps(protester.getBoundingCircle(), boundingCircle)) {
-			atLeastOne = true;
-			System.out.println(" PRE state - elapsed: " +(stateTime-elapsedTime));
-			updateAnimation();	
-
-				if (Math.abs(stateTime-elapsedTime) >= 0.5) {
-					elapsedTime = stateTime;
-					punch.play();
-					protester.hurt(40);
-					
-				}
-			}		
-		if (!atLeastOne) {
-			// EL ERROR DE LOS POLICIAS SUPER ASESINO ESTABA AQIO
-//			stateTime = 0;
-//			elapsedTime = -0.5f;
-		}
-	}
+	public abstract void checkCollision(Crowd crowd);
 
 	@Override
 	public String toString() {
-		return "Cop [boundingCircle=" + boundingCircle + ", punch=" + punch
-				+ ", elapsedTime=" + elapsedTime + ", game=" + game
+		return "Cop [boundingCircle=" + boundingCircle + ", elapsedTime=" + elapsedTime + ", game=" + game
 				+ ", ulAnimation=" + ulAnimation + ", dlAnimation="
 				+ dlAnimation + ", urAnimation=" + urAnimation
 				+ ", drAnimation=" + drAnimation + ", currentFrame="

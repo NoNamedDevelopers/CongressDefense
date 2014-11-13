@@ -8,9 +8,11 @@ import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.nonameddevelopers.congressdefense.CongressDefense;
+import com.nonameddevelopers.congressdefense.CopManager;
 import com.nonameddevelopers.congressdefense.CrowdManager;
 import com.nonameddevelopers.congressdefense.GameCamera;
 import com.nonameddevelopers.congressdefense.CopDisplayer;
+import com.nonameddevelopers.congressdefense.ProyectileLauncher;
 import com.nonameddevelopers.congressdefense.characters.Cop;
 import com.nonameddevelopers.congressdefense.characters.Crowd;
 import com.nonameddevelopers.congressdefense.characters.PoliceCaller;
@@ -28,6 +30,8 @@ public class GameScreen implements Screen {
 	// private PoliceCaller shield;
 
 	private CrowdManager crowdMan;
+	private CopManager copManager;
+	private ProyectileLauncher proyectileL;
 	// private Crowd crowd;
 	// private Crowd crowd2;
 
@@ -44,7 +48,9 @@ public class GameScreen implements Screen {
 		map.setSize(WORLD_WIDTH, WORLD_HEIGHT);
 
 		crowdMan = new CrowdManager(game, 10);
-		copDisp = new CopDisplayer(game, camera);
+		copManager = new CopManager(game, camera);
+		proyectileL = new ProyectileLauncher(game, camera);
+		copDisp = new CopDisplayer(copManager,game, camera);
 		// crowd = new Crowd(game,10);
 		// crowd2 = new Crowd(game, 20);
 
@@ -60,9 +66,10 @@ public class GameScreen implements Screen {
 
 		camera.update();
 		crowdMan.update(delta);
+		copDisp.update();
 
 		// shield.update(delta);
-		policeCar.update(delta, copDisp);
+		policeCar.update(delta, copManager);
 
 		// shield.checkCollision(crowd);
 		//copDisp = policeCar.updatePolices(copDisp);
@@ -78,7 +85,8 @@ public class GameScreen implements Screen {
 		crowdMan.draw(game.batch);
 		policeCar.draw(game.batch);
 		policeCar2.draw(game.batch);
-		copDisp.update(delta, game.batch);
+		copManager.update(delta, game.batch);
+		proyectileL.update(game.batch);
 		checkCollitions();
 		// crowd2.draw(game.batch);
 
@@ -123,7 +131,7 @@ public class GameScreen implements Screen {
 
 	public void checkCollitions() {
 		for (Crowd crowd : crowdMan.getCrowds()) {
-			for (Cop cop : copDisp.getCops()) {
+			for (Cop cop : copManager.getCops()) {
 				cop.checkCollision(crowd);
 			}
 		}

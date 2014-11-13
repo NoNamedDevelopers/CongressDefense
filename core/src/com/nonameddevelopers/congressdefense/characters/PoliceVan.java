@@ -9,6 +9,7 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Vector3;
 import com.nonameddevelopers.congressdefense.CongressDefense;
 import com.nonameddevelopers.congressdefense.CopDisplayer;
+import com.nonameddevelopers.congressdefense.CopManager;
 import com.nonameddevelopers.congressdefense.GameCamera;
 
 public class PoliceVan {
@@ -32,7 +33,7 @@ public class PoliceVan {
 		sprite.setPosition(x, y);
 	}
 
-	public void update(float delta, CopDisplayer copDisp) {
+	public void update(float delta, CopManager copManag) {
 		if (!touched) {
 			if (Gdx.input.isTouched()) {
 				Vector3 touchPos = new Vector3();
@@ -45,7 +46,7 @@ public class PoliceVan {
 					addPolices();
 					System.out.println(game.collisionManager);
 					//setCollisions();
-					updatePolices(copDisp);
+					updatePolices(copManag);
 				}
 			}
 		} 
@@ -62,9 +63,9 @@ public class PoliceVan {
 	}
 
 	private void addPolices() {
-		polices.add(new Cop(game, x + 20, y + 20));
-		polices.add(new Cop(game, x - 20, y + 20));
-		polices.add(new Cop(game, x + 20, y - 20));
+		polices.add(new MeleeCop(game, x + 20, y + 20));
+		polices.add(new MeleeCop(game, x - 20, y + 20));
+		polices.add(new MeleeCop(game, x + 20, y - 20));
 	}
 
 	public void draw(SpriteBatch batch) {
@@ -84,9 +85,9 @@ public class PoliceVan {
 		}
 	}
 
-	public CopDisplayer updatePolices(CopDisplayer copDisplayer) {
+	public CopManager updatePolices(CopManager copManag) {
 		for (Cop cop : polices)
-			copDisplayer.addCop(cop);
-		return copDisplayer;
+			copManag.addCop(cop);
+		return copManag;
 	}
 }

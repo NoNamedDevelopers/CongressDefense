@@ -39,7 +39,7 @@ public class PoliceCaller {
 				if (touchPos.x > x && touchPos.x < x+32
 					&& touchPos.y > y && touchPos.y < y+32) {
 					touched = true;
-					police = new Cop(game, x+32, y+32);
+					police = new MeleeCop(game, x+32, y+32);
 					System.out.println(game.collisionManager);
 					game.collisionManager.addCop(police);
 					

@@ -12,7 +12,6 @@ public class CongressDefense extends Game {
 	
 	public SpriteBatch batch;
 	public BitmapFont font;
-	public final CollissionManager collisionManager = new CollissionManager();
 	private Music bgMusic;
 	private Sound touchSound;
 	

@@ -21,7 +21,7 @@ public class ProyectileLauncher {
 	
 	public void update(SpriteBatch batch)
 	{
-		for (Proyectile proyectile: proyectiles)
+		for (Proyectile proyectile: proyectiles)	
 		{
 			proyectile.update();
 			proyectile.draw(batch);

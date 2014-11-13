@@ -39,7 +39,7 @@ public abstract class GameCharacter {
 		drAnimation = loadAnimation("sprites/"+type+"/down_right.png", columns, rows, animationSpeed);			
 	}
 	
-	private Animation loadAnimation(String src, int columns, int rows, float speed) {
+	protected Animation loadAnimation(String src, int columns, int rows, float speed) {
 		Texture spriteSheet = new Texture(Gdx.files.internal(src));
 		TextureRegion[][] tmp = TextureRegion.split(spriteSheet, spriteSheet.getWidth()/columns, spriteSheet.getHeight()/rows);
 		TextureRegion[] frames = new TextureRegion[columns*rows];

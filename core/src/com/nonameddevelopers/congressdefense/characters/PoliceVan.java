@@ -44,7 +44,6 @@ public class PoliceVan {
 						&& touchPos.y < y + 32) {
 					touched = true;
 					addPolices();
-					System.out.println(game.collisionManager);
 					//setCollisions();
 					updatePolices(copManag);
 				}
@@ -57,10 +56,6 @@ public class PoliceVan {
 			cop.update(delta);
 	}
 
-	private void setCollisions() {
-		for (Cop cop : polices)
-			game.collisionManager.addCop(cop);
-	}
 
 	private void addPolices() {
 		polices.add(new MeleeCop(game, x + 20, y + 20));

@@ -36,8 +36,6 @@ public class CopDisplayer {
 					game.money -= 20;
 					Cop police = new MeleeCop(game, touchPos.x, touchPos.y);
 					copMan.addCop(police);
-					System.out.println(game.collisionManager);
-					game.collisionManager.addCop(police);
 				}
 			}
 		}

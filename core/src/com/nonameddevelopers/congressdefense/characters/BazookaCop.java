@@ -19,12 +19,16 @@ public class BazookaCop extends Cop {
 		boundingCircle = new Circle();
 		boundingCircle.set(x+90, y+90, 10f);
 		
+		ulAnimation = loadAnimation("sprites/copgun/up_left.png", 5, 5, 0.02f);
+		dlAnimation = loadAnimation("sprites/copgun/down_left.png", 5, 5, 0.02f);	
+		urAnimation = loadAnimation("sprites/copgun/up_right.png", 5, 5, 0.02f);	
+		drAnimation = loadAnimation("sprites/copgun/down_right.png", 5, 5, 0.02f);	
+		
 		//shot = Gdx.audio.newSound(Gdx.files.internal("sounds/shot.mp3"));
 
 		updateAnimation();
 	}
 	
-	// No sé si habría que cambiar las animaciones de aquí para el del bazooka o funciona igual
 	private void updateAnimation() {		
 		switch(direction) {
 			case UP_LEFT:

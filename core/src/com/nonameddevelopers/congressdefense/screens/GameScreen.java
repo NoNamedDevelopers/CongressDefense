@@ -10,9 +10,11 @@ import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.nonameddevelopers.congressdefense.CongressDefense;
 import com.nonameddevelopers.congressdefense.CopManager;
 import com.nonameddevelopers.congressdefense.CrowdManager;
+import com.nonameddevelopers.congressdefense.EntityManager;
 import com.nonameddevelopers.congressdefense.GameCamera;
 import com.nonameddevelopers.congressdefense.CopDisplayer;
 import com.nonameddevelopers.congressdefense.ProyectileLauncher;
+import com.nonameddevelopers.congressdefense.characters.BazookaCop;
 import com.nonameddevelopers.congressdefense.characters.Cop;
 import com.nonameddevelopers.congressdefense.characters.Crowd;
 import com.nonameddevelopers.congressdefense.characters.PoliceCaller;
@@ -29,9 +31,7 @@ public class GameScreen implements Screen {
 
 	// private PoliceCaller shield;
 
-	private CrowdManager crowdMan;
-	private CopManager copManager;
-	private ProyectileLauncher proyectileL;
+	private EntityManager entityManager;
 	// private Crowd crowd;
 	// private Crowd crowd2;
 
@@ -47,16 +47,16 @@ public class GameScreen implements Screen {
 		map.setPosition(0, 0);
 		map.setSize(WORLD_WIDTH, WORLD_HEIGHT);
 
-		crowdMan = new CrowdManager(game, 10);
-		copManager = new CopManager(game, camera);
-		proyectileL = new ProyectileLauncher(game, camera);
-		copDisp = new CopDisplayer(copManager,game, camera);
+		entityManager = new EntityManager(game, camera);
+		copDisp = new CopDisplayer(entityManager.getCopManager(),game, camera);
 		// crowd = new Crowd(game,10);
 		// crowd2 = new Crowd(game, 20);
 
 		// shield = new PoliceCaller(game, 150,350, camera);
 		policeCar = new PoliceVan(game, 150, 350, camera);
 		policeCar2 = new PoliceVan(game, 200, 180, camera);
+		
+		entityManager.getCopManager().addCop(new BazookaCop(game, 300, 300));
 	}
 
 	@Override
@@ -65,29 +65,28 @@ public class GameScreen implements Screen {
 		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 
 		camera.update();
-		crowdMan.update(delta);
 		copDisp.update();
 
 		// shield.update(delta);
-		policeCar.update(delta, copManager);
+		policeCar.update(delta, entityManager.getCopManager());
 
 		// shield.checkCollision(crowd);
 		//copDisp = policeCar.updatePolices(copDisp);
-
+		
 		game.batch.setProjectionMatrix(camera.combined);
 		game.batch.begin();
+		
 		map.draw(game.batch);
 
 		game.font.draw(game.batch, "Life: " + game.life, 20, 200);
 		game.font.draw(game.batch, "Money: " + game.money, 20, 240);
 		game.font.draw(game.batch, "Score: " + game.score, 20, 280);
 
-		crowdMan.draw(game.batch);
 		policeCar.draw(game.batch);
 		policeCar2.draw(game.batch);
-		copManager.update(delta, game.batch);
-		proyectileL.update(game.batch);
+		entityManager.update(delta, game.batch);
 		checkCollitions();
+		
 		// crowd2.draw(game.batch);
 
 		// shield.draw(game.batch);
@@ -130,8 +129,8 @@ public class GameScreen implements Screen {
 	}
 
 	public void checkCollitions() {
-		for (Crowd crowd : crowdMan.getCrowds()) {
-			for (Cop cop : copManager.getCops()) {
+		for (Crowd crowd : entityManager.getCrowdMan().getCrowds()) {
+			for (Cop cop : entityManager.getCopManager().getCops()) {
 				cop.checkCollision(crowd);
 			}
 		}

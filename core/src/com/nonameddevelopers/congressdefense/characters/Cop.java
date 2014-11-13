@@ -19,8 +19,6 @@ public abstract class Cop extends GameCharacter {
 		super(game, x, y, "cop", 4, 6, 0.02f);
 		
 		
-		
-		
 		direction = UP_LEFT;
 		
 		boundingCircle = new Circle();

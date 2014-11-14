@@ -1,8 +1,8 @@
 package com.nonameddevelopers.congressdefense.characters;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Circle;
@@ -11,67 +11,67 @@ import com.badlogic.gdx.math.Vector2;
 import com.nonameddevelopers.congressdefense.CongressDefense;
 
 public class Proyectile {
-
+	
 	protected final CongressDefense game;	
 
-	protected Animation Animation;
-	protected TextureRegion currentFrame;
-	protected float stateTime;
+	private Texture image;
+	private TextureRegion texture;
 	
 	private Protester target;
 	
 	private Circle boundingCircle;
 	
-	protected float x, y;
-	protected short direction;
+	private float x, y;
+	
+	private boolean isDestroyed;
+	
+	private Sound ballHit;
 	
 	public Proyectile(final CongressDefense game, float x, float y, Protester protester) {
 		this.game = game;
-
-		this.target = protester;
-		
+		this.target = protester;		
 		this.x = x;
 		this.y = y;
-		boundingCircle = new Circle();
 		
-		boundingCircle.set(x + 16, y + 16, 20f);
+		boundingCircle = new Circle();				
+		isDestroyed = false;		
 		
-		stateTime = 0f;
-		
-		Animation = loadAnimation("sprites/copgun/ball.png", 1, 1, 0.02f);
+		image = new Texture(Gdx.files.internal("sprites/copgun/ball.png"));
+		texture = new TextureRegion(image);
+		ballHit = Gdx.audio.newSound(Gdx.files.internal("sounds/ball_hit.mp3"));
 	}
 	
 	public void draw(SpriteBatch batch) {
-		batch.draw(currentFrame, x, y);
+		if (!isDestroyed) 
+			batch.draw(texture, x, y);		
 	}
 	
 	public void update()
 	{
+		if (isDestroyed)
+			return;
+		
 		Vector2 direction = new Vector2();
 		direction.set(target.x, target.y).sub(this.x, this.y).nor();
-		x += direction.x * 20;
-		y += direction.y * 20;
-	}
-	
-	public void checkCollision(Crowd crowd) {
+		x += direction.x * 5;
+		y += direction.y * 5;
+
+		boundingCircle.set(x + 16, y + 16, 10f);
 		if (Intersector.overlaps(target.getBoundingCircle(), boundingCircle)) {
-			//hit.play();
 			target.hurt(40);
-			//this.dispose();
+			ballHit.play();
+			destroy();
 		}
 	}
-	protected Animation loadAnimation(String src, int columns, int rows, float speed) {
-		Texture spriteSheet = new Texture(Gdx.files.internal(src));
-		TextureRegion[][] tmp = TextureRegion.split(spriteSheet, spriteSheet.getWidth()/columns, spriteSheet.getHeight()/rows);
-		TextureRegion[] frames = new TextureRegion[columns*rows];
-		
-		int index = 0;
-		for (int i=0; i<rows; i++)
-			for (int j=0; j<columns; j++)
-				frames[index++] = tmp[i][j];
-		
-		return new Animation(speed, frames);
-	}	
 	
+	
+	private void destroy() {
+		isDestroyed = true;
+		dispose();
+	}
+	
+	public void dispose() {
+		image.dispose();		
+	}
 
 }

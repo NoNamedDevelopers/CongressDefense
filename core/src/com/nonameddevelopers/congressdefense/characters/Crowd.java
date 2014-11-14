@@ -69,10 +69,6 @@ public class Crowd {
 	
 	public int getNumberOfProtesters()
 	{
-		int i = 0;
-		for (Protester man : crowd)
-			i++;
-		return i;
-		
+		return crowd.size;
 	}
 }

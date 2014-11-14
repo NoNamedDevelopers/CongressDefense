@@ -1,23 +1,17 @@
 package com.nonameddevelopers.congressdefense.screens;
 
-import java.util.ArrayList;
-
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.nonameddevelopers.congressdefense.CongressDefense;
-import com.nonameddevelopers.congressdefense.CopManager;
-import com.nonameddevelopers.congressdefense.CrowdManager;
+import com.nonameddevelopers.congressdefense.CopDisplayer;
 import com.nonameddevelopers.congressdefense.EntityManager;
 import com.nonameddevelopers.congressdefense.GameCamera;
-import com.nonameddevelopers.congressdefense.CopDisplayer;
-import com.nonameddevelopers.congressdefense.ProyectileLauncher;
 import com.nonameddevelopers.congressdefense.characters.BazookaCop;
 import com.nonameddevelopers.congressdefense.characters.Cop;
 import com.nonameddevelopers.congressdefense.characters.Crowd;
-import com.nonameddevelopers.congressdefense.characters.PoliceCaller;
 import com.nonameddevelopers.congressdefense.characters.PoliceVan;
 
 public class GameScreen implements Screen {

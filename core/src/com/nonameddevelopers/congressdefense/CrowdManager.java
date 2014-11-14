@@ -55,11 +55,11 @@ public class CrowdManager {
 		}
 	}
 	
-	public void draw(SpriteBatch Batch)
+	public void draw(SpriteBatch batch)
 	{
 		for (Crowd crowd: crowds)
 		{
-			crowd.draw(Batch);
+			crowd.draw(batch);
 		}
 	}
 	

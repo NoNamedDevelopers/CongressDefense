@@ -8,7 +8,6 @@ import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Vector3;
 import com.nonameddevelopers.congressdefense.CongressDefense;
-import com.nonameddevelopers.congressdefense.CopDisplayer;
 import com.nonameddevelopers.congressdefense.CopManager;
 import com.nonameddevelopers.congressdefense.GameCamera;
 

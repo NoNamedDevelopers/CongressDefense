@@ -2,9 +2,7 @@ package com.nonameddevelopers.congressdefense.screens;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
-import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.graphics.GL20;
-import com.badlogic.gdx.graphics.Texture;
 import com.nonameddevelopers.congressdefense.CongressDefense;
 import com.nonameddevelopers.congressdefense.GameCamera;
 
@@ -13,8 +11,6 @@ public class GameOverScreen implements Screen {
 private final CongressDefense game;
 	
 	private GameCamera camera;
-	private Music bgMusic;
-	private Texture bgImage;
 	
 	public GameOverScreen(final CongressDefense game) {
 		this.game = game;
@@ -22,11 +18,6 @@ private final CongressDefense game;
 		camera = new GameCamera(100, 0);
 		camera.setToOrtho(false, 800, 480);
 		
-		bgImage = new Texture(Gdx.files.internal("menu.jpg"));
-		
-		bgMusic = Gdx.audio.newMusic(Gdx.files.internal("bg.mp3"));
-		bgMusic.setLooping(true);
-		bgMusic.setVolume(0.08f);
 	}
 
 	@Override
@@ -38,7 +29,6 @@ private final CongressDefense game;
 		
 		game.batch.setProjectionMatrix(camera.combined);
 		game.batch.begin();
-		game.batch.draw(bgImage, 0, 0);
 		game.font.draw(game.batch, "Game Over", 100, 150);
 		game.batch.end();
 		
@@ -59,7 +49,6 @@ private final CongressDefense game;
 
 	@Override
 	public void show() {
-		bgMusic.play();
 	}
 
 	@Override

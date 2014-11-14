@@ -4,13 +4,12 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.math.Circle;
 import com.badlogic.gdx.math.Intersector;
-import com.badlogic.gdx.math.Vector2;
 import com.nonameddevelopers.congressdefense.CongressDefense;
 import com.nonameddevelopers.congressdefense.EntityManager;
 
 public class BazookaCop extends Cop {
 	
-	private Sound shot;
+	private Sound shoot;
 
 	public BazookaCop(CongressDefense game, float x, float y) {
 
@@ -18,14 +17,14 @@ public class BazookaCop extends Cop {
 		direction = UP_LEFT;
 
 		boundingCircle = new Circle();
-		boundingCircle.set(x+400, y+400, 10f);
+		boundingCircle.set(x+10, y+10, 100f);
 		
 		ulAnimation = loadAnimation("sprites/copgun/up_left.png", 5, 5, 0.02f);
 		dlAnimation = loadAnimation("sprites/copgun/down_left.png", 5, 5, 0.02f);	
 		urAnimation = loadAnimation("sprites/copgun/up_right.png", 5, 5, 0.02f);	
 		drAnimation = loadAnimation("sprites/copgun/down_right.png", 5, 5, 0.02f);	
 		
-		//shot = Gdx.audio.newSound(Gdx.files.internal("sounds/shot.mp3"));
+		shoot = Gdx.audio.newSound(Gdx.files.internal("sounds/shoot.mp3"));
 
 		updateAnimation();
 	}
@@ -49,29 +48,24 @@ public class BazookaCop extends Cop {
 	
 	@Override
 	public void checkCollision(Crowd crowd) {
-		System.out.println("toy llegandooooo");
 		boolean atLeastOne = false;
 		for (Protester protester : crowd.getProtesters())
-			//ESTA ES LA CONDICION QUE NO CUMPLE.
 			if (Intersector.overlaps(protester.getBoundingCircle(), boundingCircle)) {
-			atLeastOne = true;
-			System.out.println(" PRE state - elapsed: " +(stateTime-elapsedTime));
-			if (x-protester.x >0 && y-protester.y>0)
-				direction = UP_RIGHT;
-			else if (x-protester.x > 0 && y-protester.y < 0)
-				direction = DOWN_RIGHT;
-			else if (x-protester.x < 0 && y-protester.y < 0)
-				direction = DOWN_LEFT;
-			else
-				direction = UP_LEFT;
-			updateAnimation();	
-
+				atLeastOne = true;
+				if (x-protester.x >0 && y-protester.y>0)
+					direction = UP_RIGHT;
+				else if (x-protester.x > 0 && y-protester.y < 0)
+					direction = DOWN_RIGHT;
+				else if (x-protester.x < 0 && y-protester.y < 0)
+					direction = DOWN_LEFT;
+				else
+					direction = UP_LEFT;
+				updateAnimation();	
+	
 				if (Math.abs(stateTime-elapsedTime) >= 0.5) {
 					elapsedTime = stateTime;
-					//shoot.play();
-					protester.hurt(40);
+					shoot.play(0.3f);
 					shoot(protester);
-					System.out.println("disparandooooooooooooooooooooo");
 				}
 			}		
 		if (!atLeastOne) {

@@ -2,9 +2,12 @@ package com.nonameddevelopers.congressdefense.characters;
 
 import java.util.Random;
 
+import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Circle;
 import com.badlogic.gdx.math.Vector2;
+import com.badlogic.gdx.utils.Array;
 import com.nonameddevelopers.congressdefense.CongressDefense;
 import com.nonameddevelopers.congressdefense.screens.GameOverScreen;
 
@@ -16,6 +19,8 @@ public class Protester extends GameCharacter {
 	private int xGoal = 813;
 	private int yGoal = 369;
 
+	private Array<Sound> moans;
+	private Sound joy;
 
 	public int life;
 	private float appearTime;
@@ -38,6 +43,12 @@ public class Protester extends GameCharacter {
 		stateTime = 0f;
 
 		boundingCircle = new Circle();
+		
+		moans = new Array<Sound>();
+		moans.add(Gdx.audio.newSound(Gdx.files.internal("sounds/moan_0.mp3")));
+		moans.add(Gdx.audio.newSound(Gdx.files.internal("sounds/moan_1.mp3")));
+		
+		joy = Gdx.audio.newSound(Gdx.files.internal("sounds/joy.mp3"));
 
 		updateAnimation();
 	}
@@ -68,10 +79,6 @@ public class Protester extends GameCharacter {
 		case DOWN_LEFT:
 			currentFrame = drAnimation.getKeyFrame(stateTime, true);
 			break;
-		case REMOVE:
-			attack();
-			kill();
-			break;
 		}
 	}
 
@@ -83,24 +90,27 @@ public class Protester extends GameCharacter {
 	}
 
 	public void hurt(int damage) {
+		
 		life -= damage;
-		if (life <= 0)
-		{
-			game.score += 5;
-			game.money += 10;
+		if (life <= 0 && !isDead)
 			kill();
+	}
+
+	private void attackCongress() {
+		if (game.life - 1 <= 0)
+			game.setScreen(new GameOverScreen(game));
+		else {
+			joy.play();
+			isDead = true;
+			game.life--;
 		}
 	}
 
-	private void attack() {
-		if (game.life - 1 <= 0)
-			game.setScreen(new GameOverScreen(game));
-		else
-			game.life--;
-	}
-
 	private void kill() {
+		moans.get(r.nextInt(2)).play();
 		isDead = true;
+		game.score += 5;
+		game.money += 10;
 	}
 
 	public boolean isDead() {
@@ -221,8 +231,7 @@ public class Protester extends GameCharacter {
 		{
 			if (y < 379 && y >359)
 			{
-				attack();
-				kill();
+				attackCongress();
 			}
 		}
 		

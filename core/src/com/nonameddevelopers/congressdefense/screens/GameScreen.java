@@ -16,18 +16,14 @@ import com.nonameddevelopers.congressdefense.characters.PoliceVan;
 
 public class GameScreen implements Screen {
 	private static final int WORLD_WIDTH = 1000;
-	private static final int WORLD_HEIGHT = 1000;
+	private static final int WORLD_HEIGHT = 750;
 
 	private final CongressDefense game;
 
 	private GameCamera camera;
 	private Sprite map;
 
-	// private PoliceCaller shield;
-
 	private EntityManager entityManager;
-	// private Crowd crowd;
-	// private Crowd crowd2;
 
 	private CopDisplayer copDisp;
 	private PoliceVan policeCar;
@@ -35,9 +31,9 @@ public class GameScreen implements Screen {
 
 	public GameScreen(final CongressDefense game) {
 		this.game = game;
-		camera = new GameCamera(1000, 100);
+		camera = new GameCamera(1000, 0);
 
-		map = new Sprite(new Texture(Gdx.files.internal("map.jpg")));
+		map = new Sprite(new Texture(Gdx.files.internal("map2.jpg")));
 		map.setPosition(0, 0);
 		map.setSize(WORLD_WIDTH, WORLD_HEIGHT);
 

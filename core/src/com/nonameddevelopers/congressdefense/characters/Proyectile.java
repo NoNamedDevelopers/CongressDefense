@@ -53,8 +53,8 @@ public class Proyectile {
 		
 		Vector2 direction = new Vector2();
 		direction.set(target.x, target.y).sub(this.x, this.y).nor();
-		x += direction.x * 5;
-		y += direction.y * 5;
+		x += direction.x * 8;
+		y += direction.y * 8;
 
 		boundingCircle.set(x + 16, y + 16, 10f);
 		if (Intersector.overlaps(target.getBoundingCircle(), boundingCircle)) {

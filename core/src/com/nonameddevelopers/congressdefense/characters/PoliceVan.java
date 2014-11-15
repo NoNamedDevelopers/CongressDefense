@@ -1,11 +1,13 @@
 package com.nonameddevelopers.congressdefense.characters;
 
 import java.util.ArrayList;
+import java.util.Random;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.math.Vector3;
 import com.nonameddevelopers.congressdefense.CongressDefense;
 import com.nonameddevelopers.congressdefense.CopManager;
@@ -17,71 +19,50 @@ public class PoliceVan {
 
 	private int x, y;
 	private Sprite sprite;
-	private boolean touched = false;
+	private int numCop;
 	private GameCamera camera;
-	private ArrayList<Cop> polices;
+	protected float stateTime;
+	private float elapsedTime;
+	private Random rand;
 
 	public PoliceVan(CongressDefense game, int x, int y, GameCamera camera) {
 		this.game = game;
 		this.camera = camera;
 		this.x = x;
 		this.y = y;
-		polices = new ArrayList<Cop>();
+		numCop = 0;
+		stateTime = 0f;
 		sprite = new Sprite(new Texture(Gdx.files.internal("sprites/van/0000.png")));
 		sprite.setSize(64, 64);
 		sprite.setPosition(x, y);
+		rand = new Random();
 	}
 
 	public void update(float delta, CopManager copManag) {
-		if (!touched) {
-			if (Gdx.input.isTouched()) {
-				Vector3 touchPos = new Vector3();
-				touchPos.set(Gdx.input.getX(), Gdx.input.getY(), 0);
-				camera.unproject(touchPos);
-
-				if (touchPos.x > x && touchPos.x < x + 32 && touchPos.y > y
-						&& touchPos.y < y + 32) {
-					touched = true;
-					addPolices();
-					//setCollisions();
-					updatePolices(copManag);
-				}
+		if (numCop < 4) {
+			stateTime += delta;	
+			if (Math.abs(stateTime-elapsedTime) >= 5) {
+				elapsedTime = stateTime;
+				int ypos = rand.nextInt(1001)-500;
+				int xpos = rand.nextInt(1001)-500;
+				Vector2 direccion = new Vector2 (xpos, ypos);
+				direccion = direccion.nor();
+				Cop cop = new MeleeCop(game, x+direccion.x*35 +20, y+direccion.y*35 +20);
+				addPolice(copManag, cop);
+				numCop++;
 			}
-		} 
-	}
-
-	private void updatePolices(float delta) {
-		for (Cop cop : polices)
-			cop.update(delta);
-	}
+		}
+	} 
 
 
-	private void addPolices() {
-		polices.add(new MeleeCop(game, x + 20, y + 20));
-		polices.add(new MeleeCop(game, x - 20, y + 20));
-		polices.add(new MeleeCop(game, x + 20, y - 20));
-	}
 
 	public void draw(SpriteBatch batch) {
-		if (!touched)
-			sprite.draw(batch);
-		else {
-			for (Cop cop : polices)
-				cop.draw(batch);
-			sprite.draw(batch);
-		}
+		sprite.draw(batch);
+
 	}
 
-	public void checkCollision(Crowd crowd) {
-		if (!polices.isEmpty() && touched) {
-			for (Cop cop : polices)
-				cop.checkCollision(crowd);
-		}
-	}
-
-	public CopManager updatePolices(CopManager copManag) {
-		for (Cop cop : polices)
-			copManag.addCop(cop);
+	public CopManager addPolice(CopManager copManag, Cop cop) {
+		copManag.addCop(cop);
 		return copManag;
 	}
 }

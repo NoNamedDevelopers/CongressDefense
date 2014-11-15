@@ -29,7 +29,7 @@ public class BazookaCop extends Cop {
 		updateAnimation();
 	}
 	
-	private void updateAnimation() {		
+	private void updateAnimation() {
 		switch(direction) {
 			case UP_LEFT:
 				currentFrame = ulAnimation.getKeyFrame(stateTime, true);
@@ -48,18 +48,16 @@ public class BazookaCop extends Cop {
 	
 	@Override
 	public void checkCollision(Crowd crowd) {
-		boolean atLeastOne = false;
 		for (Protester protester : crowd.getProtesters())
 			if (Intersector.overlaps(protester.getBoundingCircle(), boundingCircle)) {
-				atLeastOne = true;
 				if (x-protester.x >0 && y-protester.y>0)
-					direction = UP_RIGHT;
-				else if (x-protester.x > 0 && y-protester.y < 0)
 					direction = DOWN_RIGHT;
+				else if (x-protester.x > 0 && y-protester.y < 0)
+					direction = UP_RIGHT;
 				else if (x-protester.x < 0 && y-protester.y < 0)
-					direction = DOWN_LEFT;
-				else
 					direction = UP_LEFT;
+				else
+					direction = DOWN_LEFT;
 				updateAnimation();	
 	
 				if (Math.abs(stateTime-elapsedTime) >= 0.5) {
@@ -68,17 +66,11 @@ public class BazookaCop extends Cop {
 					shoot(protester);
 				}
 			}		
-		if (!atLeastOne) {
-			// EL ERROR DE LOS POLICIAS SUPER ASESINO ESTABA AQIO
-//			stateTime = 0;
-//			elapsedTime = -0.5f;
-		}
 	}
 	
 	private void shoot(Protester protester)
 	{
 		EntityManager.getInstance().getProyectileL().addProyectile(new Proyectile(game, x, y, protester));
-		//proyectileL.add(new Proyectile(game, x, y, protester));
 	}
 
 }

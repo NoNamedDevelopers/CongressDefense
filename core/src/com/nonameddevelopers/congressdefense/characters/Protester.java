@@ -20,7 +20,7 @@ public class Protester extends GameCharacter {
 	private int yGoal = 369;
 
 	private static Array<Sound> moans;
-	private Sound joy;
+	private static Sound joy;
 
 	public int life;
 	private float appearTime;
@@ -28,6 +28,11 @@ public class Protester extends GameCharacter {
 
 	static {
 		r = new Random();
+		moans = new Array<Sound>();
+		moans.add(Gdx.audio.newSound(Gdx.files.internal("sounds/moan_0.mp3")));
+		moans.add(Gdx.audio.newSound(Gdx.files.internal("sounds/moan_1.mp3")));
+		
+		joy = Gdx.audio.newSound(Gdx.files.internal("sounds/joy.mp3"));
 	}
 
 	public Protester(final CongressDefense game, float x, float y,
@@ -46,7 +51,6 @@ public class Protester extends GameCharacter {
 		
 		
 		
-		joy = Gdx.audio.newSound(Gdx.files.internal("sounds/joy.mp3"));
 
 		updateAnimation();
 	}

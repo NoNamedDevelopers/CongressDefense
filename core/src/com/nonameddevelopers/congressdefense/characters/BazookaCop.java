@@ -52,7 +52,7 @@ public class BazookaCop extends Cop {
 		for (Protester protester : crowd.getProtesters())
 			if (Intersector.overlaps(protester.getBoundingCircle(), boundingCircle)) {
 				atLeastOne = true;
-				if (x-protester.x >0 && y-protester.y>0)
+				if (x-protester.x > 0 && y-protester.y > 0)
 					direction = UP_RIGHT;
 				else if (x-protester.x > 0 && y-protester.y < 0)
 					direction = DOWN_RIGHT;

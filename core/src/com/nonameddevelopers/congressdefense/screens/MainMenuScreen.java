@@ -9,6 +9,7 @@ import com.badlogic.gdx.scenes.scene2d.InputListener;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.utils.viewport.FillViewport;
 import com.nonameddevelopers.congressdefense.CongressDefense;
+import com.nonameddevelopers.congressdefense.ui.CheckBoxActor;
 import com.nonameddevelopers.congressdefense.ui.ImageActor;
 
 public class MainMenuScreen extends Actor implements Screen {
@@ -17,21 +18,60 @@ private final CongressDefense game;
 	
 
 	private Stage stage;
-	private ImageActor bgImage, startButton;
+	private ImageActor bgImage, startButton, scoresButton, rateButton;
+	private CheckBoxActor musicButton, soundsButton;
 	
 	
 	public MainMenuScreen(final CongressDefense game) {
 		this.game = game;
 		
-		stage = new Stage(new FillViewport(800, 480), game.batch);
+		stage = new Stage(new FillViewport(1000, 750), game.batch);
 		Gdx.input.setInputProcessor(stage);
 		
-		bgImage = new ImageActor("backgrounds/3.jpg");
-		bgImage.setSize(800, 800);
+		bgImage = new ImageActor("backgrounds/cityintro.jpg");
+		bgImage.setSize(1000, 750);
 		
-		startButton = new ImageActor("ui/startbutton.png");
+		
+		musicButton = new CheckBoxActor("ui/speaker_normal_button.png", "ui/speaker_muted_button.png", game, CheckBoxActor.MUSIC);
+		musicButton.setSize(60, 60);
+		musicButton.setPosition(60, 100);
+		musicButton.addListener(new InputListener() {
+			
+			@Override
+			public boolean touchDown (InputEvent event, float x, float y, int pointer, int button) {
+				game.playTouch();
+				return true;
+			}
+			
+			public void touchUp (InputEvent event, float x, float y, int pointer, int button) {
+				game.toggleMusic();
+				dispose();
+			}
+			
+		});
+		
+
+		soundsButton = new CheckBoxActor("ui/note_normal_button.png", "ui/note_muted_button.png", game, CheckBoxActor.SOUND);
+		soundsButton.setSize(60, 60);
+		soundsButton.setPosition(140, 100);
+		soundsButton.addListener(new InputListener() {
+			
+			@Override
+			public boolean touchDown (InputEvent event, float x, float y, int pointer, int button) {
+				game.playTouch();
+				return true;
+			}
+			
+			public void touchUp (InputEvent event, float x, float y, int pointer, int button) {
+				//game.toggleMusic();
+				dispose();
+			}
+			
+		});
+		
+		startButton = new ImageActor("ui/start_button.png");
 		startButton.setSize(250, 80);
-		startButton.setPosition(270, 150);
+		startButton.setPosition(200, 490);
 		startButton.addListener(new InputListener() {
 			
 			@Override
@@ -48,8 +88,22 @@ private final CongressDefense game;
 			
 		});
 		
+		
+		scoresButton = new ImageActor("ui/scores_button.png");
+		scoresButton.setSize(250, 80);
+		scoresButton.setPosition(150, 370);
+		
+		rateButton = new ImageActor("ui/rate_button.png");
+		rateButton.setSize(250, 80);
+		rateButton.setPosition(100, 250);
+		
+		
 		stage.addActor(bgImage);
+		stage.addActor(musicButton);
+		stage.addActor(soundsButton);
 		stage.addActor(startButton);
+		stage.addActor(scoresButton);
+		stage.addActor(rateButton);
 	}
 
 	@Override
@@ -61,12 +115,6 @@ private final CongressDefense game;
 		stage.draw();
 		
 		
-		/*
-		
-		if(Gdx.input.isTouched()) {
-			game.setScreen(new GameScreen(game));
-			dispose();
-		}*/
 	}
 
 	@Override

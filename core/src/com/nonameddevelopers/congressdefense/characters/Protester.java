@@ -19,7 +19,7 @@ public class Protester extends GameCharacter {
 	private int xGoal = 813;
 	private int yGoal = 369;
 
-	private Array<Sound> moans;
+	private static Array<Sound> moans;
 	private Sound joy;
 
 	public int life;
@@ -44,9 +44,7 @@ public class Protester extends GameCharacter {
 
 		boundingCircle = new Circle();
 		
-		moans = new Array<Sound>();
-		moans.add(Gdx.audio.newSound(Gdx.files.internal("sounds/moan_0.mp3")));
-		moans.add(Gdx.audio.newSound(Gdx.files.internal("sounds/moan_1.mp3")));
+		
 		
 		joy = Gdx.audio.newSound(Gdx.files.internal("sounds/joy.mp3"));
 

@@ -18,7 +18,7 @@ private final CongressDefense game;
 	
 
 	private Stage stage;
-	private ImageActor bgImage, startButton, scoresButton, rateButton;
+	private ImageActor bgImage, startButton, optionsButton, scoresButton, rateButton;
 	private CheckBoxActor musicButton, soundsButton;
 	
 	
@@ -71,7 +71,7 @@ private final CongressDefense game;
 		
 		startButton = new ImageActor("ui/start_button.png");
 		startButton.setSize(250, 80);
-		startButton.setPosition(200, 490);
+		startButton.setPosition(70, 500);
 		startButton.addListener(new InputListener() {
 			
 			@Override
@@ -88,20 +88,24 @@ private final CongressDefense game;
 			
 		});
 		
+		optionsButton = new ImageActor("ui/scores_button.png");
+		optionsButton.setSize(250, 80);
+		optionsButton.setPosition(350, 500);
 		
-		scoresButton = new ImageActor("ui/scores_button.png");
+		scoresButton = new ImageActor("ui/options_button.png");
 		scoresButton.setSize(250, 80);
-		scoresButton.setPosition(150, 370);
+		scoresButton.setPosition(70, 350);
 		
 		rateButton = new ImageActor("ui/rate_button.png");
 		rateButton.setSize(250, 80);
-		rateButton.setPosition(100, 250);
+		rateButton.setPosition(350, 350);
 		
 		
 		stage.addActor(bgImage);
 		stage.addActor(musicButton);
 		stage.addActor(soundsButton);
 		stage.addActor(startButton);
+		stage.addActor(optionsButton);
 		stage.addActor(scoresButton);
 		stage.addActor(rateButton);
 	}

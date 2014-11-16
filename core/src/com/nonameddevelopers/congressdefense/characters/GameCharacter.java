@@ -5,6 +5,7 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
+import com.badlogic.gdx.math.Circle;
 import com.badlogic.gdx.utils.ObjectMap;
 import com.nonameddevelopers.congressdefense.CongressDefense;
 
@@ -13,8 +14,9 @@ public abstract class GameCharacter {
 	protected static final short UP_LEFT = 1;
 	protected static final short DOWN_LEFT = 2;
 	protected static final short UP_RIGHT = 3;
-	protected static final short DOWN_RIGHT = 4;
-	protected static final short REMOVE = 5;
+	protected static final short DOWN_RIGHT = 4;	
+
+	protected Circle boundingCircle;
 	
 	protected final CongressDefense game;	
 
@@ -45,7 +47,12 @@ public abstract class GameCharacter {
 		ulAnimation = loadAnimation("sprites/"+type+"/up_left.png", columns, rows, animationSpeed);
 		dlAnimation = loadAnimation("sprites/"+type+"/down_left.png", columns, rows, animationSpeed);	
 		urAnimation = loadAnimation("sprites/"+type+"/up_right.png", columns, rows, animationSpeed);	
-		drAnimation = loadAnimation("sprites/"+type+"/down_right.png", columns, rows, animationSpeed);			
+		drAnimation = loadAnimation("sprites/"+type+"/down_right.png", columns, rows, animationSpeed);	
+		
+
+	    direction = DOWN_RIGHT;
+		updateAnimation();
+		boundingCircle = new Circle();
 	}
 	
 	protected Animation loadAnimation(String src, int columns, int rows, float speed) {
@@ -63,6 +70,8 @@ public abstract class GameCharacter {
 		
 		return new Animation(speed, frames);
 	}	
+	
+	protected abstract void updateAnimation();
 	
 	public void draw(SpriteBatch batch) {
 		batch.draw(currentFrame, x, y);

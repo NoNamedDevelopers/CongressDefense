@@ -1,34 +1,24 @@
 package com.nonameddevelopers.congressdefense.characters;
 
-import com.badlogic.gdx.math.Circle;
 import com.nonameddevelopers.congressdefense.CongressDefense;
 
 
 public abstract class Cop extends GameCharacter {
 	
-	protected Circle boundingCircle;
-	
-
-	
 	protected float elapsedTime;
 	
-	public Cop(CongressDefense game, float x, float y) {
-		super(game, x, y, "cop", 4, 6, 0.02f);
+	public Cop(final CongressDefense game, float x, float y, String type, int columns, int rows, float animationSpeed) {
+		super(game, x, y, type, columns, rows, animationSpeed);		
 		
-		
-		direction = UP_LEFT;
-		
-		boundingCircle = new Circle();
 		boundingCircle.set(x+16, y+16, 10f);
-		
-		updateAnimation();
 	}
 		
 	public void update(float delta) {
 		stateTime += delta;		
 	}
 	
-	private void updateAnimation() {		
+	@Override
+	protected void updateAnimation() {		
 		switch(direction) {
 			case UP_LEFT:
 				currentFrame = ulAnimation.getKeyFrame(stateTime, true);

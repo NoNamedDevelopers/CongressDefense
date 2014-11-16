@@ -13,7 +13,6 @@ import com.nonameddevelopers.congressdefense.screens.GameOverScreen;
 
 public class Protester extends GameCharacter {
 
-	private Circle boundingCircle;
 	private static Random r;
 
 	private int xGoal = 813;
@@ -39,20 +38,9 @@ public class Protester extends GameCharacter {
 			float appearTime) {
 		super(game, x, y, "protester" + r.nextInt(3), 4, 5, 0.02f);
 
-	    direction = UP_RIGHT;
-
 		this.appearTime = appearTime;
 
 		life = 100;
-
-		stateTime = 0f;
-
-		boundingCircle = new Circle();
-		
-		
-		
-
-		updateAnimation();
 	}
 	
 	public void update(float delta) {
@@ -67,7 +55,8 @@ public class Protester extends GameCharacter {
 		boundingCircle.set(x + 16, y + 16, 20f);
 	}
 
-	private void updateAnimation() {
+	@Override
+	protected void updateAnimation() {
 		switch (direction) {
 		case UP_RIGHT:
 			currentFrame = ulAnimation.getKeyFrame(stateTime, true);

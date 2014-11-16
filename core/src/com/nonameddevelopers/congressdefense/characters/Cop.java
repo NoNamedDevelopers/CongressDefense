@@ -56,6 +56,16 @@ public abstract class Cop extends GameCharacter {
 				+ currentFrame + ", stateTime=" + stateTime + ", x=" + x
 				+ ", y=" + y + ", direction=" + direction + "]";
 	}
+
+	public Circle getBoundingCircle() {
+		return boundingCircle;
+	}
+
+	public void setBoundingCircle(Circle boundingCircle) {
+		this.boundingCircle = boundingCircle;
+	}
+	
+	
 	
 	
 }

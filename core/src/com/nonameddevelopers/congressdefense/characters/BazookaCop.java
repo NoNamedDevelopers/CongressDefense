@@ -10,6 +10,8 @@ import com.nonameddevelopers.congressdefense.EntityManager;
 public class BazookaCop extends Cop {
 	
 	private Sound shoot;
+	
+	private Circle range;
 
 	public BazookaCop(CongressDefense game, float x, float y) {
 
@@ -17,7 +19,10 @@ public class BazookaCop extends Cop {
 		direction = UP_LEFT;
 
 		boundingCircle = new Circle();
-		boundingCircle.set(x+10, y+10, 100f);
+		boundingCircle.set(x+16, y+16, 10f);
+		
+		range = new Circle();
+		range.set(x+10, y+10, 100f);
 		
 		ulAnimation = loadAnimation("sprites/copgun/up_left.png", 5, 5, 0.02f);
 		dlAnimation = loadAnimation("sprites/copgun/down_left.png", 5, 5, 0.02f);	
@@ -49,7 +54,7 @@ public class BazookaCop extends Cop {
 	@Override
 	public void checkCollision(Crowd crowd) {
 		for (Protester protester : crowd.getProtesters())
-			if (Intersector.overlaps(protester.getBoundingCircle(), boundingCircle)) {
+			if (Intersector.overlaps(protester.getBoundingCircle(), range)) {
 				if (x-protester.x >0 && y-protester.y>0)
 					direction = DOWN_RIGHT;
 				else if (x-protester.x > 0 && y-protester.y < 0)

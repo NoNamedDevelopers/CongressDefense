@@ -14,6 +14,7 @@ public class CrowdManager {
 	private int numCrowds;
 	private int protestantsPerWave;
 	private final static int coef = 2;
+	private int [] percentage;
 	
 	
 	
@@ -30,9 +31,13 @@ public class CrowdManager {
 		wave = 1;
 		numCrowds = 1;
 		protestantsPerWave = protestants;
+		percentage = new int[4];
+		percentage[0] = 2000;
+		percentage[1] = 0;
+		percentage[2] = 0;
+		percentage[3] = 0;
 		crowds = new ArrayList<Crowd>();
-		crowds.add(new Crowd(game, protestants));
-		
+		crowds.add(new Crowd(game, protestants, percentage));
 	}
 
 	public void update(float delta)
@@ -49,9 +54,10 @@ public class CrowdManager {
 			// esperar 1-2 segundos
 			wave++;
 			setNumCrowds();
+			//setPercentage();
 			crowds = new ArrayList<Crowd>();
 			for (int i = 0; i<numCrowds;i++)
-				crowds.add(new Crowd(game, protestantsPerWave));
+				crowds.add(new Crowd(game, protestantsPerWave, percentage));
 		}
 	}
 	
@@ -84,6 +90,18 @@ public class CrowdManager {
 
 	public void setCrowds(ArrayList<Crowd> crowds) {
 		this.crowds = crowds;
+	}
+	
+	public void setPercentage()
+	{
+		if (percentage[1] <300)
+			percentage[1] += 4;
+		if (percentage[2] <200)
+			percentage[2] += 2;
+		if (percentage[3] <100)
+			percentage[3] += 1;
+		percentage [0] = 2000 - percentage[1] - percentage[2] - percentage[3];
+		
 	}
 	
 	

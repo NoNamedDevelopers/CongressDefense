@@ -1,6 +1,8 @@
 package com.nonameddevelopers.congressdefense;
 
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.nonameddevelopers.congressdefense.characters.Cop;
+import com.nonameddevelopers.congressdefense.characters.Crowd;
 
 public class EntityManager {
 	private CrowdManager crowdMan;
@@ -11,11 +13,12 @@ public class EntityManager {
 	private static EntityManager instance;
 	
 	
-	private EntityManager(final CongressDefense game, GameCamera camera) {
+	public EntityManager(final CongressDefense game, GameCamera camera) {
 		this.game = game;
 		crowdMan = new CrowdManager(game, 10);
 		copManager = new CopManager(game, camera);
 		proyectileL = new ProyectileLauncher(game, camera);
+		instance = this;
 	}
 
 	public static EntityManager getInstance(final CongressDefense game,
@@ -34,6 +37,7 @@ public class EntityManager {
 		copManager.update(delta, batch);
 		proyectileL.update(batch);
 		draw(batch);
+		checkCollitions();
 	}
 
 	public void setCamera(GameCamera camera) {
@@ -66,6 +70,14 @@ public class EntityManager {
 
 	public void setProyectileL(ProyectileLauncher proyectileL) {
 		this.proyectileL = proyectileL;
+	}
+	
+	public void checkCollitions() {
+		for (Crowd crowd : getCrowdMan().getCrowds()) {
+			for (Cop cop : getCopManager().getCops()) {
+				cop.checkCollision(crowd);
+			}
+		}
 	}
 
 }

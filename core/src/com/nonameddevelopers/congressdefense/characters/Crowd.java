@@ -11,10 +11,12 @@ public class Crowd {
 
 	private final CongressDefense game;
 	private Array<Protester> crowd;
+	private int[] percentage;
 	
-	public Crowd(final CongressDefense game, int size) {
+	public Crowd(final CongressDefense game, int size, int[] percentage) {
 		this.game = game;
 		crowd = new Array<Protester>(); 
+		this.percentage = percentage;
 		populateCrowd(size);
 	}
 	
@@ -30,7 +32,15 @@ public class Crowd {
 			{
 				float x = r.nextInt(100)-50;
 				float y = r.nextInt(100)-50;
-				crowd.insert(0,new Protester(game, -100 + x, otroLado + y, i*0.25f)); 	
+				int prob = r.nextInt(2000);
+				if (prob < percentage[1])
+					crowd.insert(0,new FatProtester(game, -100 + x, otroLado + y, i*0.25f)); 	
+				else if (prob < percentage[1]+percentage[2])
+					crowd.insert(0,new FastProtester(game, -100 + x, otroLado + y, i*0.25f)); 	
+				else if (prob < percentage[1]+percentage[2]+percentage[3])
+					crowd.insert(0,new AnarquistProtester(game, -100 + x, otroLado + y, i*0.25f)); 	
+				else
+					crowd.insert(0,new PacificProtester(game, -100 + x, otroLado + y, i*0.25f)); 
 			}
 			return crowd;
 		}
@@ -41,7 +51,16 @@ public class Crowd {
 			{
 				float x = r.nextInt(100)-50;
 				float y = r.nextInt(100)-50;
-				crowd.insert(0,new Protester(game, otroLado + x, -100 + y, i*0.25f)); 	
+				int prob = r.nextInt(2000);
+				if (prob < percentage[1])
+					crowd.insert(0,new FatProtester(game, -100 + x, otroLado + y, i*0.25f)); 	
+				else if (prob < percentage[1]+percentage[2])
+					crowd.insert(0,new FastProtester(game, -100 + x, otroLado + y, i*0.25f)); 	
+				else if (prob < percentage[1]+percentage[2]+percentage[3])
+					crowd.insert(0,new AnarquistProtester(game, -100 + x, otroLado + y, i*0.25f)); 	
+				else
+					crowd.insert(0,new PacificProtester(game, -100 + x, otroLado + y, i*0.25f)); 
+	
 			}
 			return crowd;
 		}

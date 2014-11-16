@@ -41,7 +41,7 @@ public class GameScreen implements Screen {
 		map.setPosition(0, 0);
 		map.setSize(WORLD_WIDTH, WORLD_HEIGHT);
 
-		entityManager = EntityManager.getInstance(game,camera);
+		entityManager = new EntityManager(game,camera);
 		entityManager.setCamera(camera);
 		copDisp = new CopDisplayer(entityManager.getCopManager(),game, camera);
 		// crowd = new Crowd(game,10);
@@ -80,7 +80,7 @@ public class GameScreen implements Screen {
 		policeCar.draw(game.batch);
 		policeCar2.draw(game.batch);
 		entityManager.update(delta, game.batch);
-		checkCollitions();
+		
 		
 		// crowd2.draw(game.batch);
 
@@ -123,12 +123,6 @@ public class GameScreen implements Screen {
 
 	}
 
-	public void checkCollitions() {
-		for (Crowd crowd : entityManager.getCrowdMan().getCrowds()) {
-			for (Cop cop : entityManager.getCopManager().getCops()) {
-				cop.checkCollision(crowd);
-			}
-		}
-	}
+	
 
 }

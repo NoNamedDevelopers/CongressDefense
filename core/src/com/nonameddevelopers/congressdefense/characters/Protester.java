@@ -11,9 +11,9 @@ import com.badlogic.gdx.utils.Array;
 import com.nonameddevelopers.congressdefense.CongressDefense;
 import com.nonameddevelopers.congressdefense.screens.GameOverScreen;
 
-public class Protester extends GameCharacter {
+public abstract class Protester extends GameCharacter {
 
-	private Circle boundingCircle;
+	protected Circle boundingCircle;
 	private static Random r;
 
 	private int xGoal = 813;
@@ -23,7 +23,7 @@ public class Protester extends GameCharacter {
 	private Sound joy;
 
 	public int life;
-	private float appearTime;
+	protected float appearTime;
 	private boolean isDead = false;
 
 	static {
@@ -65,7 +65,7 @@ public class Protester extends GameCharacter {
 		boundingCircle.set(x + 16, y + 16, 20f);
 	}
 
-	private void updateAnimation() {
+	protected void updateAnimation() {
 		switch (direction) {
 		case UP_RIGHT:
 			currentFrame = ulAnimation.getKeyFrame(stateTime, true);
@@ -96,7 +96,7 @@ public class Protester extends GameCharacter {
 			kill();
 	}
 
-	private void attackCongress() {
+	protected void attackCongress() {
 		if (game.life - 1 <= 0)
 			game.setScreen(new GameOverScreen(game));
 		else {
@@ -106,7 +106,7 @@ public class Protester extends GameCharacter {
 		}
 	}
 
-	private void kill() {
+	protected void kill() {
 		moans.get(r.nextInt(2)).play();
 		isDead = true;
 		game.score += 5;
@@ -121,112 +121,9 @@ public class Protester extends GameCharacter {
 		return boundingCircle;
 	}
 
-	private void approach() {
+	public abstract void approach();
 
-		arrived();
-		
-		Random random = new Random();
-		Vector2 Goal = new Vector2(xGoal, yGoal);
-		Vector2 position = new Vector2(x, y);
-		Vector2 direction2 = new Vector2();
-		
-		int n = random.nextInt(100);
-		
-		if(n<60){
-			Goal = new Vector2(xGoal,yGoal);
-			direction2.set(Goal).sub(position).nor();
-			x += direction2.x * (random.nextInt(3));
-			y += direction2.y * (random.nextInt(3));
-			if (direction2.x>=0 && direction2.y >= 0)
-				this.direction = UP_RIGHT;
-			else if (direction2.x>=0 && direction2.y< 0)
-			{
-				this.direction = DOWN_RIGHT;
-			}
-			else if (direction2.x<0 && direction2.y >= 0)
-			{
-				this.direction = UP_LEFT;
-			}
-			else
-				this.direction = DOWN_LEFT;
-		}
-		/*
-		else if (n < 70)
-		{
-			direction.set(1,0);
-			x += direction.x * (random.nextInt(3));
-			y += direction.y * (random.nextInt(3));
-		}
-		else if (n < 80)
-		{
-			direction.set(-1,0);
-			x += direction.x * (random.nextInt(3));
-			y += direction.y * (random.nextInt(3));
-		}
-		else if (n < 90)
-		{
-			direction.set(0,1);
-			x += direction.x * (random.nextInt(3));
-			y += direction.y * (random.nextInt(3));
-		}
-		else
-		{
-			direction.set(0,-1);
-			x += direction.x * (random.nextInt(3));
-			y += direction.y * (random.nextInt(3));
-		}
-		*/
-		else if (n < 80){
-			//float modif = random.nextFloat();
-			Goal = new Vector2(xGoal,0);
-			position = new Vector2(x, 0);
-			direction2.set(Goal).sub(position).nor();
-			//direction.set(direction.x, modif).nor();
-			x += direction2.x * (random.nextInt(3));
-			y += direction2.y * (random.nextInt(3));
-			if (direction2.x>=0 && direction2.y >= 0)
-				this.direction = UP_RIGHT;
-			else if (direction2.x>=0 && direction2.y< 0)
-			{
-				this.direction = DOWN_RIGHT;
-			}
-			else if (direction2.x<0 && direction2.y >= 0)
-			{
-				this.direction = UP_LEFT;
-			}
-			else
-				this.direction = DOWN_LEFT;
-		}
-		else
-		{
-			//float modif = random.nextFloat();
-			Goal = new Vector2(0, yGoal);
-			position = new Vector2(0, y);
-			direction2.set(Goal).sub(position).nor();
-			//direction.set(modif, direction.y).nor();
-			x += direction2.x * (random.nextInt(3));
-			y += direction2.y * (random.nextInt(3));
-			if (direction2.x>=0 && direction2.y >= 0)
-				this.direction = UP_RIGHT;
-			else if (direction2.x>=0 && direction2.y< 0)
-			{
-				this.direction = DOWN_RIGHT;
-			}
-			else if (direction2.x<0 && direction2.y >= 0)
-			{
-				this.direction = UP_LEFT;
-			}
-			else
-				this.direction = DOWN_LEFT;
-		}
-		
-				
-			
-		
-
-	}
-
-	private void arrived() {
+	protected void arrived() {
 		if (x>803 && x<823)
 		{
 			if (y < 379 && y >359)
@@ -236,5 +133,23 @@ public class Protester extends GameCharacter {
 		}
 		
 	}
+
+	public int getxGoal() {
+		return xGoal;
+	}
+
+	public void setxGoal(int xGoal) {
+		this.xGoal = xGoal;
+	}
+
+	public int getyGoal() {
+		return yGoal;
+	}
+
+	public void setyGoal(int yGoal) {
+		this.yGoal = yGoal;
+	}
+	
+	
 
 }

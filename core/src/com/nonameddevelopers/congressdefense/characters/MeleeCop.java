@@ -36,6 +36,7 @@ public class MeleeCop extends Cop {
 				if (stateTime == 0f) {
 					punch.play();
 					protester.hurt(40);
+					stateTime += 0.001f;
 					break;
 				}
 			}		

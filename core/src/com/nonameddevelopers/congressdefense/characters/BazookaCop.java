@@ -43,6 +43,7 @@ public class BazookaCop extends Cop {
 				if (stateTime == 0f) {
 					shoot.play(0.3f);
 					shoot(protester);
+					stateTime += 0.001f;
 					break;
 				}
 				

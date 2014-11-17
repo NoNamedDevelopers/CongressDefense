@@ -19,7 +19,6 @@ public class MeleeCop extends Cop {
 
 	
 	public void checkCollision(Crowd crowd) {
-		isAttacking = false;
 		for (Protester protester : crowd.getProtesters())
 			if (Intersector.overlaps(protester.getBoundingCircle(), boundingCircle)) {
 				isAttacking = true;
@@ -32,13 +31,12 @@ public class MeleeCop extends Cop {
 				else
 					direction = DOWN_LEFT;
 	
-					if (Math.abs(stateTime-elapsedTime) >= 0.5) {
-						elapsedTime = stateTime;
-						punch.play();
-						protester.hurt(40);
-						
-					}
-				}		
+				if (stateTime == 0f) {
+					punch.play();
+					protester.hurt(40);
+					break;
+				}
+			}		
 	
 	}
 

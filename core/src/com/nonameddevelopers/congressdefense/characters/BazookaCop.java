@@ -10,6 +10,7 @@ public class BazookaCop extends Cop {
 	
 	private Sound shoot;
 
+	
 	public BazookaCop(CongressDefense game, float x, float y) {
 		super(game, x, y, "copgun", 5, 5, 0.02f);
 
@@ -20,8 +21,7 @@ public class BazookaCop extends Cop {
 	}
 	
 	public void checkCollision(Crowd crowd) {
-		isAttacking = false;
-		for (Protester protester : crowd.getProtesters())
+		for (Protester protester : crowd.getProtesters()) {
 			if (Intersector.overlaps(protester.getBoundingCircle(), boundingCircle)) {
 				isAttacking = true;
 				if (x-protester.x >0 && y-protester.y>0)
@@ -32,13 +32,15 @@ public class BazookaCop extends Cop {
 					direction = UP_LEFT;
 				else
 					direction = DOWN_LEFT;
-	
-				if (Math.abs(stateTime-elapsedTime) >= 0.5) {
-					elapsedTime = stateTime;
+				
+				if (stateTime == 0f) {
 					shoot.play(0.3f);
 					shoot(protester);
+					break;
 				}
-			}	
+				
+			}
+		}
 
 	}
 	

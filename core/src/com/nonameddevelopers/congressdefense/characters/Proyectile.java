@@ -46,7 +46,7 @@ public class Proyectile {
 			batch.draw(texture, x, y);		
 	}
 	
-	public void update()
+	public void update(float delta)
 	{
 		if (isDestroyed)
 			return;

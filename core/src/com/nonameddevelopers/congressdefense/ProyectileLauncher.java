@@ -19,14 +19,18 @@ public class ProyectileLauncher {
 		this.proyectiles = new ArrayList<Proyectile>();
 	}
 	
-	public void update(SpriteBatch batch)
+	public void draw(SpriteBatch batch)
 	{
 		for (Proyectile proyectile: proyectiles)	
-		{
-			proyectile.update();
 			proyectile.draw(batch);
-		}
 	}
+	
+	public void update(float delta) {
+		for (Proyectile proyectile: proyectiles)	
+			proyectile.update(delta);		
+	}
+	
+	
 
 	public void addProyectile(Proyectile proyectile) {
 		proyectiles.add(proyectile);	

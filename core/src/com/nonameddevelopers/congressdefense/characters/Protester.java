@@ -82,6 +82,7 @@ public abstract class Protester extends GameCharacter {
 
 	public void hurt(int damage) {	
 		life -= damage;
+		moans.get(r.nextInt(2)).play();
 		if (life <= 0 && !isDead)
 			kill();
 	}
@@ -97,7 +98,6 @@ public abstract class Protester extends GameCharacter {
 	}
 
 	protected void kill() {
-		moans.get(r.nextInt(2)).play();
 		isDead = true;
 		game.score += 5;
 		game.money += 10;

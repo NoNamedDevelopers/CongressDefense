@@ -32,12 +32,11 @@ public class EntityManager {
 			return instance;
 	}
 
-	public void update(float delta, SpriteBatch batch) {
+	public void update(float delta) {
 		crowdMan.update(delta);
-		copManager.update(delta, batch);
-		proyectileL.update(batch);
-		draw(batch);
-		checkCollitions();
+		checkCollisions();
+		copManager.update(delta);
+		proyectileL.update(delta);
 	}
 
 	public void setCamera(GameCamera camera) {
@@ -46,6 +45,8 @@ public class EntityManager {
 
 	public void draw(SpriteBatch batch) {
 		crowdMan.draw(batch);
+		copManager.draw(batch);
+		proyectileL.draw(batch);
 	}
 
 	public CrowdManager getCrowdMan() {
@@ -72,12 +73,10 @@ public class EntityManager {
 		this.proyectileL = proyectileL;
 	}
 	
-	public void checkCollitions() {
-		for (Crowd crowd : getCrowdMan().getCrowds()) {
-			for (Cop cop : getCopManager().getCops()) {
+	public void checkCollisions() {
+		for (Crowd crowd : getCrowdMan().getCrowds()) 
+			for (Cop cop : getCopManager().getCops()) 
 				cop.checkCollision(crowd);
-			}
-		}
 	}
 
 }

@@ -1,27 +1,32 @@
 package com.nonameddevelopers.congressdefense.characters;
 
+import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.math.Circle;
 import com.nonameddevelopers.congressdefense.CongressDefense;
 
 
 public abstract class Cop extends GameCharacter {
 	
-	protected float elapsedTime;
+	protected Animation currentAnimation;
+	
 	protected boolean isAttacking;
 	
 	public Cop(final CongressDefense game, float x, float y, String type, int columns, int rows, float animationSpeed) {
-		super(game, x, y, type, columns, rows, animationSpeed);		
+		super(game, x-16, y-16, type, columns, rows, animationSpeed);		
 		
-		elapsedTime = -0.5f;
 		isAttacking = false;
 		boundingCircle.set(x+16, y+16, 10f);
 	}
 		
 	public void update(float delta) {
-		if (isAttacking)
-			stateTime += delta;		
-		else
-			stateTime = 0;
+		if (isAttacking) {
+			stateTime += delta;	
+			if (stateTime>=currentAnimation.getAnimationDuration()) {
+				stateTime = 0;
+				isAttacking = false;
+			}
+		}
+		
 		updateAnimation();
 	}
 	
@@ -29,25 +34,26 @@ public abstract class Cop extends GameCharacter {
 	protected void updateAnimation() {
 		switch (direction) {
 		case UP_RIGHT:
-			currentFrame = urAnimation.getKeyFrame(stateTime, true);
+			currentAnimation = urAnimation;
 			break;
 		case DOWN_RIGHT:
-			currentFrame = drAnimation.getKeyFrame(stateTime, true);
+			currentAnimation = drAnimation;
 			break;
 		case UP_LEFT:
-			currentFrame = ulAnimation.getKeyFrame(stateTime, true);
+			currentAnimation = ulAnimation;
 			break;
 		case DOWN_LEFT:
-			currentFrame = dlAnimation.getKeyFrame(stateTime, true);
+			currentAnimation = dlAnimation;
 			break;
 		}
+		currentFrame = currentAnimation.getKeyFrame(stateTime, true);
 	}
 	
 	public abstract void checkCollision(Crowd crowd);
 
 	@Override
 	public String toString() {
-		return "Cop [boundingCircle=" + boundingCircle + ", elapsedTime=" + elapsedTime + ", game=" + game
+		return "Cop [boundingCircle=" + boundingCircle +", game=" + game
 				+ ", ulAnimation=" + ulAnimation + ", dlAnimation="
 				+ dlAnimation + ", urAnimation=" + urAnimation
 				+ ", drAnimation=" + drAnimation + ", currentFrame="

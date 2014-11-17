@@ -21,13 +21,15 @@ public class CopManager {
 		this.cops = new ArrayList<Cop>();
 	}
 	
-	public void update(float delta, SpriteBatch batch)
+	public void update(float delta)
 	{
 		for (Cop cop: cops)
-		{
 			cop.update(delta);
-			cop.draw(batch);
-		}
+	}
+
+	public void draw(SpriteBatch batch) {
+		for (Cop cop: cops)
+			cop.draw(batch);		
 	}
 
 	public void addCop(Cop cop) {

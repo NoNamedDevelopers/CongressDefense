@@ -52,9 +52,7 @@ public abstract class GameCharacter {
 		
 	    direction = DOWN_RIGHT;
 		updateAnimation();
-		boundingCircle = new Circle();
-
-		
+		boundingCircle = new Circle();		
 	}
 	
 	protected Animation loadAnimation(String src, int columns, int rows, float speed) {

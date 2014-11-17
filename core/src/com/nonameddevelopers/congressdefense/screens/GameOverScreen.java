@@ -15,7 +15,7 @@ private final CongressDefense game;
 	public GameOverScreen(final CongressDefense game) {
 		this.game = game;
 		
-		camera = new GameCamera(100, 0);
+		camera = new GameCamera(100, 100);
 		
 	}
 

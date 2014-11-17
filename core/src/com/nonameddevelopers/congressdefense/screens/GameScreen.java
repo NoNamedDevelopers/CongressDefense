@@ -1,11 +1,11 @@
 package com.nonameddevelopers.congressdefense.screens;
 
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.Input;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
+import com.badlogic.gdx.input.GestureDetector;
 import com.nonameddevelopers.congressdefense.CongressDefense;
 import com.nonameddevelopers.congressdefense.CopDisplayer;
 import com.nonameddevelopers.congressdefense.EntityManager;
@@ -34,7 +34,10 @@ public class GameScreen implements Screen {
 
 	public GameScreen(final CongressDefense game) {
 		this.game = game;
-		camera = new GameCamera(WORLD_WIDTH, 100);
+		camera = new GameCamera(WORLD_WIDTH, WORLD_HEIGHT);
+		
+		// Provisional, segurament se tendra que crear una clase personalizada que herede de GestureDetector
+		Gdx.input.setInputProcessor(new GestureDetector(camera));
 
 		mapTexture = new Texture(Gdx.files.internal("map2.jpg"));
 		map = new Sprite(mapTexture);

@@ -4,6 +4,8 @@ import java.util.Random;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.audio.Sound;
+import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Circle;
 import com.badlogic.gdx.utils.Array;
@@ -19,6 +21,8 @@ public abstract class Protester extends GameCharacter {
 
 	private static Array<Sound> moans;
 	private static Sound joy;
+	private static Texture lifeBarTexture, lifeBlockTexture;
+	private Sprite lifeBar, lifeBlock;
 
 	public int life;
 	protected float appearTime;
@@ -31,6 +35,9 @@ public abstract class Protester extends GameCharacter {
 		moans.add(Gdx.audio.newSound(Gdx.files.internal("sounds/moan_1.mp3")));
 		
 		joy = Gdx.audio.newSound(Gdx.files.internal("sounds/joy.mp3"));
+		
+		lifeBarTexture = new Texture(Gdx.files.internal("sprites/lifebar.png"));
+		lifeBlockTexture = new Texture(Gdx.files.internal("sprites/lifeblock.png"));
 	}
 
 	public Protester(final CongressDefense game, float x, float y, String type, int columns, int rows,float appearTime) {
@@ -39,6 +46,8 @@ public abstract class Protester extends GameCharacter {
 		this.appearTime = appearTime;
 
 		life = 100;
+		lifeBar = new Sprite(lifeBarTexture);
+		lifeBlock = new Sprite(lifeBlockTexture);
 	}
 	
 	public void update(float delta) {
@@ -75,9 +84,13 @@ public abstract class Protester extends GameCharacter {
 	public void draw(SpriteBatch batch) {
 		super.draw(batch);
 				
-		game.font.setScale(0.6f);
-		game.font.draw(batch, "|" + life + "|", x + 5, y + 40);
-		game.font.setScale(1.5f);
+
+		lifeBar.setPosition(x+6, y+32);
+		lifeBar.draw(batch);
+		for (int i = 0; i<life/10; i++) {
+			lifeBlock.setPosition(x+6+i*2, y+32);
+			lifeBlock.draw(batch);
+		}
 	}
 
 	public void hurt(int damage) {	

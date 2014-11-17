@@ -13,7 +13,7 @@ public class GameCamera extends OrthographicCamera implements GestureListener {
 	public GameCamera(float worldWidth, float worldHeight) {
 		this.viewportWidth = worldWidth;
 		this.viewportHeight = worldWidth * Gdx.graphics.getHeight()/Gdx.graphics.getWidth();
-		this.near = 0;
+		Gdx.gl.glViewport(0, 0, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
 		this.worldWidth = worldWidth;
 		this.worldHeight = worldHeight;
 		this.position.set(this.viewportWidth/2f, this.worldHeight/2f, 0);

@@ -81,8 +81,8 @@ private final CongressDefense game;
 			}
 			
 			public void touchUp (InputEvent event, float x, float y, int pointer, int button) {
-				game.setScreen(new GameScreen(game));
 				stage.dispose();
+				game.setScreen(new GameScreen(game));
 				dispose();
 			}
 			

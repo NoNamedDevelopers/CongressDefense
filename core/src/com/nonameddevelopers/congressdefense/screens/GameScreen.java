@@ -36,6 +36,7 @@ public class GameScreen implements Screen {
 		this.game = game;
 		camera = new GameCamera(WORLD_WIDTH, WORLD_HEIGHT);
 		
+		
 		// Provisional, segurament se tendra que crear una clase personalizada que herede de GestureDetector
 		Gdx.input.setInputProcessor(new GestureDetector(camera));
 

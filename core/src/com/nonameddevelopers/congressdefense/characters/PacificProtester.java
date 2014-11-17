@@ -6,9 +6,11 @@ import com.badlogic.gdx.math.Vector2;
 import com.nonameddevelopers.congressdefense.CongressDefense;
 
 public class PacificProtester extends Protester {
+	
+	private static Random r = new Random();
 
 	public PacificProtester(CongressDefense game, float x, float y, float appearTime) {
-		super(game, x, y, appearTime);
+		super(game, x, y, "protester" + r.nextInt(3), 4, 5, appearTime);
 	}
 	
 	

@@ -10,11 +10,7 @@ import com.nonameddevelopers.congressdefense.EntityManager;
 public class AnarquistProtester extends Protester {
 
 	public AnarquistProtester(CongressDefense game, float x, float y, float appearTime) {
-		super(game, x, y, appearTime);
-		ulAnimation = loadAnimation("sprites/anarkProt/up_left.png", 5, 5, 0.02f);
-		dlAnimation = loadAnimation("sprites/anarkProt/down_left.png", 5, 5, 0.02f);	
-		urAnimation = loadAnimation("sprites/anarkProt/up_right.png", 5, 5, 0.02f);	
-		drAnimation = loadAnimation("sprites/anarkProt/down_right.png", 5, 5, 0.02f);
+		super(game, x, y, "anarquist", 4, 5, appearTime);
 	}
 	
 	

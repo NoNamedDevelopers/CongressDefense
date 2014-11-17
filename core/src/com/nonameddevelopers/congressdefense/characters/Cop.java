@@ -6,42 +6,40 @@ import com.nonameddevelopers.congressdefense.CongressDefense;
 
 public abstract class Cop extends GameCharacter {
 	
-	protected Circle boundingCircle;
-	
-
-	
 	protected float elapsedTime;
+	protected boolean isAttacking;
 	
-	public Cop(CongressDefense game, float x, float y) {
-		super(game, x, y, "cop", 4, 6, 0.02f);
+	public Cop(final CongressDefense game, float x, float y, String type, int columns, int rows, float animationSpeed) {
+		super(game, x, y, type, columns, rows, animationSpeed);		
 		
-		
-		direction = UP_LEFT;
-		
-		boundingCircle = new Circle();
+		elapsedTime = -0.5f;
+		isAttacking = false;
 		boundingCircle.set(x+16, y+16, 10f);
-		
-		updateAnimation();
 	}
 		
 	public void update(float delta) {
-		stateTime += delta;		
+		if (isAttacking)
+			stateTime += delta;		
+		else
+			stateTime = 0;
+		updateAnimation();
 	}
 	
-	private void updateAnimation() {		
-		switch(direction) {
-			case UP_LEFT:
-				currentFrame = ulAnimation.getKeyFrame(stateTime, true);
-				break;
-			case DOWN_LEFT:
-				currentFrame = dlAnimation.getKeyFrame(stateTime, true);
-				break;
-			case UP_RIGHT:
-				currentFrame = urAnimation.getKeyFrame(stateTime, true);
-				break;
-			case DOWN_RIGHT:
-				currentFrame = drAnimation.getKeyFrame(stateTime, true);
-				break;
+	@Override
+	protected void updateAnimation() {
+		switch (direction) {
+		case UP_RIGHT:
+			currentFrame = urAnimation.getKeyFrame(stateTime, true);
+			break;
+		case DOWN_RIGHT:
+			currentFrame = drAnimation.getKeyFrame(stateTime, true);
+			break;
+		case UP_LEFT:
+			currentFrame = ulAnimation.getKeyFrame(stateTime, true);
+			break;
+		case DOWN_LEFT:
+			currentFrame = dlAnimation.getKeyFrame(stateTime, true);
+			break;
 		}
 	}
 	

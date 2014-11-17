@@ -16,7 +16,6 @@ private final CongressDefense game;
 		this.game = game;
 		
 		camera = new GameCamera(100, 0);
-		camera.setToOrtho(false, 800, 480);
 		
 	}
 

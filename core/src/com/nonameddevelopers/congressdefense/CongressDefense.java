@@ -15,7 +15,8 @@ public class CongressDefense extends Game {
 	private Music bgMusic;
 	private Sound touchSound;
 	
-	private boolean isMuted = false;
+	public boolean isMusicPlayed = true;
+	public boolean isSoundOn = true;
 	
 	public int life;
 	public int score;
@@ -63,12 +64,15 @@ public class CongressDefense extends Game {
 	}
 	
 	public void playTouch() {
-		if (!isMuted) 
-			touchSound.play(0.3f);
+		touchSound.play(0.3f);
 	}
 	
-	public void muteSound() {
-		isMuted = true;
+	public void toggleMusic() {
+		if (isMusicPlayed)
+			bgMusic.stop();
+		else 
+			bgMusic.play();
+		isMusicPlayed = !isMusicPlayed;
 	}
 
 

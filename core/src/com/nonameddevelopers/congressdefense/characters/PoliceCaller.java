@@ -17,7 +17,7 @@ public class PoliceCaller {
 	private Sprite sprite;
 	private boolean touched = false;
 	private GameCamera camera;
-	private Cop police;
+	private MeleeCop police;
 	
 	public PoliceCaller(CongressDefense game, int x, int y, GameCamera camera) {
 		this.game = game;

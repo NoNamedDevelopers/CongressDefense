@@ -4,21 +4,26 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 
 public class GameCamera extends OrthographicCamera {
-	
+
+	public float zoom = 1;
+	private float width;
 	private int offsetY;
 	
-	public GameCamera(int width, int offsetY) {
-		super(width, width * (Gdx.graphics.getHeight() / Gdx.graphics.getWidth()));
+	
+	public GameCamera(float width, int offsetY) {
+		this.viewportWidth = width;
+		this.viewportHeight = width * Gdx.graphics.getHeight()/Gdx.graphics.getWidth();
+		this.near = 0;
+		this.width = width;
 		this.offsetY = offsetY;
 		this.position.set(this.viewportWidth/2f, this.viewportHeight/2f, 0);
 		this.update();
 	}
 	
 	public void resize(int width, int height) {
-		this.viewportWidth = 1000f;
+		this.viewportWidth = this.width;
 		this.viewportHeight = this.viewportWidth * height/width;
 		this.position.set(this.viewportWidth/2f, this.viewportHeight/2f+offsetY, 0);
 		this.update();
 	}
-
 }

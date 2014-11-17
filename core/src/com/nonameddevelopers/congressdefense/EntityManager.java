@@ -23,7 +23,7 @@ public class EntityManager {
 	private static EntityManager instance;
 	
 	
-	public EntityManager(final CongressDefense game, GameCamera camera) {
+	private EntityManager(final CongressDefense game, GameCamera camera) {
 		this.game = game;
 		crowdMan = new CrowdManager(game, 10);
 		copManager = new CopManager(game, camera);

@@ -15,7 +15,6 @@ public abstract class Cop extends GameCharacter {
 		super(game, x-16, y-16, type, columns, rows, animationSpeed);		
 		
 		isAttacking = false;
-		boundingCircle.set(x+16, y+16, 10f);
 	}
 		
 	public void update(float delta) {

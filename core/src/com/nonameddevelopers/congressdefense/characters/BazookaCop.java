@@ -8,15 +8,17 @@ import com.nonameddevelopers.congressdefense.EntityManager;
 
 public class BazookaCop extends Cop {
 	
-	private Sound shoot;
+	private static Sound shoot;
 
+	static {
+		shoot = Gdx.audio.newSound(Gdx.files.internal("sounds/shoot.mp3"));
+	}
 	
 	public BazookaCop(CongressDefense game, float x, float y) {
-		super(game, x, y, "copgun", 5, 5, 0.02f);
+		super(game, x-16, y-16, "copgun", 5, 5, 0.02f);
 
-		boundingCircle.set(x+10, y+10, 100f);
+		boundingCircle.set(x, y, 100f);
 		
-		shoot = Gdx.audio.newSound(Gdx.files.internal("sounds/shoot.mp3"));
 
 	}
 	

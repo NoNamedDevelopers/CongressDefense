@@ -1,10 +1,20 @@
 package com.nonameddevelopers.congressdefense;
 
+import java.util.Comparator;
+
+import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.utils.Array;
 import com.nonameddevelopers.congressdefense.characters.Cop;
 import com.nonameddevelopers.congressdefense.characters.Crowd;
+import com.nonameddevelopers.congressdefense.characters.GameCharacter;
+import com.nonameddevelopers.congressdefense.characters.Protester;
 
 public class EntityManager {
+	
+	private Array<GameCharacter> elementsToRender;
+	
 	private CrowdManager crowdMan;
 	private CopManager copManager;
 	private ProyectileLauncher proyectileL;
@@ -44,11 +54,26 @@ public class EntityManager {
 	}
 
 	public void draw(SpriteBatch batch) {
-		crowdMan.draw(batch);
-		copManager.draw(batch);
+		elementsToRender = new Array<GameCharacter>();
+		for (Crowd crowd : crowdMan.getCrowds())
+			for (Protester protester : crowd.getProtesters())
+				elementsToRender.add(protester);
+		for (Cop cop : copManager.getCops())
+			elementsToRender.add(cop);		
+		
+		elementsToRender.sort(new Comparator<GameCharacter>() {
+			@Override
+			public int compare(GameCharacter gm0, GameCharacter gm1) {		
+				return (int) (gm1.getY()-gm0.getY());
+			}			
+		});
+		
 		proyectileL.draw(batch);
+		
+		for (GameCharacter gm : elementsToRender)
+			gm.draw(batch);
 	}
-
+	
 	public CrowdManager getCrowdMan() {
 		return crowdMan;
 	}

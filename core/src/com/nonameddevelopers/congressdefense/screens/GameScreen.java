@@ -66,7 +66,7 @@ public class GameScreen implements Screen {
 		copDisp.update();
 		entityManager.update(delta);
 
-		policeCar.update(delta, entityManager.getCopManager());
+		//policeCar.update(delta, entityManager.getCopManager());
 
 		game.batch.setProjectionMatrix(camera.combined);
 		game.batch.begin();
@@ -74,8 +74,8 @@ public class GameScreen implements Screen {
 		map.draw(game.batch);
 
 
-		policeCar.draw(game.batch);
-		policeCar2.draw(game.batch);
+		//policeCar.draw(game.batch);
+		
 		entityManager.draw(game.batch);
 		
 		building.draw(game.batch);

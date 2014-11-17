@@ -7,14 +7,16 @@ import com.nonameddevelopers.congressdefense.CongressDefense;
 
 public class MeleeCop extends Cop {
 	
-	protected Sound punch;
+	protected static Sound punch;
 
+	static {
+		punch = Gdx.audio.newSound(Gdx.files.internal("sounds/punch.mp3"));
+	}
+	
 	public MeleeCop(CongressDefense game, float x, float y) {
 		super(game, x, y, "cop", 4, 6, 0.018f);
 		
-		boundingCircle.set(x+16, y+16, 10f);
-		
-		punch = Gdx.audio.newSound(Gdx.files.internal("sounds/punch.mp3"));
+		boundingCircle.set(x, y, 10f);		
 	}	
 
 	

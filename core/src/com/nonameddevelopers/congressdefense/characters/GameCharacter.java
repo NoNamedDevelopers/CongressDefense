@@ -26,7 +26,7 @@ public abstract class GameCharacter {
 	protected TextureRegion currentFrame;
 	protected float stateTime;
 	
-	protected String type; 
+	public String type; 
 	
 	protected float x, y;
 	protected short direction;

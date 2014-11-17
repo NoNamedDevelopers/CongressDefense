@@ -20,7 +20,7 @@ public abstract class Protester extends GameCharacter {
 	private int yGoal = 369;
 
 	private static Array<Sound> moans;
-	private static Sound joy;
+	private static Sound joy, die;
 	private static Texture lifeBarTexture, lifeBlockTexture;
 	private Sprite lifeBar, lifeBlock;
 
@@ -35,6 +35,7 @@ public abstract class Protester extends GameCharacter {
 		moans.add(Gdx.audio.newSound(Gdx.files.internal("sounds/moan_1.mp3")));
 		
 		joy = Gdx.audio.newSound(Gdx.files.internal("sounds/joy.mp3"));
+		die = Gdx.audio.newSound(Gdx.files.internal("sounds/die.mp3"));
 		
 		lifeBarTexture = new Texture(Gdx.files.internal("sprites/lifebar.png"));
 		lifeBlockTexture = new Texture(Gdx.files.internal("sprites/lifeblock.png"));
@@ -112,6 +113,7 @@ public abstract class Protester extends GameCharacter {
 
 	protected void kill() {
 		isDead = true;
+		die.play();
 		game.score += 5;
 		game.money += 10;
 	}

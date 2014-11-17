@@ -8,13 +8,8 @@ import com.nonameddevelopers.congressdefense.CongressDefense;
 public class FatProtester extends Protester {
 
 	public FatProtester(CongressDefense game, float x, float y, float appearTime) {
-		super(game, x, y, appearTime);
+		super(game, x, y, "fat", 4, 5, appearTime);
 		life = 200;
-		
-		ulAnimation = loadAnimation("sprites/fatProt/up_left.png", 5, 5, 0.02f);
-		dlAnimation = loadAnimation("sprites/fatProt/down_left.png", 5, 5, 0.02f);	
-		urAnimation = loadAnimation("sprites/fatProt/up_right.png", 5, 5, 0.02f);	
-		drAnimation = loadAnimation("sprites/fatProt/down_right.png", 5, 5, 0.02f);
 	}
 	
 	

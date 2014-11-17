@@ -33,8 +33,8 @@ public abstract class Protester extends GameCharacter {
 		joy = Gdx.audio.newSound(Gdx.files.internal("sounds/joy.mp3"));
 	}
 
-	public Protester(final CongressDefense game, float x, float y, float appearTime) {
-		super(game, x, y, "protester" + r.nextInt(3), 4, 5, 0.02f);
+	public Protester(final CongressDefense game, float x, float y, String type, int columns, int rows,float appearTime) {
+		super(game, x, y, type, columns, rows, 0.02f);
 
 		this.appearTime = appearTime;
 

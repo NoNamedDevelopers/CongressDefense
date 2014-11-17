@@ -8,12 +8,7 @@ import com.nonameddevelopers.congressdefense.CongressDefense;
 public class FastProtester extends Protester {
 
 	public FastProtester(CongressDefense game, float x, float y, float appearTime) {
-		super(game, x, y, appearTime);
-		
-		ulAnimation = loadAnimation("sprites/fastProt/up_left.png", 5, 5, 0.02f);
-		dlAnimation = loadAnimation("sprites/fastProt/down_left.png", 5, 5, 0.02f);	
-		urAnimation = loadAnimation("sprites/fastProt/up_right.png", 5, 5, 0.02f);	
-		drAnimation = loadAnimation("sprites/fastProt/down_right.png", 5, 5, 0.02f);
+		super(game, x, y, "fast", 4, 5, appearTime);
 	}
 	
 	

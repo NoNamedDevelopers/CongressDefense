@@ -26,7 +26,7 @@ public class CopDisplayer {
 			
 		}
 		
-		if (inputListener.wasCopIconPressed()) {
+		if (inputListener.wasCopIconPressed) {
 			boolean available = true;
 			availableCircle = new Circle();
 			availableCircle.set(inputListener.getX(), inputListener.getY(), 20f);
@@ -45,6 +45,7 @@ public class CopDisplayer {
 					}
 				
 			}
+			inputListener.wasCopIconPressed = false;
 		}
 	}
 

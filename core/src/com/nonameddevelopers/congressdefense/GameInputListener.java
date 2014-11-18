@@ -17,7 +17,7 @@ public class GameInputListener implements GestureListener {
 	private Vector3 touchPos;
 	
 	private boolean copIconPressed = false;
-	private boolean wasCopIconPressed = false;
+	public boolean wasCopIconPressed = false;
 	
 	public GameInputListener(GameCamera camera) {
 		this.camera = camera;
@@ -118,10 +118,6 @@ public class GameInputListener implements GestureListener {
 	
 	public boolean isCopIconPressed() {
 		return copIconPressed;
-	}
-	
-	public boolean wasCopIconPressed() {
-		return wasCopIconPressed;
 	}
 	
 	public Circle getCopIconCircle() {

@@ -1,49 +1,39 @@
 package com.nonameddevelopers.congressdefense;
 
 import com.badlogic.gdx.input.GestureDetector.GestureListener;
-import com.badlogic.gdx.math.Circle;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.math.Vector3;
+import com.badlogic.gdx.utils.Array;
+import com.nonameddevelopers.congressdefense.screens.GameScreen;
+import com.nonameddevelopers.congressdefense.ui.CopIcon;
 
 public class GameInputListener implements GestureListener {
 
 	private float x, y;
-	
-	public Circle meleeCopIcon, bazookaCopIcon;
-	
+		
+	public Array<CopIcon> menu;
 	private GameCamera camera;
 	private Vector3 touchPos;
 	
-	public boolean meleeCopIconPressed, wasMeleeCopIconPressed, bazookaCopIconPressed, wasBazookaCopIconPressed;
-	
-	public GameInputListener(GameCamera camera) {
+	public GameInputListener(GameScreen screen, GameCamera camera) {
 		this.camera = camera;
+		this.menu = screen.menu;
 		
-		meleeCopIcon = new Circle();
-		bazookaCopIcon = new Circle();
 		
 		touchPos = new Vector3();
 	}
 	
 	public void update() {
-		meleeCopIcon.set(camera.position.x-camera.viewportWidth/2+10+35, 
-				camera.position.y+camera.viewportHeight/2-75+35,
-				35f);
-
-		bazookaCopIcon.set(camera.position.x-camera.viewportWidth/2+90+35, 
-				camera.position.y+camera.viewportHeight/2-75+35,
-				35f);
+		for (CopIcon icon : menu) 
+			icon.update();
 	}
 	
 	@Override
 	public boolean touchDown(float x, float y, int pointer, int button) {	
 		unproject(x, y);
 		
-		if(meleeCopIcon.contains(this.x, this.y)) 
-			meleeCopIconPressed = true;		
-
-		if(bazookaCopIcon.contains(this.x, this.y)) 
-			bazookaCopIconPressed = true;		
+		for (CopIcon icon : menu) 
+			icon.setPressed(this.x,this.y);
 		
 		return false;
 	}
@@ -51,10 +41,8 @@ public class GameInputListener implements GestureListener {
 	
 	@Override
 	public boolean tap(float x, float y, int count, int button) {
-		unproject(x, y);
-		
-		freeIcons();
-		
+		unproject(x, y);		
+		releaseIcons();
 		return false;
 	}
 
@@ -87,8 +75,7 @@ public class GameInputListener implements GestureListener {
 	@Override
 	public boolean panStop(float x, float y, int pointer, int button) {	
 		unproject(x, y);
-		
-		freeIcons();
+		releaseIcons();
 		return false;
 	}
 
@@ -107,15 +94,14 @@ public class GameInputListener implements GestureListener {
 	
 	
 	private boolean isAnyIconPressed() {
-		return meleeCopIconPressed || bazookaCopIconPressed;
+		for (CopIcon icon : menu) 
+			return icon.isPressed();
+		return false;
 	}
 	
-	private void freeIcons() {
-		wasMeleeCopIconPressed = meleeCopIconPressed;
-		meleeCopIconPressed = false;
-
-		wasBazookaCopIconPressed = bazookaCopIconPressed;
-		bazookaCopIconPressed = false;
+	private void releaseIcons() {
+		for (CopIcon icon : menu) 
+			icon.release();
 	}
 
 

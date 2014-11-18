@@ -8,27 +8,27 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.input.GestureDetector;
+import com.badlogic.gdx.utils.Array;
 import com.nonameddevelopers.congressdefense.CongressDefense;
 import com.nonameddevelopers.congressdefense.CopDisplayer;
 import com.nonameddevelopers.congressdefense.EntityManager;
 import com.nonameddevelopers.congressdefense.GameCamera;
 import com.nonameddevelopers.congressdefense.GameInputListener;
-import com.nonameddevelopers.congressdefense.characters.BazookaCop;
 import com.nonameddevelopers.congressdefense.characters.PoliceVan;
+import com.nonameddevelopers.congressdefense.ui.CopIcon;
 
 public class GameScreen implements Screen {
 	private static final int WORLD_WIDTH = 1000;
 	private static final int WORLD_HEIGHT = 750;
-	private static final Color TRANSPARENT = new Color(1,1,1,0.5f);
+
 
 	private final CongressDefense game;
 	
+	public Array<CopIcon> menu;
 	
 	private Texture starBoardTexture, coinsBoardTexture, voteBoardTexture;
 	private Sprite starBoard, coinsBoard, voteBoard;
 	
-	private Texture meleeCopIconTexture, bazookaCopIconTexture;
-	private Sprite meleeCopIcon, bazookaCopIcon;
 
 	private GameCamera camera;
 	private Texture mapTexture, buildingTexture;
@@ -37,16 +37,16 @@ public class GameScreen implements Screen {
 	private EntityManager entityManager;
 
 	private CopDisplayer copDisp;
-	private PoliceVan policeCar;
-	private PoliceVan policeCar2;
 	
 	private GameInputListener inputListener;
 
 	public GameScreen(final CongressDefense game) {
 		this.game = game;
 		camera = new GameCamera(WORLD_WIDTH, WORLD_HEIGHT);
+
+		menu = new Array<CopIcon>(); 
 		
-		inputListener = new GameInputListener(camera);
+		inputListener = new GameInputListener(this, camera);
 		Gdx.input.setInputProcessor(new GestureDetector(inputListener));
 
 		mapTexture = new Texture(Gdx.files.internal("map2.jpg"));
@@ -62,11 +62,7 @@ public class GameScreen implements Screen {
 		
 		entityManager = EntityManager.getInstance(game,camera);
 		entityManager.setCamera(camera);
-		copDisp = new CopDisplayer(entityManager.getCopManager(),game, inputListener);
-		
-		policeCar = new PoliceVan(game, 150, 350, camera);
-		policeCar2 = new PoliceVan(game, 200, 180, camera);
-		
+		copDisp = new CopDisplayer(entityManager.getCopManager(),game, inputListener);		
 		
 		loadMenu();
 	}
@@ -80,18 +76,12 @@ public class GameScreen implements Screen {
 		inputListener.update();
 		copDisp.update();
 		entityManager.update(delta);
-		
-
-		//policeCar.update(delta, entityManager.getCopManager());
 
 		game.batch.setProjectionMatrix(camera.combined);
 		game.batch.begin();
 		
 		map.draw(game.batch);
 
-
-		//policeCar.draw(game.batch);
-		
 		entityManager.draw(game.batch);
 		
 		building.draw(game.batch);
@@ -100,26 +90,14 @@ public class GameScreen implements Screen {
 		
 		
 		game.batch.end();
+		inputListener.update();
 		
 	}
 
 	
 	private void drawMenu(SpriteBatch batch) {
-		if (game.money < 20) 
-			meleeCopIcon.setColor(TRANSPARENT);
-		else
-			meleeCopIcon.setColor(Color.WHITE);
-		meleeCopIcon.setPosition(camera.position.x-camera.viewportWidth/2+10, 
-							   camera.position.y+camera.viewportHeight/2-75);
-		meleeCopIcon.draw(batch);		
-		
-		if (game.money < 50) 
-			bazookaCopIcon.setColor(TRANSPARENT);
-		else
-			bazookaCopIcon.setColor(Color.WHITE);
-		bazookaCopIcon.setPosition(camera.position.x-camera.viewportWidth/2+90, 
-							   camera.position.y+camera.viewportHeight/2-75);
-		bazookaCopIcon.draw(batch);	
+		for (CopIcon icon : menu) 
+			icon.draw(batch);
 		
 		starBoard.setPosition(camera.position.x, camera.position.y+camera.viewportHeight/2-50);
 		starBoard.draw(batch);
@@ -138,13 +116,8 @@ public class GameScreen implements Screen {
 	}
 	
 	private void loadMenu() {
-		meleeCopIconTexture = new Texture(Gdx.files.internal("ui/meleecopicon.png"));
-		meleeCopIcon = new Sprite(meleeCopIconTexture);
-		meleeCopIcon.setSize(70, 70);
-		
-		bazookaCopIconTexture = new Texture(Gdx.files.internal("ui/bazookacopicon.png"));
-		bazookaCopIcon = new Sprite(bazookaCopIconTexture);
-		bazookaCopIcon.setSize(70, 70);
+		menu.add(new CopIcon(game, camera, 20, 10, 75, "ui/meleecopicon.png", CopIcon.MELEE));
+		menu.add(new CopIcon(game, camera, 50, 90, 75, "ui/bazookacopicon.png", CopIcon.BAZOOKA));
 		
 		
 		starBoardTexture = new Texture(Gdx.files.internal("ui/starboard.png"));

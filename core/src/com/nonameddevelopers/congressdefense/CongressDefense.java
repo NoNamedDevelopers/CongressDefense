@@ -4,6 +4,7 @@ import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.audio.Sound;
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.nonameddevelopers.congressdefense.screens.MainMenuScreen;
@@ -36,8 +37,9 @@ public class CongressDefense extends Game {
 		score = 0;
 		life = 30;
 		batch = new SpriteBatch();
-		font = new BitmapFont();
-		font.setScale(1.5f);
+		font = new BitmapFont(Gdx.files.internal("opensans.fnt"));
+		font.setColor(new Color(255,255,255, 0.9f));
+		font.setScale(0.9f);
 		this.setScreen(new MainMenuScreen(this));
 	}
 	

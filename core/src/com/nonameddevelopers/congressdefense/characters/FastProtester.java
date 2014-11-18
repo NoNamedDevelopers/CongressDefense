@@ -11,21 +11,11 @@ public class FastProtester extends Protester {
 		super(game, x, y, "fast", 4, 5, appearTime);
 	}
 	
-	
 	@Override
 	public void update(float delta) {
-		stateTime += delta;
-		if (stateTime < appearTime)
-			return;
-
-
-		approach();
-		updateAnimation();
-
-		boundingCircle.set(x + 16, y + 16, 20f);
+		super.update(delta);
 	}
-	
-	
+		
 	@Override
 	public void approach() {
 

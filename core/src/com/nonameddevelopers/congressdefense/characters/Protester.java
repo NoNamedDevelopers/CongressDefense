@@ -4,6 +4,7 @@ import java.util.Random;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.audio.Sound;
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
@@ -26,6 +27,8 @@ public abstract class Protester extends GameCharacter {
 
 	public int life;
 	protected float appearTime;
+	private boolean isHurted = false;
+	private float timeHurted = 0f;
 	private boolean isDead = false;
 
 	static {
@@ -56,6 +59,10 @@ public abstract class Protester extends GameCharacter {
 		if (stateTime < appearTime)
 			return;
 
+		if (isHurted)
+			timeHurted += delta;
+		else 
+			timeHurted = 0;
 
 		approach();
 		updateAnimation();
@@ -83,9 +90,14 @@ public abstract class Protester extends GameCharacter {
 
 	@Override
 	public void draw(SpriteBatch batch) {
+		if (isHurted) {
+			batch.setColor(Color.RED);
+			if (timeHurted > 0.05f)
+				isHurted = false;
+		}
 		super.draw(batch);
+		batch.setColor(Color.WHITE);
 				
-
 		lifeBar.setPosition(x+6, y+32);
 		lifeBar.draw(batch);
 		for (int i = 0; i<life/10; i++) {
@@ -95,6 +107,7 @@ public abstract class Protester extends GameCharacter {
 	}
 
 	public void hurt(int damage) {	
+		isHurted = true;
 		life -= damage;
 		moans.get(r.nextInt(2)).play();
 		if (life <= 0 && !isDead)
@@ -122,6 +135,7 @@ public abstract class Protester extends GameCharacter {
 		return isDead;
 	}
 
+	
 	public Circle getBoundingCircle() {
 		return boundingCircle;
 	}

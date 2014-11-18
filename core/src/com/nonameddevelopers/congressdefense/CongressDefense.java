@@ -38,7 +38,7 @@ public class CongressDefense extends Game {
 		life = 30;
 		batch = new SpriteBatch();
 		font = new BitmapFont(Gdx.files.internal("opensans.fnt"));
-		font.setColor(new Color(255,255,255, 0.9f));
+		font.setColor(new Color(255,255,255, 1f));
 		font.setScale(0.9f);
 		this.setScreen(new MainMenuScreen(this));
 	}

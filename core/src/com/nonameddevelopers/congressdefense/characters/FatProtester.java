@@ -15,15 +15,7 @@ public class FatProtester extends Protester {
 	
 	@Override
 	public void update(float delta) {
-		stateTime += delta;
-		if (stateTime < appearTime)
-			return;
-
-
-		approach();
-		updateAnimation();
-
-		boundingCircle.set(x + 16, y + 16, 20f);
+		super.update(delta);
 	}
 	
 	

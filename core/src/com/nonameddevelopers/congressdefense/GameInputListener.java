@@ -95,7 +95,8 @@ public class GameInputListener implements GestureListener {
 	
 	private boolean isAnyIconPressed() {
 		for (CopIcon icon : menu) 
-			return icon.isPressed();
+			if (icon.isPressed())
+				return true;
 		return false;
 	}
 	

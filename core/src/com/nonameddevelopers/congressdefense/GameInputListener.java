@@ -1,7 +1,5 @@
 package com.nonameddevelopers.congressdefense;
 
-import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.input.GestureDetector.GestureListener;
 import com.badlogic.gdx.math.Circle;
 import com.badlogic.gdx.math.Vector2;
@@ -11,25 +9,28 @@ public class GameInputListener implements GestureListener {
 
 	private float x, y;
 	
-	private Circle copIcon;
+	public Circle meleeCopIcon, bazookaCopIcon;
 	
 	private GameCamera camera;
 	private Vector3 touchPos;
 	
-	private boolean copIconPressed = false;
-	public boolean wasCopIconPressed = false;
+	public boolean meleeCopIconPressed, wasMeleeCopIconPressed, bazookaCopIconPressed, wasBazookaCopIconPressed;
 	
 	public GameInputListener(GameCamera camera) {
 		this.camera = camera;
 		
-		copIcon = new Circle();
+		meleeCopIcon = new Circle();
+		bazookaCopIcon = new Circle();
 		
-
 		touchPos = new Vector3();
 	}
 	
 	public void update() {
-		copIcon.set(camera.position.x-camera.viewportWidth/2+10+35, 
+		meleeCopIcon.set(camera.position.x-camera.viewportWidth/2+10+35, 
+				camera.position.y+camera.viewportHeight/2-75+35,
+				35f);
+
+		bazookaCopIcon.set(camera.position.x-camera.viewportWidth/2+90+35, 
 				camera.position.y+camera.viewportHeight/2-75+35,
 				35f);
 	}
@@ -38,8 +39,11 @@ public class GameInputListener implements GestureListener {
 	public boolean touchDown(float x, float y, int pointer, int button) {	
 		unproject(x, y);
 		
-		if(copIcon.contains(this.x, this.y)) 
-			copIconPressed = true;		
+		if(meleeCopIcon.contains(this.x, this.y)) 
+			meleeCopIconPressed = true;		
+
+		if(bazookaCopIcon.contains(this.x, this.y)) 
+			bazookaCopIconPressed = true;		
 		
 		return false;
 	}
@@ -70,7 +74,7 @@ public class GameInputListener implements GestureListener {
 	public boolean pan(float x, float y, float deltaX, float deltaY) {
 		unproject(x, y);
 		
-		if (!copIconPressed)
+		if (!isAnyIconPressed())
 			if (camera.position.y+deltaY-camera.viewportHeight/2 >= 0 
 				&& camera.position.y+deltaY+camera.viewportHeight/2 <= camera.worldHeight) {
 				camera.translate(0f,deltaY);
@@ -102,9 +106,16 @@ public class GameInputListener implements GestureListener {
 	}
 	
 	
+	private boolean isAnyIconPressed() {
+		return meleeCopIconPressed || bazookaCopIconPressed;
+	}
+	
 	private void freeIcons() {
-		wasCopIconPressed = copIconPressed;
-		copIconPressed = false;
+		wasMeleeCopIconPressed = meleeCopIconPressed;
+		meleeCopIconPressed = false;
+
+		wasBazookaCopIconPressed = bazookaCopIconPressed;
+		bazookaCopIconPressed = false;
 	}
 
 
@@ -114,14 +125,6 @@ public class GameInputListener implements GestureListener {
 	
 	public float getY() {
 		return y;
-	}
-	
-	public boolean isCopIconPressed() {
-		return copIconPressed;
-	}
-	
-	public Circle getCopIconCircle() {
-		return copIcon;
 	}
 	
 	private void unproject(float x, float y) {

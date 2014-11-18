@@ -27,8 +27,8 @@ public class GameScreen implements Screen {
 	private Texture starBoardTexture, coinsBoardTexture, voteBoardTexture;
 	private Sprite starBoard, coinsBoard, voteBoard;
 	
-	private Texture policeIconTexture;
-	private Sprite policeIcon;
+	private Texture meleeCopIconTexture, bazookaCopIconTexture;
+	private Sprite meleeCopIcon, bazookaCopIcon;
 
 	private GameCamera camera;
 	private Texture mapTexture, buildingTexture;
@@ -67,7 +67,6 @@ public class GameScreen implements Screen {
 		policeCar = new PoliceVan(game, 150, 350, camera);
 		policeCar2 = new PoliceVan(game, 200, 180, camera);
 		
-		entityManager.getCopManager().addCop(new BazookaCop(game, 300, 300));
 		
 		loadMenu();
 	}
@@ -107,12 +106,20 @@ public class GameScreen implements Screen {
 	
 	private void drawMenu(SpriteBatch batch) {
 		if (game.money < 20) 
-			policeIcon.setColor(TRANSPARENT);
+			meleeCopIcon.setColor(TRANSPARENT);
 		else
-			policeIcon.setColor(Color.WHITE);
-		policeIcon.setPosition(camera.position.x-camera.viewportWidth/2+10, 
+			meleeCopIcon.setColor(Color.WHITE);
+		meleeCopIcon.setPosition(camera.position.x-camera.viewportWidth/2+10, 
 							   camera.position.y+camera.viewportHeight/2-75);
-		policeIcon.draw(batch);		
+		meleeCopIcon.draw(batch);		
+		
+		if (game.money < 50) 
+			bazookaCopIcon.setColor(TRANSPARENT);
+		else
+			bazookaCopIcon.setColor(Color.WHITE);
+		bazookaCopIcon.setPosition(camera.position.x-camera.viewportWidth/2+90, 
+							   camera.position.y+camera.viewportHeight/2-75);
+		bazookaCopIcon.draw(batch);	
 		
 		starBoard.setPosition(camera.position.x, camera.position.y+camera.viewportHeight/2-50);
 		starBoard.draw(batch);
@@ -131,9 +138,13 @@ public class GameScreen implements Screen {
 	}
 	
 	private void loadMenu() {
-		policeIconTexture = new Texture(Gdx.files.internal("ui/policeicon.png"));
-		policeIcon = new Sprite(policeIconTexture);
-		policeIcon.setSize(70, 70);
+		meleeCopIconTexture = new Texture(Gdx.files.internal("ui/meleecopicon.png"));
+		meleeCopIcon = new Sprite(meleeCopIconTexture);
+		meleeCopIcon.setSize(70, 70);
+		
+		bazookaCopIconTexture = new Texture(Gdx.files.internal("ui/bazookacopicon.png"));
+		bazookaCopIcon = new Sprite(bazookaCopIconTexture);
+		bazookaCopIcon.setSize(70, 70);
 		
 		
 		starBoardTexture = new Texture(Gdx.files.internal("ui/starboard.png"));

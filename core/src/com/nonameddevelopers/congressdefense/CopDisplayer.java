@@ -2,6 +2,7 @@ package com.nonameddevelopers.congressdefense;
 
 import com.badlogic.gdx.math.Circle;
 import com.badlogic.gdx.math.Intersector;
+import com.nonameddevelopers.congressdefense.characters.BazookaCop;
 import com.nonameddevelopers.congressdefense.characters.Cop;
 import com.nonameddevelopers.congressdefense.characters.MeleeCop;
 
@@ -21,17 +22,17 @@ public class CopDisplayer {
 	
 	public void update()
 	{
-		if (inputListener.isCopIconPressed()) {
+		if (inputListener.meleeCopIconPressed) {
 			
 			
 		}
 		
-		if (inputListener.wasCopIconPressed) {
+		if (inputListener.wasMeleeCopIconPressed) {
 			boolean available = true;
 			availableCircle = new Circle();
 			availableCircle.set(inputListener.getX(), inputListener.getY(), 20f);
 			
-			if(!Intersector.overlaps(inputListener.getCopIconCircle(), availableCircle)) {
+			if(!Intersector.overlaps(inputListener.meleeCopIcon, availableCircle)) {
 				for (Cop cop: copMan.getCops())
 					if (Intersector.overlaps(cop.getBoundingCircle(), availableCircle)) 
 						available= false;
@@ -45,7 +46,30 @@ public class CopDisplayer {
 					}
 				
 			}
-			inputListener.wasCopIconPressed = false;
+			inputListener.wasMeleeCopIconPressed = false;
+		}
+		
+
+		if (inputListener.wasBazookaCopIconPressed) {
+			boolean available = true;
+			availableCircle = new Circle();
+			availableCircle.set(inputListener.getX(), inputListener.getY(), 20f);
+			
+			if(!Intersector.overlaps(inputListener.bazookaCopIcon, availableCircle)) {
+				for (Cop cop: copMan.getCops())
+					if (Intersector.overlaps(cop.getBoundingCircle(), availableCircle)) 
+						available= false;
+				
+				if (available) 
+					if (game.money>=50)
+					{
+						game.money -= 50;
+						Cop police = new BazookaCop(game, inputListener.getX(), inputListener.getY());
+						copMan.addCop(police);
+					}
+				
+			}
+			inputListener.wasBazookaCopIconPressed = false;
 		}
 	}
 

@@ -71,7 +71,7 @@ public class GameOverScreen implements Screen {
 		game.font.setScale(3f);
 		game.font.draw(game.batch, String.valueOf(game.score), 300,325);
 		game.font.setScale(1f);
-		drawMenu(game.batch);		
+		drawMenu(game.batch);
 		
 		game.batch.end();		
 	}

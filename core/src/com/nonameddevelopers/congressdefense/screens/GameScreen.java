@@ -46,6 +46,31 @@ public class GameScreen implements Screen {
 	public GameScreen(final CongressDefense game) {
 		this.game = game;
 		camera = new GameCamera(WORLD_WIDTH, WORLD_HEIGHT);
+		if (game.dificulty == game.EASY)
+		{
+			game.setLife(80);
+			game.setMoney(200);
+			game.setScore(0);
+		}
+		else if (game.dificulty == game.NORMAL)
+		{
+			game.setLife(40);
+			game.setMoney(100);
+			game.setScore(0);
+		}
+		else if (game.dificulty == game.HARD)
+		{
+			game.setLife(20);
+			game.setMoney(50);
+			game.setScore(0);
+		}
+		else
+		{
+			game.setLife(1);
+			game.setMoney(20);
+			game.setScore(0);
+		}
+		
 
 		loadMenu();
 		

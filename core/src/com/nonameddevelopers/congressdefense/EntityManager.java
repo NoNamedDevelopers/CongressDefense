@@ -21,7 +21,7 @@ public class EntityManager {
 	
 	
 	private EntityManager(final CongressDefense game, GameCamera camera) {
-		crowdMan = new CrowdManager(game, 10);
+		crowdMan = new CrowdManager(game);
 		copManager = new CopManager();
 		proyectileL = new ProyectileLauncher(game, camera);
 		instance = this;

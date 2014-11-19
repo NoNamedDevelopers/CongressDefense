@@ -15,10 +15,28 @@ public class CrowdManager {
 	private int wave;
 	private int numCrowds;
 	private int protestantsPerWave;
-	private final static int coef = 2;
+	private int coef;
 	private int [] percentage;
 	
+	public final static int PROTESTANTS_EASY = 4;
+	public final static int PROTESTANTS_NORMAL = 8; 
+	public final static int PROTESTANTS_HARD = 12;
+	public final static int PROTESTANTS_CHUCK = 20;
 	
+	public final static int[] PERCENTAGE_EASY = {2000, 0, 0, 0};
+	public final static int[] PERCENTAGE_NORMAL = {2000, 0, 0, 0}; 
+	public final static int[] PERCENTAGE_HARD = {1900, 20, 40, 60};
+	public final static int[] PERCENTAGE_CHUCK = {1500, 100, 150, 250};
+	
+	public final static int COEF_EASY = 6;
+	public final static int COEF_NORMAL = 4; 
+	public final static int COEF_HARD = 2;
+	public final static int COEF_CHUCK = 1;
+	
+	public final static int INCREASE_EASY = 1;
+	public final static int INCREASE_NORMAL = 2; 
+	public final static int INCREASE_HARD = 3;
+	public final static int INCREASE_CHUCK = 4;
 	
 	
 	//Para una versión con niveles y no infinita
@@ -28,18 +46,40 @@ public class CrowdManager {
 	
 	
 
-	public CrowdManager(final CongressDefense game, int protestants) {
+	public CrowdManager(final CongressDefense game) {
 		this.game = game;
 		wave = 1;
 		numCrowds = 1;
-		protestantsPerWave = protestants;
-		percentage = new int[4];
-		percentage[0] = 2000;
-		percentage[1] = 0;
-		percentage[2] = 0;
-		percentage[3] = 0;
+		if (game.dificulty == game.EASY)
+		{
+			protestantsPerWave = PROTESTANTS_EASY;
+			increaseProtestant = INCREASE_EASY;
+			coef = COEF_EASY;
+			percentage = PERCENTAGE_EASY;
+		}
+		else if (game.dificulty == game.NORMAL)
+		{
+			protestantsPerWave = PROTESTANTS_NORMAL;
+			increaseProtestant = INCREASE_NORMAL;
+			coef = COEF_NORMAL;
+			percentage = PERCENTAGE_NORMAL;
+		}
+		else if (game.dificulty == game.HARD)
+		{
+			protestantsPerWave = PROTESTANTS_HARD;
+			increaseProtestant = INCREASE_HARD;
+			coef = COEF_HARD;
+			percentage = PERCENTAGE_HARD;
+		}
+		else
+		{
+			protestantsPerWave = PROTESTANTS_CHUCK;
+			increaseProtestant = INCREASE_CHUCK;
+			coef = COEF_CHUCK;
+			percentage = PERCENTAGE_CHUCK;
+		}
 		crowds = new Array<Crowd>();
-		crowds.add(new Crowd(game, protestants, percentage));
+		crowds.add(new Crowd(game, protestantsPerWave, percentage));
 	}
 
 	public void update(float delta)
@@ -56,6 +96,7 @@ public class CrowdManager {
 			// esperar 1-2 segundos
 			wave++;
 			setNumCrowds();
+			setNumProtestants();
 			//setPercentage();
 			for (int i = 0; i<numCrowds;i++)
 				crowds.add(new Crowd(game, protestantsPerWave, percentage));
@@ -88,7 +129,7 @@ public class CrowdManager {
 	
 	public void setNumCrowds()
 	{
-		numCrowds = wave/coef +1;
+		numCrowds = (2*wave)/coef +1;
 	}
 
 	public Array<Crowd> getCrowds() {
@@ -109,6 +150,11 @@ public class CrowdManager {
 			percentage[3] += 1;
 		percentage [0] = 2000 - percentage[1] - percentage[2] - percentage[3];
 		
+	}
+	
+	public void setNumProtestants()
+	{
+		protestantsPerWave = protestantsPerWave + increaseProtestant/2;
 	}
 	
 	

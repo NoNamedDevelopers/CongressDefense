@@ -10,6 +10,11 @@ import com.nonameddevelopers.congressdefense.screens.MainMenuScreen;
 
 public class CongressDefense extends Game {
 	
+	public final static int EASY = 0;
+	public final static int NORMAL = 1;
+	public final static int HARD = 2;
+	public final static int CHUCK_NORRIS = 3;
+	
 	public SpriteBatch batch;
 	public BitmapFont font;
 	private Music bgMusic;
@@ -23,6 +28,8 @@ public class CongressDefense extends Game {
 	public int score;
 	public int money;
 	
+	public int dificulty = 1;
+	
 	@Override
 	public void create () {
 		Gdx.input.setCatchBackKey(true);
@@ -31,9 +38,7 @@ public class CongressDefense extends Game {
 		 
 		touchSound = new GameSound("sounds/punch.mp3", 330);
 		
-		money = 80;
-		score = 0;
-		life = 30;
+
 		batch = new SpriteBatch();
 		font = new BitmapFont(Gdx.files.internal("opensans.fnt"));
 		font.setColor(new Color(255,255,255, 1f));
@@ -133,6 +138,11 @@ public class CongressDefense extends Game {
 	
 	public void togglePause() {
 		isPaused = !isPaused;
+	}
+	
+	public void setDificulty(int dif)
+	{
+		this.dificulty = dif;
 	}
 	
 	

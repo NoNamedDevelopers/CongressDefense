@@ -25,11 +25,9 @@ public class CongressDefense extends Game {
 	
 	@Override
 	public void create () {
+		Gdx.input.setCatchBackKey(true);
+		
 		GameSound.GAME = this;
-
-		bgMusic = Gdx.audio.newMusic(Gdx.files.internal("bg.mp3"));
-		bgMusic.setLooping(true);
-		bgMusic.setVolume(0.08f);
 		 
 		touchSound = new GameSound("sounds/punch.mp3", 330);
 		
@@ -41,7 +39,6 @@ public class CongressDefense extends Game {
 		font.setColor(new Color(255,255,255, 1f));
 		font.setScale(0.9f);
 		loadMenu();
-		playMusic();
 	}
 	
 	public void loadMenu() {
@@ -61,6 +58,26 @@ public class CongressDefense extends Game {
 		font.dispose();
 		bgMusic.dispose();
 		touchSound.dispose();
+	}
+	
+	public void setMusic(String src) {
+		if (bgMusic == null)
+			bgMusic = Gdx.audio.newMusic(Gdx.files.internal(src));
+		if (isMusicPlayed) {
+			bgMusic.stop();
+			bgMusic = Gdx.audio.newMusic(Gdx.files.internal(src));
+			bgMusic.play();
+		}
+		else {
+			bgMusic = Gdx.audio.newMusic(Gdx.files.internal(src));
+		}
+
+		bgMusic.setLooping(true);
+		bgMusic.setVolume(0.1f);
+	}
+	
+	public void setMusicLooping(boolean condition) {
+		bgMusic.setLooping(condition);
 	}
 	
 	public void playMusic() {

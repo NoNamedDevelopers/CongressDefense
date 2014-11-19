@@ -1,6 +1,7 @@
 package com.nonameddevelopers.congressdefense.screens;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Input.Keys;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Texture;
@@ -49,7 +50,16 @@ public class GameScreen implements Screen {
 		loadMenu();
 		
 		inputListener = new GameInputListener(game, this, camera);
-		Gdx.input.setInputProcessor(new GestureDetector(inputListener));
+		Gdx.input.setInputProcessor(new GestureDetector(inputListener) {			
+			@Override
+			   public boolean keyDown(int keycode) {
+			       
+			        if(keycode == Keys.BACK){
+			           game.loadMenu();
+			        }
+			        return false;
+			   }
+		});
 
 		mapTexture = new Texture(Gdx.files.internal("map2.jpg"));
 		map = new Sprite(mapTexture);
@@ -64,7 +74,9 @@ public class GameScreen implements Screen {
 		
 		EntityManager.empty();
 		entityManager = EntityManager.getInstance(game,camera);
-		copDisp = new CopDisplayer(entityManager.getCopManager(),game, inputListener);				
+		copDisp = new CopDisplayer(entityManager.getCopManager(),game, inputListener);		
+		
+		game.setMusic("defense.mp3");
 	}
 
 	@Override

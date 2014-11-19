@@ -2,6 +2,7 @@ package com.nonameddevelopers.congressdefense.screens;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
+import com.badlogic.gdx.Input.Keys;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
@@ -14,9 +15,8 @@ import com.nonameddevelopers.congressdefense.ui.ImageActor;
 
 public class MainMenuScreen extends Actor implements Screen {
 	
-private final CongressDefense game;
+	private final CongressDefense game;
 	
-
 	private Stage stage;
 	private ImageActor bgImage, startButton, optionsButton, scoresButton, rateButton;
 	private CheckBoxActor musicButton, soundsButton;
@@ -24,8 +24,16 @@ private final CongressDefense game;
 	
 	public MainMenuScreen(final CongressDefense game) {
 		this.game = game;
-		
-		stage = new Stage(new FillViewport(1000, 750), game.batch);
+		stage = new Stage(new FillViewport(1000, 750), game.batch) {
+			@Override
+			public boolean keyDown(int keycode) {
+		       
+		        if(keycode == Keys.BACK){
+		           Gdx.app.exit();
+		        }
+		        return false;
+			}
+		};
 		Gdx.input.setInputProcessor(stage);
 		
 		bgImage = new ImageActor("backgrounds/cityintro.jpg");
@@ -129,6 +137,7 @@ private final CongressDefense game;
 
 	@Override
 	public void show() {
+		game.setMusic("bg.mp3");
 	}
 
 	@Override

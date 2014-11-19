@@ -63,7 +63,7 @@ private final CongressDefense game;
 			}
 			
 			public void touchUp (InputEvent event, float x, float y, int pointer, int button) {
-				//game.toggleMusic();
+				game.toggleSound();
 				dispose();
 			}
 			
@@ -129,7 +129,7 @@ private final CongressDefense game;
 
 	@Override
 	public void show() {
-		game.playBackground();
+		game.playMusic();
 	}
 
 	@Override

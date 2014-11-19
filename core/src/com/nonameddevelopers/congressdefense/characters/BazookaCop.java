@@ -41,7 +41,7 @@ public class BazookaCop extends Cop {
 					direction = DOWN_LEFT;
 				
 				if (stateTime == 0f) {
-					shoot.play(0.3f);
+					shoot.play(0.3f*game.soundFactor);
 					shoot(protester);
 					stateTime += 0.001f;
 					break;

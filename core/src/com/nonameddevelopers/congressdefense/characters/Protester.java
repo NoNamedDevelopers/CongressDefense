@@ -109,7 +109,7 @@ public abstract class Protester extends GameCharacter {
 	public void hurt(int damage) {	
 		isHurted = true;
 		life -= damage;
-		moans.get(r.nextInt(2)).play();
+		moans.get(r.nextInt(2)).play(game.soundFactor);
 		if (life <= 0 && !isDead)
 			kill();
 	}
@@ -118,7 +118,7 @@ public abstract class Protester extends GameCharacter {
 		if (game.life - 1 <= 0)
 			game.setScreen(new GameOverScreen(game));
 		else {
-			joy.play();
+			joy.play(game.soundFactor);
 			isDead = true;
 			game.life--;
 		}
@@ -126,7 +126,7 @@ public abstract class Protester extends GameCharacter {
 
 	protected void kill() {
 		isDead = true;
-		die.play();
+		die.play(game.soundFactor);
 		game.score += 5;
 		game.money += 10;
 	}

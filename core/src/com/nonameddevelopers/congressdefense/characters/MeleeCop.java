@@ -34,7 +34,7 @@ public class MeleeCop extends Cop {
 					direction = DOWN_LEFT;
 	
 				if (stateTime == 0f) {
-					punch.play();
+					punch.play(game.soundFactor);
 					protester.hurt(40);
 					stateTime += 0.001f;
 					break;

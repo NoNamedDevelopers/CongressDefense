@@ -14,7 +14,7 @@ public class Proyectile {
 	
 	protected final CongressDefense game;	
 
-	private Texture image;
+	private static Texture image;
 	private TextureRegion texture;
 	
 	private Protester target;
@@ -25,7 +25,12 @@ public class Proyectile {
 	
 	private boolean isDestroyed;
 	
-	private Sound ballHit;
+	private static Sound ballHit;
+	
+	static {
+		image = new Texture(Gdx.files.internal("sprites/copgun/ball.png"));
+		ballHit = Gdx.audio.newSound(Gdx.files.internal("sounds/ball_hit.mp3"));
+	}
 	
 	public Proyectile(final CongressDefense game, float x, float y, Protester protester) {
 		this.game = game;
@@ -36,9 +41,7 @@ public class Proyectile {
 		boundingCircle = new Circle();				
 		isDestroyed = false;		
 		
-		image = new Texture(Gdx.files.internal("sprites/copgun/ball.png"));
 		texture = new TextureRegion(image);
-		ballHit = Gdx.audio.newSound(Gdx.files.internal("sounds/ball_hit.mp3"));
 	}
 	
 	public void draw(SpriteBatch batch) {
@@ -59,7 +62,7 @@ public class Proyectile {
 		boundingCircle.set(x + 16, y + 16, 10f);
 		if (Intersector.overlaps(target.getBoundingCircle(), boundingCircle)) {
 			target.hurt(40);
-			ballHit.play();
+			ballHit.play(game.soundFactor);
 			destroy();
 		}
 	}
@@ -67,11 +70,6 @@ public class Proyectile {
 	
 	private void destroy() {
 		isDestroyed = true;
-		dispose();
 	}
 	
-	public void dispose() {
-		image.dispose();		
-	}
-
 }

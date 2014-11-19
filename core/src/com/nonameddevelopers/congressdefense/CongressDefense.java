@@ -19,6 +19,8 @@ public class CongressDefense extends Game {
 	public boolean isMusicPlayed = true;
 	public boolean isSoundOn = true;
 	
+	public float soundFactor = 1f;
+	
 	public int life;
 	public int score;
 	public int money;
@@ -57,16 +59,13 @@ public class CongressDefense extends Game {
 		touchSound.dispose();
 	}
 	
-	public void playBackground() {
-		bgMusic.play();
-	}
-	
-	public void stopBackground() {
-		bgMusic.stop();
+	public void playMusic() {
+		if (isMusicPlayed)
+			bgMusic.play();
 	}
 	
 	public void playTouch() {
-		touchSound.play(0.3f);
+		touchSound.play(0.3f*soundFactor);
 	}
 	
 	public void toggleMusic() {
@@ -75,6 +74,14 @@ public class CongressDefense extends Game {
 		else 
 			bgMusic.play();
 		isMusicPlayed = !isMusicPlayed;
+	}
+	
+	public void toggleSound() {
+		if (isSoundOn)
+			soundFactor = 0f;
+		else 
+			soundFactor = 1f;
+		isSoundOn = !isSoundOn;
 	}
 
 

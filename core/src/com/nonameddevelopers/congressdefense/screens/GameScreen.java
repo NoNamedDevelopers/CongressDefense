@@ -2,7 +2,6 @@ package com.nonameddevelopers.congressdefense.screens;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
-import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
@@ -14,7 +13,7 @@ import com.nonameddevelopers.congressdefense.CopDisplayer;
 import com.nonameddevelopers.congressdefense.EntityManager;
 import com.nonameddevelopers.congressdefense.GameCamera;
 import com.nonameddevelopers.congressdefense.GameInputListener;
-import com.nonameddevelopers.congressdefense.characters.PoliceVan;
+import com.nonameddevelopers.congressdefense.ui.CheckBoxActor;
 import com.nonameddevelopers.congressdefense.ui.CopIcon;
 
 public class GameScreen implements Screen {
@@ -27,13 +26,15 @@ public class GameScreen implements Screen {
 	public Array<CopIcon> menu;
 	
 	private Texture starBoardTexture, coinsBoardTexture, voteBoardTexture;
-	private Sprite starBoard, coinsBoard, voteBoard;
-	
+	private Sprite starBoard, coinsBoard, voteBoard;	
 
 	private GameCamera camera;
 	private Texture mapTexture, buildingTexture;
 	private Sprite map, building;
 
+
+	public CheckBoxActor musicButton, soundsButton;
+	
 	private EntityManager entityManager;
 
 	private CopDisplayer copDisp;
@@ -44,9 +45,9 @@ public class GameScreen implements Screen {
 		this.game = game;
 		camera = new GameCamera(WORLD_WIDTH, WORLD_HEIGHT);
 
-		menu = new Array<CopIcon>(); 
+		loadMenu();
 		
-		inputListener = new GameInputListener(this, camera);
+		inputListener = new GameInputListener(game, this, camera);
 		Gdx.input.setInputProcessor(new GestureDetector(inputListener));
 
 		mapTexture = new Texture(Gdx.files.internal("map2.jpg"));
@@ -64,7 +65,8 @@ public class GameScreen implements Screen {
 		entityManager.setCamera(camera);
 		copDisp = new CopDisplayer(entityManager.getCopManager(),game, inputListener);		
 		
-		loadMenu();
+		
+		
 	}
 
 	@Override
@@ -90,7 +92,6 @@ public class GameScreen implements Screen {
 		
 		
 		game.batch.end();
-		inputListener.update();
 		
 	}
 
@@ -113,9 +114,16 @@ public class GameScreen implements Screen {
 		voteBoard.draw(batch);
 		game.font.draw(batch, String.valueOf(game.life), camera.position.x+445,
 					   camera.position.y+camera.viewportHeight/2-13);
+		
+
+		musicButton.setPosition(camera.position.x-camera.viewportWidth/2+5,  camera.position.y-camera.viewportHeight/2+5);
+		musicButton.draw(batch, 1f);
+		soundsButton.setPosition(camera.position.x-camera.viewportWidth/2+60,  camera.position.y-camera.viewportHeight/2+5);
+		soundsButton.draw(batch, 1f);
 	}
 	
 	private void loadMenu() {
+		menu = new Array<CopIcon>(); 		
 		menu.add(new CopIcon(game, camera, 20, 10, 75, "ui/meleecopicon.png", CopIcon.MELEE));
 		menu.add(new CopIcon(game, camera, 50, 90, 75, "ui/bazookacopicon.png", CopIcon.BAZOOKA));
 		
@@ -131,6 +139,16 @@ public class GameScreen implements Screen {
 		voteBoardTexture = new Texture(Gdx.files.internal("ui/voteboard.png"));
 		voteBoard = new Sprite(voteBoardTexture);
 		voteBoard.setSize(96, 50);
+		
+		
+
+		musicButton = new CheckBoxActor("ui/speaker_normal_button.png", "ui/speaker_muted_button.png", game, CheckBoxActor.MUSIC);
+		musicButton.setSize(50, 50);
+				
+
+		soundsButton = new CheckBoxActor("ui/note_normal_button.png", "ui/note_muted_button.png", game, CheckBoxActor.SOUND);
+		soundsButton.setSize(50, 50);
+		
 	}
 	
 	

@@ -1,24 +1,31 @@
 package com.nonameddevelopers.congressdefense;
 
 import com.badlogic.gdx.input.GestureDetector.GestureListener;
+import com.badlogic.gdx.math.Intersector;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.utils.Array;
 import com.nonameddevelopers.congressdefense.screens.GameScreen;
+import com.nonameddevelopers.congressdefense.ui.CheckBoxActor;
 import com.nonameddevelopers.congressdefense.ui.CopIcon;
 
 public class GameInputListener implements GestureListener {
 
 	private float x, y;
 		
+	private final CongressDefense game;
 	public Array<CopIcon> menu;
+	private CheckBoxActor musicButton;
+	private CheckBoxActor soundButton;
 	private GameCamera camera;
 	private Vector3 touchPos;
 	
-	public GameInputListener(GameScreen screen, GameCamera camera) {
+	public GameInputListener(final CongressDefense game, GameScreen screen, GameCamera camera) {
+		this.game = game;
 		this.camera = camera;
 		this.menu = screen.menu;
-		
+		this.musicButton = screen.musicButton;
+		this.soundButton = screen.soundsButton;
 		
 		touchPos = new Vector3();
 	}
@@ -31,6 +38,11 @@ public class GameInputListener implements GestureListener {
 	@Override
 	public boolean touchDown(float x, float y, int pointer, int button) {	
 		unproject(x, y);
+		
+		if (musicButton.circle.contains(this.x, this.y))
+			game.toggleMusic();
+		if (soundButton.circle.contains(this.x, this.y))
+			game.toggleSound();
 		
 		for (CopIcon icon : menu) 
 			icon.setPressed(this.x,this.y);

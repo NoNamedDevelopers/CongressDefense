@@ -8,6 +8,7 @@ import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.input.GestureDetector;
 import com.badlogic.gdx.utils.Array;
+import com.badlogic.gdx.utils.ObjectMap;
 import com.nonameddevelopers.congressdefense.CongressDefense;
 import com.nonameddevelopers.congressdefense.CopDisplayer;
 import com.nonameddevelopers.congressdefense.EntityManager;
@@ -24,16 +25,16 @@ public class GameScreen implements Screen {
 	private final CongressDefense game;
 	
 	public Array<CopIcon> menu;
+	public ObjectMap<String, CheckBoxActor> buttons;
 	
 	private Texture starBoardTexture, coinsBoardTexture, voteBoardTexture;
-	private Sprite starBoard, coinsBoard, voteBoard;	
+	private Sprite starBoard, coinsBoard, voteBoard;
 
 	private GameCamera camera;
 	private Texture mapTexture, buildingTexture;
 	private Sprite map, building;
 
 
-	public CheckBoxActor musicButton, soundsButton;
 	
 	private EntityManager entityManager;
 
@@ -61,22 +62,24 @@ public class GameScreen implements Screen {
 		building.setPosition(0, 0);
 		building.setSize(WORLD_WIDTH, WORLD_HEIGHT);
 		
+		EntityManager.empty();
 		entityManager = EntityManager.getInstance(game,camera);
-		copDisp = new CopDisplayer(entityManager.getCopManager(),game, inputListener);		
-		
-		
-		
+		copDisp = new CopDisplayer(entityManager.getCopManager(),game, inputListener);				
 	}
 
 	@Override
 	public void render(float delta) {
+		
 		Gdx.gl.glClearColor(0, 0, 0, 1);
 		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 		
 		camera.update();
 		inputListener.update();
-		copDisp.update();
-		entityManager.update(delta);
+
+		if (!game.isPaused) {
+			copDisp.update();
+			entityManager.update(delta);
+		}
 
 		game.batch.setProjectionMatrix(camera.combined);
 		game.batch.begin();
@@ -87,11 +90,9 @@ public class GameScreen implements Screen {
 		
 		building.draw(game.batch);
 
-		drawMenu(game.batch);
+		drawMenu(game.batch);		
 		
-		
-		game.batch.end();
-		
+		game.batch.end();		
 	}
 
 	
@@ -114,17 +115,24 @@ public class GameScreen implements Screen {
 		game.font.draw(batch, String.valueOf(game.life), camera.position.x+445,
 					   camera.position.y+camera.viewportHeight/2-13);
 		
+		
 
-		musicButton.setPosition(camera.position.x-camera.viewportWidth/2+5,  camera.position.y-camera.viewportHeight/2+5);
-		musicButton.draw(batch, 1f);
-		soundsButton.setPosition(camera.position.x-camera.viewportWidth/2+60,  camera.position.y-camera.viewportHeight/2+5);
-		soundsButton.draw(batch, 1f);
+		buttons.get("pause").setPosition(camera.position.x-camera.viewportWidth/2+10,  camera.position.y+camera.viewportHeight/2-60);
+		
+		buttons.get("speaker").setPosition(camera.position.x-camera.viewportWidth/2+10,  camera.position.y-camera.viewportHeight/2+10);
+			
+		buttons.get("sounds").setPosition(camera.position.x-camera.viewportWidth/2+70,  camera.position.y-camera.viewportHeight/2+10);
+		
+		buttons.get("back").setPosition(camera.position.x+camera.viewportWidth/2-60,  camera.position.y-camera.viewportHeight/2+10);
+		
+		for (CheckBoxActor button : buttons.values()) 
+			button.draw(batch, 1f);
 	}
 	
 	private void loadMenu() {
 		menu = new Array<CopIcon>(); 		
-		menu.add(new CopIcon(game, camera, 20, 170, 5, "ui/meleecopicon.png", CopIcon.MELEE));
-		menu.add(new CopIcon(game, camera, 50, 80, 5, "ui/bazookacopicon.png", CopIcon.BAZOOKA));
+		menu.add(new CopIcon(game, camera, 20, camera.position.x+75, 10, "ui/meleecopicon.png", CopIcon.MELEE));
+		menu.add(new CopIcon(game, camera, 50, camera.position.x-5, 10, "ui/bazookacopicon.png", CopIcon.BAZOOKA));
 		
 		
 		starBoardTexture = new Texture(Gdx.files.internal("ui/starboard.png"));
@@ -140,14 +148,19 @@ public class GameScreen implements Screen {
 		voteBoard.setSize(96, 50);
 		
 		
-
-		musicButton = new CheckBoxActor("ui/speaker_normal_button.png", "ui/speaker_muted_button.png", game, CheckBoxActor.MUSIC);
-		musicButton.setSize(50, 50);
-				
-
-		soundsButton = new CheckBoxActor("ui/note_normal_button.png", "ui/note_muted_button.png", game, CheckBoxActor.SOUND);
-		soundsButton.setSize(50, 50);
+		buttons = new ObjectMap<String, CheckBoxActor>();
 		
+		buttons.put("pause", new CheckBoxActor("ui/pause_button.png", "ui/play_button.png", game, CheckBoxActor.PAUSE));
+		buttons.get("pause").setSize(50, 50);
+
+		buttons.put("speaker",  new CheckBoxActor("ui/speaker_normal_button.png", "ui/speaker_muted_button.png", game, CheckBoxActor.MUSIC));
+		buttons.get("speaker").setSize(50, 50);				
+
+		buttons.put("sounds",  new CheckBoxActor("ui/note_normal_button.png", "ui/note_muted_button.png", game, CheckBoxActor.SOUND));
+		buttons.get("sounds").setSize(50, 50);
+		
+		buttons.put("back",  new CheckBoxActor("ui/back_button.png", "ui/back_button.png", game, CheckBoxActor.NORMAL));
+		buttons.get("back").setSize(50, 50);		
 	}
 	
 	

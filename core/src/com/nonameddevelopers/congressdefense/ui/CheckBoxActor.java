@@ -13,6 +13,8 @@ public class CheckBoxActor extends Actor {
 	
 	public static final short MUSIC = 0;
 	public static final short SOUND = 1;
+	public static final short PAUSE = 3;
+	public static final short NORMAL = 4;
 	
 	private Texture imageOn, imageOff;
 	private TextureRegion textureOn, textureOff, texture;
@@ -41,12 +43,20 @@ public class CheckBoxActor extends Actor {
 		Color color = getColor();
 		batch.setColor(color.r, color.g, color.b, color.a * parentAlpha);
 
-		if (type == MUSIC)
+		switch(type) {
+		case MUSIC:
 			condition = game.isMusicPlayed;
-		else if (type == SOUND)
+			break;
+		case SOUND:
 			condition = game.isSoundOn;
-		else 
+			break;
+		case PAUSE:
+			condition = !game.isPaused;
+			break;
+		default:
 			condition = false;
+		}
+		
 		texture = condition ? textureOn : textureOff;
 		batch.draw(texture, getX(), getY(), 
 				   getOriginX(), getOriginY(),

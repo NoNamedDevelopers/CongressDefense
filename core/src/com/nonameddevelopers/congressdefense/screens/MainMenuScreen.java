@@ -129,7 +129,6 @@ private final CongressDefense game;
 
 	@Override
 	public void show() {
-		game.playMusic();
 	}
 
 	@Override

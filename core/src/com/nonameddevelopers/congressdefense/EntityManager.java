@@ -38,6 +38,10 @@ public class EntityManager {
 	public static EntityManager getInstance() {
 			return instance;
 	}
+	
+	public static void empty() {
+		instance = null;
+	}
 
 	public void update(float delta) {
 		crowdMan.update(delta);

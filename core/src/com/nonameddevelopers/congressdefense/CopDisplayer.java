@@ -35,13 +35,13 @@ public class CopDisplayer {
 				
 				copToPlant.setPosition(inputListener.getX(), inputListener.getY()+40);
 
-				availableCircle.set(inputListener.getX(), inputListener.getY(), 20f);
+				availableCircle.set(inputListener.getX(), inputListener.getY()+40, 20f);
 				
 				copToPlant.tint(Color.GREEN);
 				
 				if(!Intersector.overlaps(icon.circle, availableCircle)) {
 					for (Cop cop: copMan.getCops())
-						if (cop!=copToPlant 
+						if (cop!=copToPlant 							
 							&& Intersector.overlaps(cop.getBoundingCircle(), availableCircle))  {
 							available= false;
 							copToPlant.tint(Color.RED);

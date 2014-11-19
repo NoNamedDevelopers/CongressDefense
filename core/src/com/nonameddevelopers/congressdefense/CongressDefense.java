@@ -17,6 +17,7 @@ public class CongressDefense extends Game {
 	
 	public boolean isMusicPlayed = true;
 	public boolean isSoundOn = true;
+	public boolean isPaused = false;
 	
 	public int life;
 	public int score;
@@ -39,9 +40,15 @@ public class CongressDefense extends Game {
 		font = new BitmapFont(Gdx.files.internal("opensans.fnt"));
 		font.setColor(new Color(255,255,255, 1f));
 		font.setScale(0.9f);
-		this.setScreen(new MainMenuScreen(this));
+		loadMenu();
+		playMusic();
 	}
 	
+	public void loadMenu() {
+		if (this.getScreen()!=null)
+			this.getScreen().dispose();
+		this.setScreen(new MainMenuScreen(this));		
+	}
 
 	@Override
 	public void render () {
@@ -105,6 +112,10 @@ public class CongressDefense extends Game {
 
 	public void setMoney(int money) {
 		this.money = money;
+	}
+	
+	public void togglePause() {
+		isPaused = !isPaused;
 	}
 	
 	

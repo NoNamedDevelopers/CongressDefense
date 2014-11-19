@@ -49,12 +49,12 @@ public class CopIcon {
 	}
 	
 	public void update() {
-		circle.set(camera.position.x-camera.viewportWidth/2+x+35,
-				   camera.position.y+camera.viewportHeight/2-y+35,
+		circle.set(camera.position.x+camera.viewportWidth/2-x+35,
+				   camera.position.y-camera.viewportHeight/2+y+35,
 				   35f);
 		
-		sprite.setPosition(camera.position.x-camera.viewportWidth/2+x, 
-				   		   camera.position.y+camera.viewportHeight/2-y);
+		sprite.setPosition(camera.position.x+camera.viewportWidth/2-x, 
+				   		   camera.position.y-camera.viewportHeight/2+y);
 	}
 	
 	public void draw(SpriteBatch batch) {

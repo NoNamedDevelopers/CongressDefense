@@ -3,7 +3,6 @@ package com.nonameddevelopers.congressdefense;
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.audio.Music;
-import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
@@ -14,12 +13,10 @@ public class CongressDefense extends Game {
 	public SpriteBatch batch;
 	public BitmapFont font;
 	private Music bgMusic;
-	private Sound touchSound;
+	private GameSound touchSound;
 	
 	public boolean isMusicPlayed = true;
 	public boolean isSoundOn = true;
-	
-	public float soundFactor = 1f;
 	
 	public int life;
 	public int score;
@@ -27,13 +24,13 @@ public class CongressDefense extends Game {
 	
 	@Override
 	public void create () {
-		
+		GameSound.GAME = this;
 
 		bgMusic = Gdx.audio.newMusic(Gdx.files.internal("bg.mp3"));
 		bgMusic.setLooping(true);
 		bgMusic.setVolume(0.08f);
 		 
-		touchSound = Gdx.audio.newSound(Gdx.files.internal("sounds/punch.mp3"));
+		touchSound = new GameSound("sounds/punch.mp3", 330);
 		
 		money = 80;
 		score = 0;
@@ -65,7 +62,7 @@ public class CongressDefense extends Game {
 	}
 	
 	public void playTouch() {
-		touchSound.play(0.3f*soundFactor);
+		touchSound.play(0.3f);
 	}
 	
 	public void toggleMusic() {
@@ -77,10 +74,6 @@ public class CongressDefense extends Game {
 	}
 	
 	public void toggleSound() {
-		if (isSoundOn)
-			soundFactor = 0f;
-		else 
-			soundFactor = 1f;
 		isSoundOn = !isSoundOn;
 	}
 

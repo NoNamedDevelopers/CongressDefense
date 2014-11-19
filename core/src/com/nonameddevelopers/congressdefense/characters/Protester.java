@@ -11,6 +11,7 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Circle;
 import com.badlogic.gdx.utils.Array;
 import com.nonameddevelopers.congressdefense.CongressDefense;
+import com.nonameddevelopers.congressdefense.GameSound;
 import com.nonameddevelopers.congressdefense.screens.GameOverScreen;
 
 public abstract class Protester extends GameCharacter {
@@ -20,8 +21,9 @@ public abstract class Protester extends GameCharacter {
 	private int xGoal = 813;
 	private int yGoal = 369;
 
-	private static Array<Sound> moans;
-	private static Sound joy, die;
+	private static Array<GameSound> moans;
+	private static GameSound joy, die;
+	private static float lastDieSound = 0.5f;
 	private static Texture lifeBarTexture, lifeBlockTexture;
 	private Sprite lifeBar, lifeBlock;
 
@@ -33,12 +35,13 @@ public abstract class Protester extends GameCharacter {
 
 	static {
 		r = new Random();
-		moans = new Array<Sound>();
-		moans.add(Gdx.audio.newSound(Gdx.files.internal("sounds/moan_0.mp3")));
-		moans.add(Gdx.audio.newSound(Gdx.files.internal("sounds/moan_1.mp3")));
+		moans = new Array<GameSound>();
+		moans.add(new GameSound("sounds/moan_0.mp3", 300));
+		moans.add(new GameSound("sounds/moan_1.mp3", 300));
+		moans.add(new GameSound("sounds/moan_2.mp3", 330));
 		
-		joy = Gdx.audio.newSound(Gdx.files.internal("sounds/joy.mp3"));
-		die = Gdx.audio.newSound(Gdx.files.internal("sounds/die.mp3"));
+		joy = new GameSound("sounds/joy.mp3", 1150);
+		die = new GameSound("sounds/die.mp3", 670);
 		
 		lifeBarTexture = new Texture(Gdx.files.internal("sprites/lifebar.png"));
 		lifeBlockTexture = new Texture(Gdx.files.internal("sprites/lifeblock.png"));
@@ -54,7 +57,7 @@ public abstract class Protester extends GameCharacter {
 		lifeBlock = new Sprite(lifeBlockTexture);
 	}
 	
-	public void update(float delta) {
+	public void update(float delta) {		
 		stateTime += delta;
 		if (stateTime < appearTime)
 			return;
@@ -109,7 +112,7 @@ public abstract class Protester extends GameCharacter {
 	public void hurt(int damage) {	
 		isHurted = true;
 		life -= damage;
-		moans.get(r.nextInt(2)).play(game.soundFactor);
+		moans.get(r.nextInt(3)).play(0.5f);
 		if (life <= 0 && !isDead)
 			kill();
 	}
@@ -118,7 +121,7 @@ public abstract class Protester extends GameCharacter {
 		if (game.life - 1 <= 0)
 			game.setScreen(new GameOverScreen(game));
 		else {
-			joy.play(game.soundFactor);
+			joy.play();
 			isDead = true;
 			game.life--;
 		}
@@ -126,7 +129,9 @@ public abstract class Protester extends GameCharacter {
 
 	protected void kill() {
 		isDead = true;
-		die.play(game.soundFactor);
+		die.play();
+		
+		
 		game.score += 5;
 		game.money += 10;
 	}

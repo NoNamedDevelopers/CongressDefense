@@ -124,8 +124,8 @@ public class GameScreen implements Screen {
 	
 	private void loadMenu() {
 		menu = new Array<CopIcon>(); 		
-		menu.add(new CopIcon(game, camera, 20, 10, 75, "ui/meleecopicon.png", CopIcon.MELEE));
-		menu.add(new CopIcon(game, camera, 50, 90, 75, "ui/bazookacopicon.png", CopIcon.BAZOOKA));
+		menu.add(new CopIcon(game, camera, 20, 170, 5, "ui/meleecopicon.png", CopIcon.MELEE));
+		menu.add(new CopIcon(game, camera, 50, 80, 5, "ui/bazookacopicon.png", CopIcon.BAZOOKA));
 		
 		
 		starBoardTexture = new Texture(Gdx.files.internal("ui/starboard.png"));

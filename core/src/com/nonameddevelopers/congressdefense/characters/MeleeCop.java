@@ -1,16 +1,15 @@
 package com.nonameddevelopers.congressdefense.characters;
 
-import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.math.Intersector;
 import com.nonameddevelopers.congressdefense.CongressDefense;
+import com.nonameddevelopers.congressdefense.GameSound;
 
 public class MeleeCop extends Cop {
 	
-	protected static Sound punch;
+	protected static GameSound punch;
 
 	static {
-		punch = Gdx.audio.newSound(Gdx.files.internal("sounds/punch.mp3"));
+		punch = new GameSound("sounds/punch.mp3", 330);
 	}
 	
 	public MeleeCop(CongressDefense game, float x, float y) {
@@ -34,7 +33,7 @@ public class MeleeCop extends Cop {
 					direction = DOWN_LEFT;
 	
 				if (stateTime == 0f) {
-					punch.play(game.soundFactor);
+					punch.play();
 					protester.hurt(40);
 					stateTime += 0.001f;
 					break;

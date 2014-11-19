@@ -1,7 +1,6 @@
 package com.nonameddevelopers.congressdefense.characters;
 
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
@@ -9,6 +8,7 @@ import com.badlogic.gdx.math.Circle;
 import com.badlogic.gdx.math.Intersector;
 import com.badlogic.gdx.math.Vector2;
 import com.nonameddevelopers.congressdefense.CongressDefense;
+import com.nonameddevelopers.congressdefense.GameSound;
 
 public class Proyectile {
 	
@@ -27,11 +27,11 @@ public class Proyectile {
 	
 	private boolean isDestroyed;
 	
-	private static Sound ballHit;
+	private static GameSound ballHit;
 	
 	static {
 		image = new Texture(Gdx.files.internal("sprites/copgun/ball.png"));
-		ballHit = Gdx.audio.newSound(Gdx.files.internal("sounds/ball_hit.mp3"));
+		ballHit = new GameSound("sounds/ball_hit.mp3", 170);
 	}
 	
 	public Proyectile(final CongressDefense game, float x, float y, Protester protester) {
@@ -68,7 +68,7 @@ public class Proyectile {
 		
 		if (Intersector.overlaps(target.getBoundingCircle(), boundingCircle)) {
 			target.hurt(40);
-			ballHit.play(game.soundFactor);
+			ballHit.play();
 			destroy();
 		}
 	}

@@ -67,7 +67,7 @@ public abstract class Protester extends GameCharacter {
 		else 
 			timeHurted = 0;
 
-		approach();
+		approach(delta);
 		updateAnimation();
 
 		boundingCircle.set(x + 16, y + 16, 20f);
@@ -145,7 +145,7 @@ public abstract class Protester extends GameCharacter {
 		return boundingCircle;
 	}
 
-	public abstract void approach();
+	public abstract void approach(float delta);
 
 	protected void arrived() {
 		if (x>803 && x<823)

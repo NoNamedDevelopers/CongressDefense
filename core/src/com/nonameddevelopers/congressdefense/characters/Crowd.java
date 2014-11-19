@@ -72,8 +72,10 @@ public class Crowd {
 		while (iter.hasNext()) {
 			Protester protester = iter.next();
 			protester.update(delta);
-			if (protester.isDead())
-				iter.remove();				
+			if (protester.isDead()) {
+				iter.remove();
+				protester = null;
+			}
 		}
 	}
 	
@@ -90,4 +92,5 @@ public class Crowd {
 	{
 		return crowd.size;
 	}
+
 }

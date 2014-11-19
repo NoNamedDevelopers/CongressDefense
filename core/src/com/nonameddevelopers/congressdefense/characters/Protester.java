@@ -169,6 +169,5 @@ public abstract class Protester extends GameCharacter {
 		this.yGoal = yGoal;
 	}
 	
-	
 
 }

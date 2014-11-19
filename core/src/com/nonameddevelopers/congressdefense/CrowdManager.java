@@ -1,15 +1,17 @@
 package com.nonameddevelopers.congressdefense;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.utils.Array;
 import com.nonameddevelopers.congressdefense.characters.Crowd;
 
 public class CrowdManager {
 	
 	
 	private final CongressDefense game;
-	private ArrayList<Crowd> crowds;
+	private Array<Crowd> crowds;
 	private int wave;
 	private int numCrowds;
 	private int protestantsPerWave;
@@ -36,7 +38,7 @@ public class CrowdManager {
 		percentage[1] = 0;
 		percentage[2] = 0;
 		percentage[3] = 0;
-		crowds = new ArrayList<Crowd>();
+		crowds = new Array<Crowd>();
 		crowds.add(new Crowd(game, protestants, percentage));
 	}
 
@@ -55,7 +57,6 @@ public class CrowdManager {
 			wave++;
 			setNumCrowds();
 			//setPercentage();
-			crowds = new ArrayList<Crowd>();
 			for (int i = 0; i<numCrowds;i++)
 				crowds.add(new Crowd(game, protestantsPerWave, percentage));
 		}
@@ -69,14 +70,20 @@ public class CrowdManager {
 		}
 	}
 	
-	public boolean isCrowdsDead()
-	{
-		for (Crowd crowd: crowds)
-		{
-			if (crowd.getNumberOfProtesters()!=0)
-				return false;
+	public boolean isCrowdsDead() {
+		boolean isCrowdsDead = true;
+		Iterator<Crowd> iter = crowds.iterator();
+		while(iter.hasNext()) {
+			Crowd crowd = iter.next();
+			if (crowd.getNumberOfProtesters()==0) {
+				iter.remove();
+				crowd = null;
+			}
+			else
+				isCrowdsDead = false;
+				
 		}
-		return true;
+		return isCrowdsDead;
 	}
 	
 	public void setNumCrowds()
@@ -84,11 +91,11 @@ public class CrowdManager {
 		numCrowds = wave/coef +1;
 	}
 
-	public ArrayList<Crowd> getCrowds() {
+	public Array<Crowd> getCrowds() {
 		return crowds;
 	}
 
-	public void setCrowds(ArrayList<Crowd> crowds) {
+	public void setCrowds(Array<Crowd> crowds) {
 		this.crowds = crowds;
 	}
 	

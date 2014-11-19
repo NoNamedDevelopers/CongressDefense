@@ -1,9 +1,9 @@
 package com.nonameddevelopers.congressdefense;
 
-import java.util.ArrayList;
+import java.util.Iterator;
 
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.nonameddevelopers.congressdefense.characters.Cop;
+import com.badlogic.gdx.utils.Array;
 import com.nonameddevelopers.congressdefense.characters.Proyectile;
 
 public class ProyectileLauncher {
@@ -11,12 +11,12 @@ public class ProyectileLauncher {
 	private final CongressDefense game;
 	
 	private GameCamera camera;
-	private ArrayList<Proyectile> proyectiles;
+	private Array<Proyectile> proyectiles;
 	
 	public ProyectileLauncher(CongressDefense game, GameCamera camera) {
 		this.game = game;
 		this.camera = camera;
-		this.proyectiles = new ArrayList<Proyectile>();
+		this.proyectiles = new Array<Proyectile>();
 	}
 	
 	public void draw(SpriteBatch batch)
@@ -26,12 +26,17 @@ public class ProyectileLauncher {
 	}
 	
 	public void update(float delta) {
-		for (Proyectile proyectile: proyectiles)	
-			proyectile.update(delta);		
+		Iterator<Proyectile> iter = proyectiles.iterator();
+		while(iter.hasNext()) {
+			Proyectile proyectile = iter.next();
+			proyectile.update(delta);
+			if (proyectile.isDestroyed()) {
+				iter.remove();
+				proyectile = null;
+			}
+		}
 	}
 	
-	
-
 	public void addProyectile(Proyectile proyectile) {
 		proyectiles.add(proyectile);	
 	}

@@ -31,6 +31,8 @@ public abstract class GameCharacter {
 	protected float x, y;
 	protected short direction;
 	
+	private static int i = 0;
+	
 	static {
 		textures = new ObjectMap<String, Texture>();
 	}	
@@ -57,9 +59,10 @@ public abstract class GameCharacter {
 	
 	protected Animation loadAnimation(String src, int columns, int rows, float speed) {
 		if (!textures.containsKey(src)) 
-			textures.put(type, new Texture(Gdx.files.internal(src)));
+			textures.put(src, new Texture(Gdx.files.internal(src)));
 		
-		Texture spriteSheet = textures.get(type);
+		
+		Texture spriteSheet = textures.get(src);
 		TextureRegion[][] tmp = TextureRegion.split(spriteSheet, spriteSheet.getWidth()/columns, spriteSheet.getHeight()/rows);
 		TextureRegion[] frames = new TextureRegion[columns*rows];
 		

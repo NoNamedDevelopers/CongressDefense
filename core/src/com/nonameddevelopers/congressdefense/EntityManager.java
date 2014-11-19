@@ -1,9 +1,8 @@
 package com.nonameddevelopers.congressdefense;
 
 import java.util.Comparator;
+import java.util.Iterator;
 
-import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.utils.Array;
 import com.nonameddevelopers.congressdefense.characters.Cop;
@@ -29,6 +28,7 @@ public class EntityManager {
 		copManager = new CopManager(game, camera);
 		proyectileL = new ProyectileLauncher(game, camera);
 		instance = this;
+		elementsToRender = new Array<GameCharacter>();
 	}
 
 	public static EntityManager getInstance(final CongressDefense game,
@@ -54,7 +54,6 @@ public class EntityManager {
 	}
 
 	public void draw(SpriteBatch batch) {
-		elementsToRender = new Array<GameCharacter>();
 		for (Crowd crowd : crowdMan.getCrowds())
 			for (Protester protester : crowd.getProtesters())
 				elementsToRender.add(protester);
@@ -70,8 +69,12 @@ public class EntityManager {
 		
 		proyectileL.draw(batch);
 		
-		for (GameCharacter gm : elementsToRender)
-			gm.draw(batch);
+
+		Iterator<GameCharacter> iter = elementsToRender.iterator();
+		while (iter.hasNext()) {
+			iter.next().draw(batch);
+			iter.remove();
+		}
 	}
 	
 	public CrowdManager getCrowdMan() {

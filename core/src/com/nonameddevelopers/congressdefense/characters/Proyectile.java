@@ -21,6 +21,8 @@ public class Proyectile {
 	
 	private Circle boundingCircle;
 	
+	private Vector2 direction;
+	
 	private float x, y;
 	
 	private boolean isDestroyed;
@@ -38,6 +40,9 @@ public class Proyectile {
 		this.x = x;
 		this.y = y;
 		
+
+		
+		direction = new Vector2();
 		boundingCircle = new Circle();				
 		isDestroyed = false;		
 		
@@ -51,25 +56,29 @@ public class Proyectile {
 	
 	public void update(float delta)
 	{
-		if (isDestroyed)
+		if (target.isDead()) {
+			destroy();
 			return;
-		
-		Vector2 direction = new Vector2();
+		}
 		direction.set(target.x, target.y).sub(this.x, this.y).nor();
 		x += direction.x * 8;
 		y += direction.y * 8;
 
 		boundingCircle.set(x + 16, y + 16, 10f);
+		
 		if (Intersector.overlaps(target.getBoundingCircle(), boundingCircle)) {
 			target.hurt(40);
 			ballHit.play(game.soundFactor);
 			destroy();
 		}
 	}
-	
-	
+		
 	private void destroy() {
 		isDestroyed = true;
+	}
+	
+	public boolean isDestroyed() {
+		return isDestroyed;
 	}
 	
 }

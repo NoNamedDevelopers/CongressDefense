@@ -3,7 +3,6 @@ package com.nonameddevelopers.congressdefense.characters;
 import java.util.Random;
 
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
@@ -23,7 +22,6 @@ public abstract class Protester extends GameCharacter {
 
 	private static Array<GameSound> moans;
 	private static GameSound joy, die;
-	private static float lastDieSound = 0.5f;
 	private static Texture lifeBarTexture, lifeBlockTexture;
 	private Sprite lifeBar, lifeBlock;
 
@@ -94,12 +92,11 @@ public abstract class Protester extends GameCharacter {
 	@Override
 	public void draw(SpriteBatch batch) {
 		if (isHurted) {
-			batch.setColor(Color.RED);
+			tint(Color.RED);
 			if (timeHurted > 0.05f)
 				isHurted = false;
 		}
 		super.draw(batch);
-		batch.setColor(Color.WHITE);
 				
 		lifeBar.setPosition(x+6, y+32);
 		lifeBar.draw(batch);

@@ -39,7 +39,6 @@ public class MeleeCop extends Cop {
 					break;
 				}
 			}		
-	
 	}
 
 }

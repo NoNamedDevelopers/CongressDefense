@@ -9,12 +9,12 @@ public abstract class Cop extends GameCharacter {
 	
 	protected Animation currentAnimation;
 	
-	protected boolean isAttacking;
+	private boolean isPlanted = false;
+	
+	protected boolean isAttacking = false;
 	
 	public Cop(final CongressDefense game, float x, float y, String type, int columns, int rows, float animationSpeed) {
 		super(game, x-16, y-16, type, columns, rows, animationSpeed);		
-		
-		isAttacking = false;
 	}
 		
 	public void update(float delta) {
@@ -50,16 +50,6 @@ public abstract class Cop extends GameCharacter {
 	
 	public abstract void checkCollision(Crowd crowd);
 
-	@Override
-	public String toString() {
-		return "Cop [boundingCircle=" + boundingCircle +", game=" + game
-				+ ", ulAnimation=" + ulAnimation + ", dlAnimation="
-				+ dlAnimation + ", urAnimation=" + urAnimation
-				+ ", drAnimation=" + drAnimation + ", currentFrame="
-				+ currentFrame + ", stateTime=" + stateTime + ", x=" + x
-				+ ", y=" + y + ", direction=" + direction + "]";
-	}
-
 	public Circle getBoundingCircle() {
 		return boundingCircle;
 	}
@@ -68,6 +58,20 @@ public abstract class Cop extends GameCharacter {
 		this.boundingCircle = boundingCircle;
 	}
 	
+	public void setPosition(float x, float y) {
+		this.x = x-16;
+		this.y = y-16;
+		this.boundingCircle.x = x;
+		this.boundingCircle.y = y;
+	}
+	
+	public void plant() {
+		isPlanted = true;
+	}
+	
+	public boolean isPlanted() {
+		return isPlanted;
+	}
 	
 	
 	

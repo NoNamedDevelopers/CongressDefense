@@ -17,15 +17,12 @@ public class EntityManager {
 	private CrowdManager crowdMan;
 	private CopManager copManager;
 	private ProyectileLauncher proyectileL;
-	private final CongressDefense game;
-	private GameCamera camera;
 	private static EntityManager instance;
 	
 	
 	private EntityManager(final CongressDefense game, GameCamera camera) {
-		this.game = game;
 		crowdMan = new CrowdManager(game, 10);
-		copManager = new CopManager(game, camera);
+		copManager = new CopManager();
 		proyectileL = new ProyectileLauncher(game, camera);
 		instance = this;
 		elementsToRender = new Array<GameCharacter>();
@@ -49,9 +46,6 @@ public class EntityManager {
 		proyectileL.update(delta);
 	}
 
-	public void setCamera(GameCamera camera) {
-		this.camera = camera;
-	}
 
 	public void draw(SpriteBatch batch) {
 		for (Crowd crowd : crowdMan.getCrowds())
@@ -104,7 +98,8 @@ public class EntityManager {
 	public void checkCollisions() {
 		for (Crowd crowd : getCrowdMan().getCrowds()) 
 			for (Cop cop : getCopManager().getCops()) 
-				cop.checkCollision(crowd);
+				if (cop.isPlanted())
+					cop.checkCollision(crowd);
 	}
 
 }

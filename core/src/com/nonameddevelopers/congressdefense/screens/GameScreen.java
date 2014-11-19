@@ -62,7 +62,6 @@ public class GameScreen implements Screen {
 		building.setSize(WORLD_WIDTH, WORLD_HEIGHT);
 		
 		entityManager = EntityManager.getInstance(game,camera);
-		entityManager.setCamera(camera);
 		copDisp = new CopDisplayer(entityManager.getCopManager(),game, inputListener);		
 		
 		

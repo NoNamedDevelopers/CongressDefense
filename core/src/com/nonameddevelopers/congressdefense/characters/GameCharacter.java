@@ -1,6 +1,7 @@
 package com.nonameddevelopers.congressdefense.characters;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
@@ -26,12 +27,12 @@ public abstract class GameCharacter {
 	protected TextureRegion currentFrame;
 	protected float stateTime;
 	
+	private Color tint = Color.WHITE;
+	
 	public String type; 
 	
 	protected float x, y;
 	protected short direction;
-	
-	private static int i = 0;
 	
 	static {
 		textures = new ObjectMap<String, Texture>();
@@ -77,10 +78,16 @@ public abstract class GameCharacter {
 	protected abstract void updateAnimation();
 	
 	public void draw(SpriteBatch batch) {
+		batch.setColor(tint);
 		batch.draw(currentFrame, x, y);
-		
+		batch.setColor(Color.WHITE);
+		tint = Color.WHITE;
 	}
 		
+	public void tint(Color color) {
+		this.tint = color;
+	}
+	
 	public TextureRegion getCurrentFrame() {
 		return currentFrame;
 	}

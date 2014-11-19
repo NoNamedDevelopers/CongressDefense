@@ -22,8 +22,6 @@ public class BazookaCop extends Cop {
 		boundingCircle.set(x, y, 10f);
 		range = new Circle();
 		range.set(x,y, 100f);
-		
-
 	}
 	
 	public void checkCollision(Crowd crowd) {
@@ -48,7 +46,6 @@ public class BazookaCop extends Cop {
 				
 			}
 		}
-
 	}
 	
 	private void shoot(Protester protester)
@@ -56,4 +53,11 @@ public class BazookaCop extends Cop {
 		EntityManager.getInstance().getProyectileL().addProyectile(new Proyectile(game, x, y, protester));
 	}
 
+	@Override
+	public void setPosition(float x, float y) {
+		super.setPosition(x, y);
+		range.x = x;
+		range.y = y;
+	}
+	
 }

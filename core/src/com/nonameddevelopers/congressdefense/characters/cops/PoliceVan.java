@@ -48,7 +48,7 @@ public class PoliceVan {
 				int xpos = rand.nextInt(1001)-500;
 				Vector2 direccion = new Vector2 (xpos, ypos);
 				direccion = direccion.nor();
-				Cop cop = new MeleeCop(game, x+direccion.x*35 +20, y+direccion.y*35 +20);
+				Cop cop = new MovileCop(game, x+direccion.x*35 +20, y+direccion.y*35 +20);
 				addPolice(copManag, cop);
 				numCop++;
 			}

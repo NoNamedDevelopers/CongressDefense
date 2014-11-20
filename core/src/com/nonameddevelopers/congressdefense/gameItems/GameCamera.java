@@ -1,4 +1,4 @@
-package com.nonameddevelopers.congressdefense;
+package com.nonameddevelopers.congressdefense.gameItems;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.OrthographicCamera;

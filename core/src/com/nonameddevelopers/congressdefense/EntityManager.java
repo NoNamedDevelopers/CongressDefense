@@ -9,6 +9,7 @@ import com.nonameddevelopers.congressdefense.characters.Cop;
 import com.nonameddevelopers.congressdefense.characters.Crowd;
 import com.nonameddevelopers.congressdefense.characters.GameCharacter;
 import com.nonameddevelopers.congressdefense.characters.Protester;
+import com.nonameddevelopers.congressdefense.gameItems.GameCamera;
 
 public class EntityManager {
 	

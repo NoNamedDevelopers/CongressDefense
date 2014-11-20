@@ -6,6 +6,10 @@ import java.util.Random;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.utils.Array;
 import com.nonameddevelopers.congressdefense.CongressDefense;
+import com.nonameddevelopers.congressdefense.characters.protesters.AnarquistProtester;
+import com.nonameddevelopers.congressdefense.characters.protesters.FastProtester;
+import com.nonameddevelopers.congressdefense.characters.protesters.FatProtester;
+import com.nonameddevelopers.congressdefense.characters.protesters.PacificProtester;
 
 public class Crowd {
 

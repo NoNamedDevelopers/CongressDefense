@@ -1,7 +1,8 @@
-package com.nonameddevelopers.congressdefense;
+package com.nonameddevelopers.congressdefense.gameItems;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.audio.Sound;
+import com.nonameddevelopers.congressdefense.CongressDefense;
 
 public class GameSound {
 

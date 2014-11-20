@@ -6,6 +6,7 @@ import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.nonameddevelopers.congressdefense.gameItems.GameSound;
 import com.nonameddevelopers.congressdefense.screens.MainMenuScreen;
 
 public class CongressDefense extends Game {

@@ -10,7 +10,7 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Circle;
 import com.badlogic.gdx.utils.Array;
 import com.nonameddevelopers.congressdefense.CongressDefense;
-import com.nonameddevelopers.congressdefense.GameSound;
+import com.nonameddevelopers.congressdefense.gameItems.GameSound;
 import com.nonameddevelopers.congressdefense.screens.GameOverScreen;
 
 public abstract class Protester extends GameCharacter {

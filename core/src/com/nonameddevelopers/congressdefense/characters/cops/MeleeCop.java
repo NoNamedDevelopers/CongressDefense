@@ -1,8 +1,11 @@
-package com.nonameddevelopers.congressdefense.characters;
+package com.nonameddevelopers.congressdefense.characters.cops;
 
 import com.badlogic.gdx.math.Intersector;
 import com.nonameddevelopers.congressdefense.CongressDefense;
-import com.nonameddevelopers.congressdefense.GameSound;
+import com.nonameddevelopers.congressdefense.characters.Cop;
+import com.nonameddevelopers.congressdefense.characters.Crowd;
+import com.nonameddevelopers.congressdefense.characters.Protester;
+import com.nonameddevelopers.congressdefense.gameItems.GameSound;
 
 public class MeleeCop extends Cop {
 	
@@ -23,11 +26,11 @@ public class MeleeCop extends Cop {
 		for (Protester protester : crowd.getProtesters())
 			if (Intersector.overlaps(protester.getBoundingCircle(), boundingCircle)) {
 				isAttacking = true;
-				if (x-protester.x >0 && y-protester.y>0)
+				if (x-protester.getX() >0 && y-protester.getY()>0)
 					direction = DOWN_RIGHT;
-				else if (x-protester.x > 0 && y-protester.y < 0)
+				else if (x-protester.getX() > 0 && y-protester.getY() < 0)
 					direction = UP_RIGHT;
-				else if (x-protester.x < 0 && y-protester.y < 0)
+				else if (x-protester.getX() < 0 && y-protester.getY() < 0)
 					direction = UP_LEFT;
 				else
 					direction = DOWN_LEFT;

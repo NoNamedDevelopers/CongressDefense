@@ -7,10 +7,10 @@ import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Circle;
 import com.nonameddevelopers.congressdefense.CongressDefense;
-import com.nonameddevelopers.congressdefense.GameCamera;
-import com.nonameddevelopers.congressdefense.characters.BazookaCop;
 import com.nonameddevelopers.congressdefense.characters.Cop;
-import com.nonameddevelopers.congressdefense.characters.MeleeCop;
+import com.nonameddevelopers.congressdefense.characters.cops.BazookaCop;
+import com.nonameddevelopers.congressdefense.characters.cops.MeleeCop;
+import com.nonameddevelopers.congressdefense.gameItems.GameCamera;
 
 public class CopIcon {
 	private static final Color TRANSPARENT = new Color(1,1,1,0.5f);

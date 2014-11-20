@@ -1,4 +1,4 @@
-package com.nonameddevelopers.congressdefense.characters;
+package com.nonameddevelopers.congressdefense.characters.cops;
 
 import java.util.ArrayList;
 import java.util.Random;
@@ -11,7 +11,8 @@ import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.math.Vector3;
 import com.nonameddevelopers.congressdefense.CongressDefense;
 import com.nonameddevelopers.congressdefense.CopManager;
-import com.nonameddevelopers.congressdefense.GameCamera;
+import com.nonameddevelopers.congressdefense.characters.Cop;
+import com.nonameddevelopers.congressdefense.gameItems.GameCamera;
 
 public class PoliceVan {
 

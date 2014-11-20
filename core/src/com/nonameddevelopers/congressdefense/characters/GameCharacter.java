@@ -31,7 +31,8 @@ public abstract class GameCharacter {
 	
 	public String type; 
 	
-	protected float x, y;
+	protected float x;
+	protected float y;
 	protected short direction;
 	
 	static {

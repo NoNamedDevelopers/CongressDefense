@@ -4,6 +4,7 @@ import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.math.Circle;
 import com.badlogic.gdx.math.Intersector;
 import com.nonameddevelopers.congressdefense.characters.Cop;
+import com.nonameddevelopers.congressdefense.gameItems.GameInputListener;
 import com.nonameddevelopers.congressdefense.ui.CopIcon;
 
 public class CopDisplayer {

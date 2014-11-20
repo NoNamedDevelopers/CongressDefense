@@ -6,7 +6,8 @@ import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Vector3;
 import com.nonameddevelopers.congressdefense.CongressDefense;
-import com.nonameddevelopers.congressdefense.GameCamera;
+import com.nonameddevelopers.congressdefense.characters.cops.MeleeCop;
+import com.nonameddevelopers.congressdefense.gameItems.GameCamera;
 
 public class PoliceCaller {
 

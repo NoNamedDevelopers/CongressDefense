@@ -10,8 +10,8 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.input.GestureDetector;
 import com.badlogic.gdx.utils.ObjectMap;
 import com.nonameddevelopers.congressdefense.CongressDefense;
-import com.nonameddevelopers.congressdefense.GameCamera;
-import com.nonameddevelopers.congressdefense.GameOverInputListener;
+import com.nonameddevelopers.congressdefense.gameItems.GameCamera;
+import com.nonameddevelopers.congressdefense.gameItems.GameOverInputListener;
 import com.nonameddevelopers.congressdefense.ui.CheckBoxActor;
 
 public class GameOverScreen implements Screen {

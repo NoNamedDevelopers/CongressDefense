@@ -1,9 +1,10 @@
-package com.nonameddevelopers.congressdefense.characters;
+package com.nonameddevelopers.congressdefense.characters.protesters;
 
 import java.util.Random;
 
 import com.badlogic.gdx.math.Vector2;
 import com.nonameddevelopers.congressdefense.CongressDefense;
+import com.nonameddevelopers.congressdefense.characters.Protester;
 
 public class FatProtester extends Protester {
 

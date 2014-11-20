@@ -13,8 +13,8 @@ import com.badlogic.gdx.utils.ObjectMap;
 import com.nonameddevelopers.congressdefense.CongressDefense;
 import com.nonameddevelopers.congressdefense.CopDisplayer;
 import com.nonameddevelopers.congressdefense.EntityManager;
-import com.nonameddevelopers.congressdefense.GameCamera;
-import com.nonameddevelopers.congressdefense.GameInputListener;
+import com.nonameddevelopers.congressdefense.gameItems.GameCamera;
+import com.nonameddevelopers.congressdefense.gameItems.GameInputListener;
 import com.nonameddevelopers.congressdefense.ui.CheckBoxActor;
 import com.nonameddevelopers.congressdefense.ui.CopIcon;
 

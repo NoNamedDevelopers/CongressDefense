@@ -1,10 +1,11 @@
-package com.nonameddevelopers.congressdefense;
+package com.nonameddevelopers.congressdefense.gameItems;
 
 import com.badlogic.gdx.input.GestureDetector.GestureListener;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.ObjectMap;
+import com.nonameddevelopers.congressdefense.CongressDefense;
 import com.nonameddevelopers.congressdefense.screens.GameScreen;
 import com.nonameddevelopers.congressdefense.ui.CheckBoxActor;
 import com.nonameddevelopers.congressdefense.ui.CopIcon;

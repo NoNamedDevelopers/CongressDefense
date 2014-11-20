@@ -1,28 +1,24 @@
-package com.nonameddevelopers.congressdefense.characters;
+package com.nonameddevelopers.congressdefense.characters.protesters;
 
 import java.util.Random;
 
-import com.badlogic.gdx.math.Intersector;
 import com.badlogic.gdx.math.Vector2;
 import com.nonameddevelopers.congressdefense.CongressDefense;
-import com.nonameddevelopers.congressdefense.EntityManager;
+import com.nonameddevelopers.congressdefense.characters.Protester;
 
-public class AnarquistProtester extends Protester {
+public class PacificProtester extends Protester {
+	
+	private static Random r = new Random();
 
-	public AnarquistProtester(CongressDefense game, float x, float y, float appearTime) {
-		super(game, x, y, "anarquist", 4, 5, appearTime);
+	public PacificProtester(CongressDefense game, float x, float y, float appearTime) {
+		super(game, x, y, "protester" + r.nextInt(3), 4, 5, appearTime);
 	}
 	
-	
-
-
 	@Override
 	public void update(float delta) {
 		super.update(delta);
 	}
-	
-	
-	
+
 	@Override
 	public void approach(float delta) {
 
@@ -68,19 +64,5 @@ public class AnarquistProtester extends Protester {
 		
 
 	}
-	
-	public void checkCollitions() {
-			for (Cop cop : EntityManager.getInstance().getCopManager().getCops()) {
-				if (Intersector.overlaps(getBoundingCircle(), cop.getBoundingCircle())) {
-					//Animacion pegar();
-					//sonidoPegar.play();
-					//cop.dispose();
-					//this.dispose();
-				}
-			}
-		
-	}
-	
-	
 
 }

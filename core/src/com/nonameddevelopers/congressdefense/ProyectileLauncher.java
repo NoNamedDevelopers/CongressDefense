@@ -5,6 +5,7 @@ import java.util.Iterator;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.utils.Array;
 import com.nonameddevelopers.congressdefense.characters.Proyectile;
+import com.nonameddevelopers.congressdefense.gameItems.GameCamera;
 
 public class ProyectileLauncher {
 

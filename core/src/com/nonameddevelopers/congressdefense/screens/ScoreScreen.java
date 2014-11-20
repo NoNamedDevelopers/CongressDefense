@@ -12,10 +12,11 @@ import com.badlogic.gdx.utils.ObjectMap;
 import com.nonameddevelopers.congressdefense.CongressDefense;
 import com.nonameddevelopers.congressdefense.gameItems.GameCamera;
 import com.nonameddevelopers.congressdefense.gameItems.GameOverInputListener;
+import com.nonameddevelopers.congressdefense.gameItems.ScoreScreenInputListener;
 import com.nonameddevelopers.congressdefense.scoresclient.RESTConnector;
 import com.nonameddevelopers.congressdefense.ui.CheckBoxActor;
 
-public class GameOverScreen implements Screen {
+public class ScoreScreen implements Screen {
 		
 	private static final int WORLD_WIDTH = 1000;
 	private static final int WORLD_HEIGHT = 750;
@@ -28,15 +29,17 @@ public class GameOverScreen implements Screen {
 	private Texture bgTexture;
 	private Sprite bg;
 		
-	private GameOverInputListener inputListener;
+	private ScoreScreenInputListener inputListener;
 	
-	public GameOverScreen(final CongressDefense game) {
+	String puntuacion;
+	
+	public ScoreScreen(final CongressDefense game) {
 		this.game = game;
 		camera = new GameCamera(WORLD_WIDTH, WORLD_HEIGHT);
 	
 		loadMenu();
 		
-		inputListener = new GameOverInputListener(game, this, camera);
+		inputListener = new ScoreScreenInputListener(game, this, camera);
 		Gdx.input.setInputProcessor(new GestureDetector(inputListener){			
 			@Override
 			   public boolean keyDown(int keycode) {
@@ -53,12 +56,7 @@ public class GameOverScreen implements Screen {
 		bg.setPosition(0, 0);
 		bg.setSize(WORLD_WIDTH, WORLD_HEIGHT);	
 
-		game.setMusic("gameover.mp3");
-		game.setMusicLooping(false);
-		
-		/***************** Actualizar puntuación en el servidor *********/
-		//TODO: Habría que pedirle al usuario su nombre
-		RESTConnector.updateUserScore("Noe", game.score);
+		puntuacion = RESTConnector.getScores().toString();
 	}
 	
 	@Override
@@ -74,11 +72,12 @@ public class GameOverScreen implements Screen {
 		
 		bg.draw(game.batch);
 		game.font.setScale(3f);
-		game.font.draw(game.batch, String.valueOf(game.score), 300,325);
+		game.font.draw(game.batch,puntuacion, 300,325);
+
 		game.font.setScale(1f);
 		drawMenu(game.batch);
 		
-		game.batch.end();		
+		game.batch.end();				
 	}
 	
 	

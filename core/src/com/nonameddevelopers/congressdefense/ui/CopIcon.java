@@ -10,6 +10,7 @@ import com.nonameddevelopers.congressdefense.CongressDefense;
 import com.nonameddevelopers.congressdefense.characters.Cop;
 import com.nonameddevelopers.congressdefense.characters.cops.BazookaCop;
 import com.nonameddevelopers.congressdefense.characters.cops.MeleeCop;
+import com.nonameddevelopers.congressdefense.characters.cops.MovileCop;
 import com.nonameddevelopers.congressdefense.gameItems.GameCamera;
 
 public class CopIcon {
@@ -71,7 +72,9 @@ public class CopIcon {
 			return new BazookaCop(game,x,y);
 		case (MELEE):
 		default:
-			return new MeleeCop(game,x,y);
+			return new MovileCop(game,x,y);
+
+			//return new MovileCop(game,x,y);
 		}
 	}
 	

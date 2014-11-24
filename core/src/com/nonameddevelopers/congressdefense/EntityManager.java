@@ -2,6 +2,7 @@ package com.nonameddevelopers.congressdefense;
 
 import java.util.Comparator;
 import java.util.Iterator;
+import java.util.Random;
 
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.utils.Array;
@@ -101,7 +102,9 @@ public class EntityManager {
 	}
 	
 	public void checkCollisions() {
-		for (Crowd crowd : getCrowdMan().getCrowds()) 
+//		Random random = new Random();
+//		int cr = random.nextInt(getCrowdMan().getCrowds().size);
+		for (Crowd crowd : getCrowdMan().getCrowds())
 			for (Cop cop : getCopManager().getCops()) 
 				if (cop.isPlanted())
 					cop.checkCollision(crowd);

@@ -13,6 +13,14 @@ public abstract class Cop extends GameCharacter {
 	
 	protected boolean isAttacking = false;
 	
+	protected boolean isPressed = false;
+	
+	protected float xInit;
+	
+	protected float yInit;
+	
+	
+
 	public Cop(final CongressDefense game, float x, float y, String type, int columns, int rows, float animationSpeed) {
 		super(game, x-16, y-16, type, columns, rows, animationSpeed);		
 	}
@@ -73,6 +81,30 @@ public abstract class Cop extends GameCharacter {
 		return isPlanted;
 	}
 	
-	
-	
+	public void wasPressed(float x, float y) {
+		isPressed = boundingCircle.contains(x,y);
+	}
+
+	public void setPressed(boolean isPressed) {
+		this.isPressed = isPressed;
+	}
+
+	public boolean isPressed() {
+		return isPressed;
+	}
+	public float getxInit() {
+		return xInit;
+	}
+
+	public void setxInit(float xInit) {
+		this.xInit = xInit;
+	}
+
+	public float getyInit() {
+		return yInit;
+	}
+
+	public void setyInit(float yInit) {
+		this.yInit = yInit;
+	}
 }

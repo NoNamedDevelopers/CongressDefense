@@ -11,8 +11,8 @@ import com.nonameddevelopers.congressdefense.scoresclient.petitions.UpdateOrInse
 
 public class RESTConnector {
 
-	public static List<User> getScores() {
-		String url = "http://localhost:8080/B/rest/api/scores";
+	public static List<User> getScores() throws Exception {
+		String url = "http://156.35.94.103:8080/SEV/rest/api/scores";
 		try {
 			URL obj = new URL(url);
 			HttpURLConnection con = (HttpURLConnection) obj.openConnection();
@@ -44,10 +44,10 @@ public class RESTConnector {
 
 			return gs.fromJson(json, UsersWrapper.class).users;
 		} catch (Exception e) {
-
+			throw e;
 		}
 		
-		return null;
+		
 	}
 
 	public static void updateUserScore(String username, Integer score) {

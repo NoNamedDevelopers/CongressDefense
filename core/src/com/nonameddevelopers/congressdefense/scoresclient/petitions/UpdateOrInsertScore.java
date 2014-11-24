@@ -16,7 +16,7 @@ public class UpdateOrInsertScore implements Runnable {
 	@Override
 	public void run() {
 		String url = String.format(
-				"http://localhost:8080/B/rest/api/update/%s/%d", username,
+				"http://156.35.94.103:8080/SEV/rest/api/update/%s/%d", username,
 				score);
 
 		try {

@@ -23,7 +23,7 @@ public class MainMenuScreen extends Actor implements Screen {
 	private final CongressDefense game;
 
 	private Stage stage;
-	private ImageActor bgImage, startButton, optionsButton, scoresButton,
+	private ImageActor bgImage, startButton, scoresButton, optionsButton,
 			rateButton;
 	private CheckBoxActor musicButton, soundsButton;
 
@@ -107,13 +107,9 @@ public class MainMenuScreen extends Actor implements Screen {
 
 		});
 
-		optionsButton = new ImageActor("ui/scores_button.png");
-		optionsButton.setSize(250, 80);
-		optionsButton.setPosition(350, 500);
-
-		scoresButton = new ImageActor("ui/options_button.png");
+		scoresButton = new ImageActor("ui/scores_button.png");
 		scoresButton.setSize(250, 80);
-		scoresButton.setPosition(70, 350);
+		scoresButton.setPosition(350, 500);
 		scoresButton.addListener(new InputListener() {
 			@Override
 			public boolean touchDown(InputEvent event, float x, float y,
@@ -125,11 +121,20 @@ public class MainMenuScreen extends Actor implements Screen {
 			public void touchUp(InputEvent event, float x, float y,
 					int pointer, int button) {
 				stage.dispose();
-				game.setScreen(new ScoreScreen(game));
+				try {
+					game.setScreen(new ScoreScreen(game));
+				} catch (Exception e) {
+					
+				}
 				dispose();
 			}
 
 		});
+
+		optionsButton = new ImageActor("ui/options_button.png");
+		optionsButton.setSize(250, 80);
+		optionsButton.setPosition(70, 350);
+	
 
 		rateButton = new ImageActor("ui/rate_button.png");
 		rateButton.setSize(250, 80);
@@ -139,8 +144,8 @@ public class MainMenuScreen extends Actor implements Screen {
 		stage.addActor(musicButton);
 		stage.addActor(soundsButton);
 		stage.addActor(startButton);
-		stage.addActor(optionsButton);
 		stage.addActor(scoresButton);
+		stage.addActor(optionsButton);
 		stage.addActor(rateButton);
 	}
 

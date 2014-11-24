@@ -30,4 +30,11 @@ public class User {
 		Score = score;
 	}
 
+	@Override
+	public String toString() {
+		return "User [Username=" + Username + ", Score=" + Score + "]";
+	}
+	
+	
+
 }

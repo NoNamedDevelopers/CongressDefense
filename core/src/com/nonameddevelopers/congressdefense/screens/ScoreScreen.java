@@ -31,9 +31,9 @@ public class ScoreScreen implements Screen {
 		
 	private ScoreScreenInputListener inputListener;
 	
-	String puntuacion;
+	String puntuacion = "0";
 	
-	public ScoreScreen(final CongressDefense game) {
+	public ScoreScreen(final CongressDefense game) throws Exception {
 		this.game = game;
 		camera = new GameCamera(WORLD_WIDTH, WORLD_HEIGHT);
 	

@@ -41,6 +41,9 @@ public class MainMenuScreen extends Actor implements Screen {
 
 		musicButton = new CheckBoxActor("ui/speaker_normal_button.png",
 				"ui/speaker_muted_button.png", game, CheckBoxActor.MUSIC);
+		
+		
+		musicButton = new CheckBoxActor("ui/note_normal_button.png", "ui/note_muted_button.png", game, CheckBoxActor.MUSIC);
 		musicButton.setSize(60, 60);
 		musicButton.setPosition(60, 100);
 		musicButton.addListener(new InputListener() {
@@ -62,6 +65,8 @@ public class MainMenuScreen extends Actor implements Screen {
 
 		soundsButton = new CheckBoxActor("ui/note_normal_button.png",
 				"ui/note_muted_button.png", game, CheckBoxActor.SOUND);
+
+		soundsButton = new CheckBoxActor("ui/speaker_normal_button.png", "ui/speaker_muted_button.png", game, CheckBoxActor.SOUND);
 		soundsButton.setSize(60, 60);
 		soundsButton.setPosition(140, 100);
 		soundsButton.addListener(new InputListener() {

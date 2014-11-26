@@ -133,20 +133,20 @@ public class MainMenuScreen extends Actor implements Screen {
 
 		optionsButton = new ImageActor("ui/options_button.png");
 		optionsButton.setSize(250, 80);
-		optionsButton.setPosition(70, 350);
+		optionsButton.setPosition(350, 350);
 	
 
 		rateButton = new ImageActor("ui/rate_button.png");
 		rateButton.setSize(250, 80);
-		rateButton.setPosition(350, 350);
+		rateButton.setPosition(70, 350);
 
 		stage.addActor(bgImage);
 		stage.addActor(musicButton);
 		stage.addActor(soundsButton);
 		stage.addActor(startButton);
 		stage.addActor(scoresButton);
-		stage.addActor(optionsButton);
 		stage.addActor(rateButton);
+		//stage.addActor(optionsButton);
 	}
 
 	@Override

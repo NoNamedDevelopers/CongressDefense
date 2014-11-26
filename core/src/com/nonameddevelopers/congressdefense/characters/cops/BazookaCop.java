@@ -33,7 +33,6 @@ public class BazookaCop extends Cop {
 			if (Intersector.overlaps(protester.getBoundingCircle(), range)) {
 				isAttacking = true;
 				
-				System.out.println("X: "+(x-protester.getX())+",Y: "+(y-protester.getY()));
 				if ( x-protester.getX() == 0 && y-protester.getY() > 0)
 					direction = UP;
 				else if ( x-protester.getX() == 0 && y-protester.getY() < 0)

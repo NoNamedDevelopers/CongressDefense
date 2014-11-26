@@ -148,6 +148,11 @@ public class GameOverScreen implements Screen {
 		   @Override
 		   public void input (String text) {
 				RESTConnector.updateUserScore(text, game.score);
+				try {
+					game.setScreen(new ScoreScreen(game));
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
 		   }
 
 		   @Override

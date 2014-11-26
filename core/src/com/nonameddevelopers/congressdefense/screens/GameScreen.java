@@ -157,7 +157,6 @@ public class GameScreen implements Screen {
 		game.font.draw(batch, String.valueOf(game.life), camera.position.x+445,
 					   camera.position.y+camera.viewportHeight/2-13);
 		
-		
 
 		buttons.get("pause").setPosition(camera.position.x-camera.viewportWidth/2+10,  camera.position.y+camera.viewportHeight/2-60);
 		

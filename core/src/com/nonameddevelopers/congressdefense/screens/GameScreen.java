@@ -48,26 +48,26 @@ public class GameScreen implements Screen {
 		camera = new GameCamera(WORLD_WIDTH, WORLD_HEIGHT);
 		if (game.dificulty == game.EASY)
 		{
-			game.setLife(80);
-			game.setMoney(200);
+			game.setLife(40);
+			game.setMoney(320);
 			game.setScore(0);
 		}
 		else if (game.dificulty == game.NORMAL)
 		{
-			game.setLife(40);
-			game.setMoney(100);
+			game.setLife(25);
+			game.setMoney(280);
 			game.setScore(0);
 		}
 		else if (game.dificulty == game.HARD)
 		{
-			game.setLife(20);
-			game.setMoney(50);
+			game.setLife(15);
+			game.setMoney(180);
 			game.setScore(0);
 		}
 		else
 		{
 			game.setLife(1);
-			game.setMoney(20);
+			game.setMoney(70);
 			game.setScore(0);
 		}
 		
@@ -172,8 +172,8 @@ public class GameScreen implements Screen {
 	
 	private void loadMenu() {
 		menu = new Array<CopIcon>(); 		
-		menu.add(new CopIcon(game, camera, 20, camera.position.x+75, 10, "ui/meleecopicon.png", CopIcon.MELEE));
-		menu.add(new CopIcon(game, camera, 50, camera.position.x-5, 10, "ui/bazookacopicon.png", CopIcon.BAZOOKA));
+		menu.add(new CopIcon(game, camera, 70, camera.position.x+75, 10, "ui/meleecopicon.png", CopIcon.MELEE));
+		menu.add(new CopIcon(game, camera, 180, camera.position.x-5, 10, "ui/bazookacopicon.png", CopIcon.BAZOOKA));
 		
 		
 		starBoardTexture = new Texture(Gdx.files.internal("ui/starboard.png"));

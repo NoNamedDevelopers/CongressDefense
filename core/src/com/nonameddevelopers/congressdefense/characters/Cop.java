@@ -20,6 +20,8 @@ public abstract class Cop extends GameCharacter {
 	
 	protected float yInit;
 	
+	protected boolean isDead = false;
+	
 	
 
 	public Cop(final CongressDefense game, float x, float y, String type, int columns, int rows, float animationSpeed) {
@@ -89,5 +91,14 @@ public abstract class Cop extends GameCharacter {
 
 	public void setyInit(float yInit) {
 		this.yInit = yInit;
+	}
+	
+	public void kill() {
+		isDead = true;
+		//die.play();
+	}
+
+	public boolean isDead() {
+		return isDead;
 	}
 }

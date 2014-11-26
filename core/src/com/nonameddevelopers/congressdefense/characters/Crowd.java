@@ -40,8 +40,6 @@ public class Crowd {
 				if (prob < percentage[1])
 					crowd.insert(0,new FatProtester(game, -100 + x, otroLado + y, i*0.25f)); 	
 				else if (prob < percentage[1]+percentage[2])
-					crowd.insert(0,new FastProtester(game, -100 + x, otroLado + y, i*0.25f)); 	
-				else if (prob < percentage[1]+percentage[2]+percentage[3])
 					crowd.insert(0,new AnarquistProtester(game, -100 + x, otroLado + y, i*0.25f)); 	
 				else
 					crowd.insert(0,new PacificProtester(game, -100 + x, otroLado + y, i*0.25f)); 
@@ -59,8 +57,6 @@ public class Crowd {
 				if (prob < percentage[1])
 					crowd.insert(0,new FatProtester(game, -100 + x, otroLado + y, i*0.25f)); 	
 				else if (prob < percentage[1]+percentage[2])
-					crowd.insert(0,new FastProtester(game, -100 + x, otroLado + y, i*0.25f)); 	
-				else if (prob < percentage[1]+percentage[2]+percentage[3])
 					crowd.insert(0,new AnarquistProtester(game, -100 + x, otroLado + y, i*0.25f)); 	
 				else
 					crowd.insert(0,new PacificProtester(game, -100 + x, otroLado + y, i*0.25f)); 

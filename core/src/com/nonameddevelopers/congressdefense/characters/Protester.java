@@ -114,6 +114,11 @@ public abstract class Protester extends GameCharacter {
 		game.score += 5;
 		game.money += 10;
 	}
+	
+	protected void suicide() {
+		isDead = true;
+		die.play();
+	}
 
 	public boolean isDead() {
 		return isDead;

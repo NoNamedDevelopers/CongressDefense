@@ -28,6 +28,7 @@ public class AnarquistProtester extends Protester {
 	public void approach(float delta) {
 
 		arrived();
+		checkCollitions();
 		
 		Random random = new Random();
 		Vector2 Goal = new Vector2(getxGoal(), getyGoal());
@@ -73,10 +74,8 @@ public class AnarquistProtester extends Protester {
 	public void checkCollitions() {
 			for (Cop cop : EntityManager.getInstance().getCopManager().getCops()) {
 				if (Intersector.overlaps(getBoundingCircle(), cop.getBoundingCircle())) {
-					//Animacion pegar();
-					//sonidoPegar.play();
-					//cop.dispose();
-					//this.dispose();
+					cop.kill();
+					this.suicide();
 				}
 			}
 		

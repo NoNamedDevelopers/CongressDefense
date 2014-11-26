@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.Iterator;
 
 import com.nonameddevelopers.congressdefense.characters.Cop;
+import com.nonameddevelopers.congressdefense.characters.Protester;
 
 public class CopManager {
 	
@@ -16,8 +17,15 @@ public class CopManager {
 	
 	public void update(float delta)
 	{
-		for (Cop cop: cops)
-			cop.update(delta);
+		Iterator<Cop> iter = cops.iterator();
+		while (iter.hasNext()) {
+			Cop police = iter.next();
+			police.update(delta);
+			if (police.isDead()) {
+				iter.remove();
+				police = null;
+			}
+		}
 	}	
 	
 	public void addCop(Cop cop) {

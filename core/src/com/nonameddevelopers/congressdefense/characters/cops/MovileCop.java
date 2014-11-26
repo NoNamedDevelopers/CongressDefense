@@ -84,8 +84,8 @@ public class MovileCop extends Cop {
 					protester.hurt(40);
 					stateTime += 0.001f;
 				}
+				break;
 			}
-			break;
 		}
 		if (!inRange) {
 			for (Protester protester : crowd.getProtesters()) {

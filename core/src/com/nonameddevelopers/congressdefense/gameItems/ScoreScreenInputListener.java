@@ -60,7 +60,12 @@ public class ScoreScreenInputListener implements GestureListener {
 
 	@Override
 	public boolean pan(float x, float y, float deltaX, float deltaY) {
-		unproject(x, y);		
+		unproject(x, y);
+		if (camera.position.y + deltaY - camera.viewportHeight / 2 >= 0
+				&& camera.position.y + deltaY + camera.viewportHeight / 2 <= camera.worldHeight) {
+			camera.translate(0f, deltaY);
+			camera.update();
+		}
 		return false;
 	}
 

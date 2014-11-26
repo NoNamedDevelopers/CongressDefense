@@ -1,8 +1,10 @@
 package com.nonameddevelopers.congressdefense.screens;
 
+import java.util.List;
+
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.Input.Keys;
+import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
@@ -11,9 +13,9 @@ import com.badlogic.gdx.input.GestureDetector;
 import com.badlogic.gdx.utils.ObjectMap;
 import com.nonameddevelopers.congressdefense.CongressDefense;
 import com.nonameddevelopers.congressdefense.gameItems.GameCamera;
-import com.nonameddevelopers.congressdefense.gameItems.GameOverInputListener;
 import com.nonameddevelopers.congressdefense.gameItems.ScoreScreenInputListener;
 import com.nonameddevelopers.congressdefense.scoresclient.RESTConnector;
+import com.nonameddevelopers.congressdefense.scoresclient.User;
 import com.nonameddevelopers.congressdefense.ui.CheckBoxActor;
 
 public class ScoreScreen implements Screen {
@@ -26,17 +28,17 @@ public class ScoreScreen implements Screen {
 	public ObjectMap<String, CheckBoxActor> buttons;
 	
 	private GameCamera camera;
-	private Texture bgTexture;
-	private Sprite bg;
+	private Texture bgTexture, bgTopTexture, headerTexture;
+	private Sprite bg, bgTop, header;
 		
 	private ScoreScreenInputListener inputListener;
 	
-	String puntuacion = "0";
+	List<User> puntuacion;
 	
 	public ScoreScreen(final CongressDefense game) throws Exception {
 		this.game = game;
 		camera = new GameCamera(WORLD_WIDTH, WORLD_HEIGHT);
-	
+		
 		loadMenu();
 		
 		inputListener = new ScoreScreenInputListener(game, this, camera);
@@ -51,12 +53,19 @@ public class ScoreScreen implements Screen {
 			   }
 		});
 	
-		bgTexture = new Texture(Gdx.files.internal("gameoverbg.jpg"));
+		bgTexture = new Texture(Gdx.files.internal("scores-background.jpg"));
 		bg = new Sprite(bgTexture);
-		bg.setPosition(0, 0);
 		bg.setSize(WORLD_WIDTH, WORLD_HEIGHT);	
+		
+		bgTopTexture = new Texture(Gdx.files.internal("scores-top.png"));
+		bgTop = new Sprite(bgTopTexture);
+		bgTop.setSize(WORLD_WIDTH, WORLD_HEIGHT);	
+		
+		headerTexture = new Texture(Gdx.files.internal("scores-header.png"));
+		header = new Sprite(headerTexture);
+		header.setSize(592, 120);	
 
-		puntuacion = RESTConnector.getScores().toString();
+		puntuacion = RESTConnector.getScores();
 	}
 	
 	@Override
@@ -70,12 +79,24 @@ public class ScoreScreen implements Screen {
 		game.batch.setProjectionMatrix(camera.combined);
 		game.batch.begin();
 		
+		bg.setPosition(camera.position.x-camera.viewportWidth/2, camera.position.y-camera.viewportHeight/2);
 		bg.draw(game.batch);
-		game.font.setScale(3f);
-		game.font.draw(game.batch,puntuacion, 300,325);
+		
+		for (int i = 0; i<puntuacion.size(); i++) {
+			game.font.draw(game.batch,puntuacion.get(i).Username, 325,600-i*30);
+			game.font.draw(game.batch,puntuacion.get(i).Score.toString(), 600,600-i*30);
+		}
 
-		game.font.setScale(1f);
+		bgTop.setPosition(camera.position.x-camera.viewportWidth/2, camera.position.y-camera.viewportHeight/2);
+		bgTop.draw(game.batch);
+
+		
+		header.setPosition(camera.position.x-285, camera.position.y+camera.viewportHeight/2-70);
+		header.draw(game.batch);
+		game.font.draw(game.batch, "Name:", 325,camera.position.y+camera.viewportHeight/2-20);
+		game.font.draw(game.batch,"Points", 600,camera.position.y+camera.viewportHeight/2-20);
 		drawMenu(game.batch);
+		
 		
 		game.batch.end();				
 	}

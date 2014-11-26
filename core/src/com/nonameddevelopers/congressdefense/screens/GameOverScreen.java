@@ -1,8 +1,9 @@
 package com.nonameddevelopers.congressdefense.screens;
 
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.Input.Keys;
+import com.badlogic.gdx.Input.TextInputListener;
+import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
@@ -56,9 +57,10 @@ public class GameOverScreen implements Screen {
 		game.setMusic("gameover.mp3");
 		game.setMusicLooping(false);
 		
-		/***************** Actualizar puntuación en el servidor *********/
-		//TODO: Habría que pedirle al usuario su nombre
-		RESTConnector.updateUserScore("Noe", game.score);
+
+		NameInputListener listener = new NameInputListener();
+		Gdx.input.getTextInput(listener, "Name", "Player 1");
+		Gdx.input.setOnscreenKeyboardVisible(true);
 	}
 	
 	@Override
@@ -142,5 +144,14 @@ public class GameOverScreen implements Screen {
 	}
 	
 	
+	public class NameInputListener implements TextInputListener {
+		   @Override
+		   public void input (String text) {
+				RESTConnector.updateUserScore(text, game.score);
+		   }
 
+		   @Override
+		   public void canceled () {
+		   }
+		}
 }

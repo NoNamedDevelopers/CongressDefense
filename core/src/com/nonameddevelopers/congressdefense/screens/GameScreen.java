@@ -32,8 +32,8 @@ public class GameScreen implements Screen {
 	private Sprite starBoard, coinsBoard, voteBoard;
 
 	private GameCamera camera;
-	private Texture mapTexture, buildingTexture;
-	private Sprite map, building;
+	private Texture mapTexture, firstBuildingTexture, secondBuildingTexture;
+	private Sprite map, firstBuilding, secondBuilding;
 
 
 	
@@ -86,16 +86,21 @@ public class GameScreen implements Screen {
 			   }
 		});
 
-		mapTexture = new Texture(Gdx.files.internal("map2.jpg"));
+		mapTexture = new Texture(Gdx.files.internal("lastmap.jpg"));
 		map = new Sprite(mapTexture);
 		map.setPosition(0, 0);
 		map.setSize(WORLD_WIDTH, WORLD_HEIGHT);
 		
 
-		buildingTexture = new Texture(Gdx.files.internal("building.png"));
-		building = new Sprite(buildingTexture);
-		building.setPosition(0, 0);
-		building.setSize(WORLD_WIDTH, WORLD_HEIGHT);
+		firstBuildingTexture = new Texture(Gdx.files.internal("firstbuilding.png"));
+		firstBuilding = new Sprite(firstBuildingTexture);
+		firstBuilding.setPosition(0, 0);
+		firstBuilding.setSize(WORLD_WIDTH, WORLD_HEIGHT);
+		
+		secondBuildingTexture = new Texture(Gdx.files.internal("secondbuilding.png"));
+		secondBuilding = new Sprite(secondBuildingTexture);
+		secondBuilding.setPosition(0, 0);
+		secondBuilding.setSize(WORLD_WIDTH, WORLD_HEIGHT);
 		
 		EntityManager.empty();
 		entityManager = EntityManager.getInstance(game,camera);
@@ -125,7 +130,7 @@ public class GameScreen implements Screen {
 
 		entityManager.draw(game.batch);
 		
-		building.draw(game.batch);
+		secondBuilding.draw(game.batch);
 
 		drawMenu(game.batch);		
 		

@@ -4,6 +4,9 @@ import java.util.Comparator;
 import java.util.Iterator;
 import java.util.Random;
 
+import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.utils.Array;
 import com.nonameddevelopers.congressdefense.characters.Cop;
@@ -21,6 +24,9 @@ public class EntityManager {
 	private ProyectileLauncher proyectileL;
 	private static EntityManager instance;
 	
+	private Texture  firstBuildingTexture ;
+	private Sprite  firstBuilding;
+	
 	
 	private EntityManager(final CongressDefense game, GameCamera camera) {
 		crowdMan = new CrowdManager(game);
@@ -28,6 +34,12 @@ public class EntityManager {
 		proyectileL = new ProyectileLauncher(game, camera);
 		instance = this;
 		elementsToRender = new Array<GameCharacter>();
+		
+
+		firstBuildingTexture = new Texture(Gdx.files.internal("firstbuilding.png"));
+		firstBuilding = new Sprite(firstBuildingTexture);
+		firstBuilding.setPosition(0, 0);
+		firstBuilding.setSize(camera.worldWidth, camera.worldHeight);
 	}
 
 	public static EntityManager getInstance(final CongressDefense game,
@@ -69,11 +81,20 @@ public class EntityManager {
 		
 		proyectileL.draw(batch);
 		
-
+		boolean buildingDrawn = false;
 		Iterator<GameCharacter> iter = elementsToRender.iterator();
 		while (iter.hasNext()) {
-			iter.next().draw(batch);
+			GameCharacter gc = iter.next();
+			if(gc.getY()<300 && !buildingDrawn) {
+				buildingDrawn = true;
+				firstBuilding.draw(batch);
+			}
+			gc.draw(batch);
 			iter.remove();
+		}
+		if(!buildingDrawn){
+			buildingDrawn = true;
+			firstBuilding.draw(batch);
 		}
 	}
 	

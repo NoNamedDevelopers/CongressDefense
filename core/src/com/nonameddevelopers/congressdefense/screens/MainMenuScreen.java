@@ -101,7 +101,7 @@ public class MainMenuScreen extends Actor implements Screen {
 			public void touchUp(InputEvent event, float x, float y,
 					int pointer, int button) {
 				stage.dispose();
-				game.setScreen(new GameScreen(game));
+				game.setScreen(new SelectLevelScreen(game));
 				dispose();
 			}
 

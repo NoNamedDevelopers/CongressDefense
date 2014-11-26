@@ -11,7 +11,7 @@ public class PacificProtester extends Protester {
 	private static Random r = new Random();
 
 	public PacificProtester(CongressDefense game, float x, float y, float appearTime) {
-		super(game, x, y, "protester" + r.nextInt(3), 4, 5, appearTime);
+		super(game, x, y, "protester" + r.nextInt(3), 4, 5, appearTime,0.02f);
 	}
 	
 	@Override
@@ -49,7 +49,15 @@ public class PacificProtester extends Protester {
 		direction2.set(Goal).sub(position).nor();
 		x += direction2.x * (random.nextInt(3)) * delta * 50;
 		y += direction2.y * (random.nextInt(3)) * delta * 50;
-		if (direction2.x>=0 && direction2.y >= 0)
+		if (direction2.x == 0 && direction2.y >= 0)
+			this.direction = UP;
+		else if (direction2.x == 0 && direction2.y <= 0)
+			this.direction = DOWN;
+		else if (direction2.x>=0 && direction2.y == 0)
+			this.direction = RIGHT;
+		else if (direction2.x<=0 && direction2.y == 0)
+			this.direction = LEFT;
+		else if (direction2.x>=0 && direction2.y >= 0)
 			this.direction = UP_RIGHT;
 		else if (direction2.x>=0 && direction2.y< 0)
 		{

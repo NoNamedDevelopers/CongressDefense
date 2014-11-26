@@ -9,7 +9,7 @@ import com.nonameddevelopers.congressdefense.characters.Protester;
 public class FatProtester extends Protester {
 
 	public FatProtester(CongressDefense game, float x, float y, float appearTime) {
-		super(game, x, y, "fat", 4, 5, appearTime);
+		super(game, x, y, "fat", 4, 5, appearTime, 0.02f);
 		life = 200;
 	}
 	

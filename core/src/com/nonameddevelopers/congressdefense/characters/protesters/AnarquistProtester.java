@@ -12,7 +12,7 @@ import com.nonameddevelopers.congressdefense.characters.Protester;
 public class AnarquistProtester extends Protester {
 
 	public AnarquistProtester(CongressDefense game, float x, float y, float appearTime) {
-		super(game, x, y, "anarquist", 4, 5, appearTime);
+		super(game, x, y, "anarquist", 4, 5, appearTime, 0.02f);
 	}
 	
 

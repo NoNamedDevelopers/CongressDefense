@@ -45,8 +45,8 @@ public abstract class Protester extends GameCharacter {
 		lifeBlockTexture = new Texture(Gdx.files.internal("sprites/lifeblock.png"));
 	}
 
-	public Protester(final CongressDefense game, float x, float y, String type, int columns, int rows,float appearTime) {
-		super(game, x, y, type, columns, rows, 0.02f);
+	public Protester(final CongressDefense game, float x, float y, String type, int columns, int rows,float appearTime, float frameSpeed) {
+		super(game, x, y, type, columns, rows, frameSpeed);
 
 		this.appearTime = appearTime;
 
@@ -69,24 +69,6 @@ public abstract class Protester extends GameCharacter {
 		updateAnimation();
 
 		boundingCircle.set(x + 16, y + 16, 20f);
-	}
-
-	@Override
-	protected void updateAnimation() {
-		switch (direction) {
-		case UP_RIGHT:
-			currentFrame = ulAnimation.getKeyFrame(stateTime, true);
-			break;
-		case DOWN_RIGHT:
-			currentFrame = dlAnimation.getKeyFrame(stateTime, true);
-			break;
-		case UP_LEFT:
-			currentFrame = urAnimation.getKeyFrame(stateTime, true);
-			break;
-		case DOWN_LEFT:
-			currentFrame = drAnimation.getKeyFrame(stateTime, true);
-			break;
-		}
 	}
 
 	@Override

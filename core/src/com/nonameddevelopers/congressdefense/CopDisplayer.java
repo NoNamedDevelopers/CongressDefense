@@ -40,8 +40,6 @@ public class CopDisplayer {
 				copToPlant.setPosition(inputListener.getX(),
 						inputListener.getY() + 40);
 				
-				copToPlant.setxInit(inputListener.getX());
-				copToPlant.setyInit(inputListener.getY());
 
 				availableCircle.set(inputListener.getX(),
 						inputListener.getY() + 40, 20f);
@@ -66,6 +64,11 @@ public class CopDisplayer {
 				if (available && icon.canBuy()) {
 					game.money -= icon.getCost();
 					copToPlant.plant();
+					copToPlant.setxInit(copToPlant.getX());
+					copToPlant.setyInit(copToPlant.getY());
+				} 
+				else {
+					copMan.deleteCopToPlant();
 				}
 				copToPlant = null;
 			}

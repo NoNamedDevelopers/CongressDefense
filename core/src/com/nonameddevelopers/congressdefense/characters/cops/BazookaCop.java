@@ -32,14 +32,24 @@ public class BazookaCop extends Cop {
 		for (Protester protester : crowd.getProtesters()) {
 			if (Intersector.overlaps(protester.getBoundingCircle(), range)) {
 				isAttacking = true;
-				if (x-protester.getX()>0 && y-protester.getY()>0)
-					direction = DOWN_RIGHT;
-				else if (x-protester.getX() > 0 && y-protester.getY() < 0)
-					direction = UP_RIGHT;
-				else if (x-protester.getX() < 0 && y-protester.getY() < 0)
-					direction = UP_LEFT;
-				else
+				
+				System.out.println("X: "+(x-protester.getX())+",Y: "+(y-protester.getY()));
+				if ( x-protester.getX() == 0 && y-protester.getY() > 0)
+					direction = UP;
+				else if ( x-protester.getX() == 0 && y-protester.getY() < 0)
+					direction = DOWN;
+				else if (x-protester.getX() > 0 && y-protester.getY() == 0)
+					direction = RIGHT;
+				else if (x-protester.getX() < 0 && y-protester.getY() == 0)
+					direction = LEFT;
+				else if (x-protester.getX() > 0 && y-protester.getY() > 0)
 					direction = DOWN_LEFT;
+				else if (x-protester.getX() > 0 && y-protester.getY() < 0)
+					direction = UP_LEFT;
+				else if (x-protester.getX() < 0 && y-protester.getY() < 0)
+					direction = UP_RIGHT;
+				else
+					direction = DOWN_RIGHT;
 				
 				if (stateTime == 0f) {
 					shoot.play(0.3f);

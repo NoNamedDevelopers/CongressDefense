@@ -1,19 +1,20 @@
 package com.nonameddevelopers.congressdefense.characters;
 
-import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.math.Circle;
 import com.nonameddevelopers.congressdefense.CongressDefense;
 
 
 public abstract class Cop extends GameCharacter {
-	
-	protected Animation currentAnimation;
-	
+		
 	private boolean isPlanted = false;
 	
 	protected boolean isAttacking = false;
 	
+	protected boolean isRunning = false;
+	
 	protected boolean isPressed = false;
+	
+	protected boolean isComingBack = false;
 	
 	protected float xInit;
 	
@@ -26,34 +27,16 @@ public abstract class Cop extends GameCharacter {
 	}
 		
 	public void update(float delta) {
-		if (isAttacking) {
+		if (isAttacking || isRunning) {
 			stateTime += delta;	
 			if (stateTime>=currentAnimation.getAnimationDuration()) {
 				stateTime = 0;
 				isAttacking = false;
+				isRunning = false;
 			}
 		}
 		
 		updateAnimation();
-	}
-	
-	@Override
-	protected void updateAnimation() {
-		switch (direction) {
-		case UP_RIGHT:
-			currentAnimation = urAnimation;
-			break;
-		case DOWN_RIGHT:
-			currentAnimation = drAnimation;
-			break;
-		case UP_LEFT:
-			currentAnimation = ulAnimation;
-			break;
-		case DOWN_LEFT:
-			currentAnimation = dlAnimation;
-			break;
-		}
-		currentFrame = currentAnimation.getKeyFrame(stateTime, true);
 	}
 	
 	public abstract void checkCollision(Crowd crowd);

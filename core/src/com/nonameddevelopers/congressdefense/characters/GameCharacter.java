@@ -11,11 +11,15 @@ import com.badlogic.gdx.utils.ObjectMap;
 import com.nonameddevelopers.congressdefense.CongressDefense;
 
 public abstract class GameCharacter {
-	
+
 	protected static final short UP_LEFT = 1;
 	protected static final short DOWN_LEFT = 2;
 	protected static final short UP_RIGHT = 3;
-	protected static final short DOWN_RIGHT = 4;	
+	protected static final short DOWN_RIGHT = 4;
+	protected static final short UP = 5;
+	protected static final short DOWN = 6;
+	protected static final short LEFT = 7;
+	protected static final short RIGHT = 8;
 
 	protected Circle boundingCircle;	
 	
@@ -23,9 +27,11 @@ public abstract class GameCharacter {
 
 	private static ObjectMap<String, Texture> textures;
 	
-	protected Animation ulAnimation, dlAnimation, urAnimation, drAnimation;
+	protected Animation uAnimation, dAnimation, lAnimation, rAnimation, ulAnimation, dlAnimation, urAnimation, drAnimation;
 	protected TextureRegion currentFrame;
 	protected float stateTime;
+
+	protected Animation currentAnimation;
 	
 	private Color tint = Color.WHITE;
 	
@@ -47,14 +53,18 @@ public abstract class GameCharacter {
 		this.type = type;
 		
 		stateTime = 0f;
-		
+
+		uAnimation = loadAnimation("sprites/"+type+"/up.png", columns, rows, animationSpeed);
+		dAnimation = loadAnimation("sprites/"+type+"/down.png", columns, rows, animationSpeed);
+		lAnimation = loadAnimation("sprites/"+type+"/left.png", columns, rows, animationSpeed);
+		rAnimation = loadAnimation("sprites/"+type+"/right.png", columns, rows, animationSpeed);
 		ulAnimation = loadAnimation("sprites/"+type+"/up_left.png", columns, rows, animationSpeed);
 		dlAnimation = loadAnimation("sprites/"+type+"/down_left.png", columns, rows, animationSpeed);	
 		urAnimation = loadAnimation("sprites/"+type+"/up_right.png", columns, rows, animationSpeed);	
 		drAnimation = loadAnimation("sprites/"+type+"/down_right.png", columns, rows, animationSpeed);	
 		
 		
-	    direction = DOWN_RIGHT;
+	    direction = DOWN;
 		updateAnimation();
 		boundingCircle = new Circle();		
 	}
@@ -75,8 +85,37 @@ public abstract class GameCharacter {
 		
 		return new Animation(speed, frames);
 	}	
+
+	protected void updateAnimation() {
+		switch (direction) {
+		case UP:
+			currentAnimation = uAnimation;
+			break;
+		case DOWN:
+			currentAnimation = dAnimation;
+			break;
+		case LEFT:
+			currentAnimation = lAnimation;
+			break;
+		case RIGHT:
+			currentAnimation = rAnimation;
+			break;
+		case UP_RIGHT:
+			currentAnimation = urAnimation;
+			break;
+		case DOWN_RIGHT:
+			currentAnimation = drAnimation;
+			break;
+		case UP_LEFT:
+			currentAnimation = ulAnimation;
+			break;
+		case DOWN_LEFT:
+			currentAnimation = dlAnimation;
+			break;
+		}
+		currentFrame = currentAnimation.getKeyFrame(stateTime, true);
+	}
 	
-	protected abstract void updateAnimation();
 	
 	public void draw(SpriteBatch batch) {
 		batch.setColor(tint);

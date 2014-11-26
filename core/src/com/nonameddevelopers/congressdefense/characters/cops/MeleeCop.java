@@ -26,14 +26,23 @@ public class MeleeCop extends Cop {
 		for (Protester protester : crowd.getProtesters())
 			if (Intersector.overlaps(protester.getBoundingCircle(), boundingCircle)) {
 				isAttacking = true;
-				if (x-protester.getX() >0 && y-protester.getY()>0)
-					direction = DOWN_RIGHT;
-				else if (x-protester.getX() > 0 && y-protester.getY() < 0)
-					direction = UP_RIGHT;
-				else if (x-protester.getX() < 0 && y-protester.getY() < 0)
-					direction = UP_LEFT;
-				else
+
+				if (x-protester.getX() == 0 && y-protester.getY() > 0)
+					direction = UP;
+				else if (x-protester.getX() == 0 && y-protester.getY() < 0)
+					direction = DOWN;
+				else if (x-protester.getX() > 0 && y-protester.getY() == 0)
+					direction = RIGHT;
+				else if (x-protester.getX() < 0 && y-protester.getY() == 0)
+					direction = LEFT;
+				else if (x-protester.getX() > 0 && y-protester.getY() > 0)
 					direction = DOWN_LEFT;
+				else if (x-protester.getX() > 0 && y-protester.getY() < 0)
+					direction = UP_LEFT;
+				else if (x-protester.getX() < 0 && y-protester.getY() < 0)
+					direction = UP_RIGHT;
+				else
+					direction = DOWN_RIGHT;
 	
 				if (stateTime == 0f) {
 					punch.play();

@@ -9,7 +9,7 @@ import com.nonameddevelopers.congressdefense.characters.Protester;
 public class FastProtester extends Protester {
 
 	public FastProtester(CongressDefense game, float x, float y, float appearTime) {
-		super(game, x, y, "fast", 4, 5, appearTime);
+		super(game, x, y, "fast", 4, 5, appearTime, 0.02f);
 	}
 	
 	@Override

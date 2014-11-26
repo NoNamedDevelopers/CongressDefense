@@ -1,22 +1,24 @@
 package com.nonameddevelopers.congressdefense.characters.cops;
 
-import java.util.Random;
-
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.audio.Sound;
+import com.badlogic.gdx.graphics.g2d.Animation;
+import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
+import com.badlogic.gdx.graphics.glutils.ShapeRenderer.ShapeType;
 import com.badlogic.gdx.math.Circle;
 import com.badlogic.gdx.math.Intersector;
 import com.badlogic.gdx.math.Vector2;
 import com.nonameddevelopers.congressdefense.CongressDefense;
-import com.nonameddevelopers.congressdefense.gameItems.GameSound;
 import com.nonameddevelopers.congressdefense.characters.Cop;
 import com.nonameddevelopers.congressdefense.characters.Crowd;
 import com.nonameddevelopers.congressdefense.characters.Protester;
+import com.nonameddevelopers.congressdefense.gameItems.GameSound;
 
 public class MovileCop extends Cop {
 
 	private Circle range;
 	private boolean inRange = false;
+	
+	private Animation runUAnimation,runDAnimation,runLAnimation,runRAnimation,runUlAnimation,runDlAnimation,runUrAnimation,runDrAnimation;
 
 	protected static GameSound punch;
 
@@ -34,11 +36,21 @@ public class MovileCop extends Cop {
 
 		range = new Circle();
 		range.set(xInit + 16, yInit + 16, 100f);
+		
+
+		runUAnimation = loadAnimation("sprites/coprun/up.png", 4, 5, 0.018f);
+		runDAnimation = loadAnimation("sprites/coprun/down.png", 4, 5, 0.018f);
+		runLAnimation = loadAnimation("sprites/coprun/left.png", 4, 5, 0.018f);
+		runRAnimation = loadAnimation("sprites/coprun/right.png", 4, 5, 0.018f);
+		runUlAnimation = loadAnimation("sprites/coprun/up_left.png", 4, 5, 0.018f);
+		runDlAnimation = loadAnimation("sprites/coprun/down_left.png", 4, 5, 0.018f);	
+		runUrAnimation = loadAnimation("sprites/coprun/up_right.png", 4, 5, 0.018f);	
+		runDrAnimation = loadAnimation("sprites/coprun/down_right.png",4, 5, 0.018f);
 	}
 
 	@Override
 	public void checkCollision(Crowd crowd) {
-		range.set(xInit + 16, yInit + 16, 100f);
+		range.set(xInit, yInit, 100f);
 		boundingCircle.set(x, y, 10f);
 		Protester prot = null;
 		Vector2 pos = new Vector2(this.x, this.y);
@@ -49,14 +61,23 @@ public class MovileCop extends Cop {
 					boundingCircle)) {
 				inRange = true;
 				isAttacking = true;
-				if (x - protester.getX() > 0 && y - protester.getY() > 0)
-					direction = DOWN_RIGHT;
-				else if (x - protester.getX() > 0 && y - protester.getY() < 0)
-					direction = UP_RIGHT;
-				else if (x - protester.getX() < 0 && y - protester.getY() < 0)
-					direction = UP_LEFT;
-				else
+				
+				if (x-protester.getX() == 0 && y-protester.getY() > 0)
+					direction = UP;
+				else if (x-protester.getX() == 0 && y-protester.getY() < 0)
+					direction = DOWN;
+				else if (x-protester.getX() > 0 && y-protester.getY() == 0)
+					direction = RIGHT;
+				else if (x-protester.getX() < 0 && y-protester.getY() == 0)
+					direction = LEFT;
+				else if (x-protester.getX() > 0 && y-protester.getY() > 0)
 					direction = DOWN_LEFT;
+				else if (x-protester.getX() > 0 && y-protester.getY() < 0)
+					direction = UP_LEFT;
+				else if (x-protester.getX() < 0 && y-protester.getY() < 0)
+					direction = UP_RIGHT;
+				else
+					direction = DOWN_RIGHT;
 
 				if (stateTime == 0f) {
 					punch.play();
@@ -69,6 +90,24 @@ public class MovileCop extends Cop {
 		if (!inRange) {
 			for (Protester protester : crowd.getProtesters()) {
 				if (Intersector.overlaps(protester.getBoundingCircle(), range)) {
+
+					if (x-protester.getX() == 0 && y-protester.getY() > 0)
+						direction = UP;
+					else if (x-protester.getX() == 0 && y-protester.getY() < 0)
+						direction = DOWN;
+					else if (x-protester.getX() > 0 && y-protester.getY() == 0)
+						direction = RIGHT;
+					else if (x-protester.getX() < 0 && y-protester.getY() == 0)
+						direction = LEFT;
+					else if (x-protester.getX() > 0 && y-protester.getY() > 0)
+						direction = DOWN_LEFT;
+					else if (x-protester.getX() > 0 && y-protester.getY() < 0)
+						direction = UP_LEFT;
+					else if (x-protester.getX() < 0 && y-protester.getY() < 0)
+						direction = UP_RIGHT;
+					else
+						direction = DOWN_RIGHT;
+					
 					Vector2 posProt = new Vector2(protester.getX(),
 							protester.getY());
 					if (prot == null) {
@@ -89,16 +128,17 @@ public class MovileCop extends Cop {
 				// prot = crowd.getProtesters().get(indice);}
 				if (prot != null) {
 					aproachProtester(prot);
-					// incluir animacion de caminar
-				} else {
-					// backCenter();
-				}
+					isRunning = true;
+					return;
+				} 
 			}
+			isRunning = Math.abs(x-xInit) > 5 ||  Math.abs(y-yInit) > 5;
+			if (isRunning)
+				backCenter();
+			else 
+				isComingBack = false;
 		}
-		// else{
-		// backCenter();
-		// incluir animacion de caminar
-		// }
+	
 	}
 
 	private void aproachProtester(Protester protester) {
@@ -106,17 +146,18 @@ public class MovileCop extends Cop {
 		Vector2 direction2 = new Vector2();
 		Vector2 Goal = new Vector2(protester.getX(), protester.getY());
 		direction2.set(Goal).sub(position).nor();
-		x += direction2.x * 1.2f;
-		y += direction2.y * 1.2f;
+		x += direction2.x * 1.2f * Gdx.graphics.getDeltaTime() * 50;
+		y += direction2.y * 1.2f * Gdx.graphics.getDeltaTime() * 50;
 	}
 
 	private void backCenter() {
+		isComingBack = true;
 		Vector2 position = new Vector2(x, y);
 		Vector2 direction2 = new Vector2();
 		Vector2 Goal = new Vector2(xInit, yInit);
 		direction2.set(Goal).sub(position).nor();
-		x += direction2.x * 1.5f;
-		y += direction2.y * 1.5f;
+		x += direction2.x * 1.5f * Gdx.graphics.getDeltaTime() * 50;
+		y += direction2.y * 1.5f * Gdx.graphics.getDeltaTime() * 50;
 	}
 
 	public float getxInit() {
@@ -134,5 +175,59 @@ public class MovileCop extends Cop {
 	public void setyInit(float yInit) {
 		this.yInit = yInit;
 	}
+	
+	@Override
+	protected void updateAnimation() {
+		if (!isRunning)
+			super.updateAnimation();
+		else {
+			if (isComingBack) {
+				if (xInit-x == 0 && yInit-y > 0)
+					direction = UP;
+				else if (xInit-x == 0 && yInit-y < 0)
+					direction = DOWN;
+				else if (xInit-x > 0 && yInit-y == 0)
+					direction = RIGHT;
+				else if (xInit-x < 0 && yInit-y == 0)
+					direction = LEFT;
+				else if (xInit-x > 0 && yInit-y > 0)
+					direction =  UP_RIGHT;
+				else if (xInit-x > 0 && yInit-y < 0)
+					direction = DOWN_RIGHT;
+				else if (xInit-x < 0 && yInit-y < 0)
+					direction = DOWN_LEFT;
+				else
+					direction = UP_LEFT;
+			}
+			
+			switch (direction) {
+			case UP:
+				currentAnimation = runUAnimation;
+				break;
+			case DOWN:
+				currentAnimation = runDAnimation;
+				break;
+			case LEFT:
+				currentAnimation = runLAnimation;
+				break;
+			case RIGHT:
+				currentAnimation = runRAnimation;
+				break;
+			case UP_RIGHT:
+				currentAnimation = runUrAnimation;
+				break;
+			case DOWN_RIGHT:
+				currentAnimation = runDrAnimation;
+				break;
+			case UP_LEFT:
+				currentAnimation = runUlAnimation;
+				break;
+			case DOWN_LEFT:
+				currentAnimation = runDlAnimation;
+				break;
+			}
+			currentFrame = currentAnimation.getKeyFrame(stateTime, true);
+			}
+		}
 
 }

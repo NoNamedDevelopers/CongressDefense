@@ -96,7 +96,7 @@ public class ScoreScreen implements Screen {
 
 		sortList();
 		for (int i = 0; i < puntuacion.size(); i++) {
-			game.font.draw(game.batch, puntuacion.get(i).Username, 325,
+			game.font.draw(game.batch,(i+1) + "º- " + puntuacion.get(i).Username, 325,
 					600 - i * 30);
 			game.font.draw(game.batch, puntuacion.get(i).Score.toString(), 600,
 					600 - i * 30);

@@ -143,9 +143,9 @@ public class CrowdManager {
 	public void setPercentage()
 	{
 		if (percentage[1] <300)
-			percentage[1] += 4;
+			percentage[1] += 10;
 		if (percentage[2] <150)
-			percentage[2] += 1;
+			percentage[2] += 5;
 		percentage [0] = 2000 - percentage[1] - percentage[2];
 		
 	}
@@ -154,19 +154,19 @@ public class CrowdManager {
 	{
 		if (game.dificulty == game.EASY)
 		{
-			protestantsPerWave = PROTESTANTS_EASY + wave*INCREASE_EASY/3;
+			protestantsPerWave = PROTESTANTS_EASY + wave*INCREASE_EASY/2;
 		}
 		else if (game.dificulty == game.NORMAL)
 		{
-			protestantsPerWave = PROTESTANTS_NORMAL  + wave*INCREASE_NORMAL/3;
+			protestantsPerWave = PROTESTANTS_NORMAL  + wave*INCREASE_NORMAL/2;
 		}
 		else if (game.dificulty == game.HARD)
 		{
-			protestantsPerWave = PROTESTANTS_HARD  + wave*INCREASE_HARD/3;
+			protestantsPerWave = PROTESTANTS_HARD  + wave*INCREASE_HARD/2;
 		}
 		else
 		{
-			protestantsPerWave = PROTESTANTS_CHUCK  + wave*INCREASE_CHUCK/3;
+			protestantsPerWave = PROTESTANTS_CHUCK  + wave*INCREASE_CHUCK/2;
 		}
 	}
 	

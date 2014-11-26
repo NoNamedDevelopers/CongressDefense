@@ -72,7 +72,7 @@ public class CopIcon {
 			return new BazookaCop(game,x,y);
 		case (MELEE):
 		default:
-			return new MovileCop(game,x,y);
+			return new MeleeCop(game,x,y);
 
 			//return new MovileCop(game,x,y);
 		}

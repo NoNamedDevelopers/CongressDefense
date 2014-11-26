@@ -172,7 +172,7 @@ public class GameScreen implements Screen {
 	
 	private void loadMenu() {
 		menu = new Array<CopIcon>(); 		
-		menu.add(new CopIcon(game, camera, 70, camera.position.x+75, 10, "ui/meleecopicon.png", CopIcon.MELEE));
+		menu.add(new CopIcon(game, camera, 60, camera.position.x+75, 10, "ui/meleecopicon.png", CopIcon.MELEE));
 		menu.add(new CopIcon(game, camera, 180, camera.position.x-5, 10, "ui/bazookacopicon.png", CopIcon.BAZOOKA));
 		
 		

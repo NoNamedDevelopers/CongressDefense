@@ -13,6 +13,14 @@ android {
 
         instrumentTest.setRoot('tests')
     }
+    
+    
+}
+
+dependencies {
+compile 'com.google.code.gson:gson:2.2.+'
+compile fileTree(dir: 'libs', include: ['*.jar'])
+
 }
 
 // needed to add JNI shared libraries to APK when compiling on CLI

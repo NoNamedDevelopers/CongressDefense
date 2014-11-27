@@ -1,5 +1,10 @@
 package com.nonameddevelopers.congressdefense.screens;
 
+import java.net.URLDecoder;
+import java.net.URLEncoder;
+
+import jdk.nashorn.internal.runtime.URIUtils;
+
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input.Keys;
 import com.badlogic.gdx.Input.TextInputListener;
@@ -147,7 +152,8 @@ public class GameOverScreen implements Screen {
 	public class NameInputListener implements TextInputListener {
 		   @Override
 		   public void input (String text) {
-				RESTConnector.updateUserScore(text, game.score);
+			   
+				RESTConnector.updateUserScore(text.replaceAll(" ", "%20"), game.score);
 				try {
 					game.setScreen(new ScoreScreen(game));
 				} catch (Exception e) {

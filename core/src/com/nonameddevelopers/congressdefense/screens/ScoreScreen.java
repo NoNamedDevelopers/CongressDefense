@@ -1,9 +1,12 @@
 package com.nonameddevelopers.congressdefense.screens;
 
+import java.net.URLDecoder;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
+
+import jdk.nashorn.internal.runtime.URIUtils;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input.Keys;
@@ -20,6 +23,7 @@ import com.nonameddevelopers.congressdefense.gameItems.ScoreScreenInputListener;
 import com.nonameddevelopers.congressdefense.scoresclient.RESTConnector;
 import com.nonameddevelopers.congressdefense.scoresclient.User;
 import com.nonameddevelopers.congressdefense.ui.CheckBoxActor;
+import com.sun.javafx.fxml.builder.URLBuilder;
 
 public class ScoreScreen implements Screen {
 
@@ -71,12 +75,13 @@ public class ScoreScreen implements Screen {
 	}
 
 	private void sortList() {
-		Collections.sort(puntuacion,Collections.reverseOrder(new Comparator<User>() {
-			@Override
-			public int compare(User user1,User user2) {
-				return user1.Score.compareTo(user2.Score);
-			}
-	    }));
+		Collections.sort(puntuacion,
+				Collections.reverseOrder(new Comparator<User>() {
+					@Override
+					public int compare(User user1, User user2) {
+						return user1.Score.compareTo(user2.Score);
+					}
+				}));
 	}
 
 	@Override
@@ -95,9 +100,10 @@ public class ScoreScreen implements Screen {
 		bg.draw(game.batch);
 
 		sortList();
+
 		for (int i = 0; i < puntuacion.size(); i++) {
-			game.font.draw(game.batch,(i+1) + "º- " + puntuacion.get(i).Username, 325,
-					600 - i * 30);
+			game.font.draw(game.batch, (i + 1) + "º- "
+					+ 			   puntuacion.get(i).Username, 325, 600 - i * 30);
 			game.font.draw(game.batch, puntuacion.get(i).Score.toString(), 600,
 					600 - i * 30);
 		}

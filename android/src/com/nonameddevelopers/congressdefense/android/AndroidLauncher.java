@@ -17,7 +17,6 @@ import com.nonameddevelopers.congressdefense.CongressDefense;
 
 public class AndroidLauncher extends AndroidApplication {
 
-	HashMap<TrackerName, Tracker> mTrackers = new HashMap<TrackerName, Tracker>();
 	GoogleAnalytics analytics;
 
 	@Override

@@ -1,5 +1,7 @@
 package com.nonameddevelopers.congressdefense.characters;
 
+import java.util.Random;
+
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Texture;
@@ -8,8 +10,10 @@ import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Circle;
+import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.ObjectMap;
 import com.nonameddevelopers.congressdefense.CongressDefense;
+import com.nonameddevelopers.congressdefense.gameItems.GameSound;
 
 public abstract class GameCharacter {
 
@@ -42,17 +46,36 @@ public abstract class GameCharacter {
 	protected float y;
 	protected short direction;
 
+
+	private static Random r;
+	private static Array<GameSound> moans;
+	
+	protected boolean isDead = false;
+	protected boolean isGhost = false;
 	protected boolean isHurted = false;
 	protected float timeHurted = 0f;
+	private float deadX = 0f;
+	private float deadY = 0f;
+	private float deadAlpha = 1f; 
 	
 	protected int life;
 	protected int initialLife;
 
-	private static Texture lifeBarTexture, lifeBlockTexture;
-	private Sprite lifeBar, lifeBlock;
+	private static Texture lifeBarTexture, lifeBlockTexture, ghostTexture;
+	private Sprite lifeBar, lifeBlock, ghost;
 	
 	static {
 		textures = new ObjectMap<String, Texture>();
+		lifeBarTexture = new Texture(Gdx.files.internal("sprites/lifebar.png"));
+		lifeBlockTexture = new Texture(Gdx.files.internal("sprites/lifeblock.png"));
+		ghostTexture = new Texture(Gdx.files.internal("sprites/ghost.png"));
+		
+
+		r = new Random();
+		moans = new Array<GameSound>();
+		moans.add(new GameSound("sounds/moan_0.mp3", 300));
+		moans.add(new GameSound("sounds/moan_1.mp3", 300));
+		moans.add(new GameSound("sounds/moan_2.mp3", 330));
 	}	
 	
 	public GameCharacter(final CongressDefense game, float x, float y, String type, int columns, int rows, float animationSpeed) {
@@ -82,10 +105,10 @@ public abstract class GameCharacter {
 		initialLife = life;
 		
 
-		lifeBarTexture = new Texture(Gdx.files.internal("sprites/lifebar.png"));
-		lifeBlockTexture = new Texture(Gdx.files.internal("sprites/lifeblock.png"));
 		lifeBar = new Sprite(lifeBarTexture);
 		lifeBlock = new Sprite(lifeBlockTexture);
+		ghost = new Sprite(ghostTexture);
+		ghost.setSize(64, 64);
 	}
 	
 	protected Animation loadAnimation(String src, int columns, int rows, float speed) {
@@ -106,10 +129,21 @@ public abstract class GameCharacter {
 	}	
 	
 	protected void update(float delta) {
-		if (isHurted)
-			timeHurted += delta;
-		else 
-			timeHurted = 0;
+		if(isGhost) {
+			deadY += 50*delta;
+			deadAlpha -= delta ;
+			if (deadAlpha <= 0f) {
+				isDead = true;
+			}
+		}
+		else {
+			if (isHurted) {
+				timeHurted += delta;
+			}
+			else { 
+				timeHurted = 0;
+			}
+		}
 	}
 
 	protected void updateAnimation() {
@@ -144,16 +178,23 @@ public abstract class GameCharacter {
 	
 	
 	public void draw(SpriteBatch batch) {
-		if (isHurted) {
-			tint(Color.RED);
-			if (timeHurted > 0.05f)
-				isHurted = false;
+		if (isGhost) {
+			ghost.setAlpha(deadAlpha);
+			ghost.setPosition(deadX, deadY);
+			ghost.draw(batch);
 		}
-		batch.setColor(tint);
-		batch.draw(currentFrame, x, y);
-		batch.setColor(Color.WHITE);
-		tint(Color.WHITE);
-		drawLife(batch);
+		else {
+			if (isHurted) {
+				tint(Color.RED);
+				if (timeHurted > 0.05f)
+					isHurted = false;
+			}
+			batch.setColor(tint);
+			batch.draw(currentFrame, x, y);
+			batch.setColor(Color.WHITE);
+			tint(Color.WHITE);
+			drawLife(batch);
+		}
 	}
 	
 	private void drawLife(SpriteBatch batch) {		
@@ -181,6 +222,29 @@ public abstract class GameCharacter {
 	
 	public float getY() {
 		return y;
+	}
+	
+
+	public void hurt(int damage) {
+		moans.get(r.nextInt(3)).play(0.5f);
+		isHurted = true;
+		life -= damage;
+		if (life <= 0 && !isDead)
+			kill();
+	}
+	
+	public void kill() {
+		isGhost = true;
+		deadX = x;
+		deadY = y;
+	}
+	
+	public boolean isDead() {
+		return isDead;
+	}
+	
+	public boolean isGhost() {
+		return isGhost;
 	}
 	
 }

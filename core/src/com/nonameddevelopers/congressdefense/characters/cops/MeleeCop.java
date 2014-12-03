@@ -24,33 +24,35 @@ public class MeleeCop extends Cop {
 	
 	public void checkCollision(Crowd crowd) {
 		for (Protester protester : crowd.getProtesters())
-			if (Intersector.overlaps(protester.getBoundingCircle(), boundingCircle)) {
-				isAttacking = true;
-
-				if (x-protester.getX() == 0 && y-protester.getY() > 0)
-					direction = UP;
-				else if (x-protester.getX() == 0 && y-protester.getY() < 0)
-					direction = DOWN;
-				else if (x-protester.getX() > 0 && y-protester.getY() == 0)
-					direction = RIGHT;
-				else if (x-protester.getX() < 0 && y-protester.getY() == 0)
-					direction = LEFT;
-				else if (x-protester.getX() > 0 && y-protester.getY() > 0)
-					direction = DOWN_LEFT;
-				else if (x-protester.getX() > 0 && y-protester.getY() < 0)
-					direction = UP_LEFT;
-				else if (x-protester.getX() < 0 && y-protester.getY() < 0)
-					direction = UP_RIGHT;
-				else
-					direction = DOWN_RIGHT;
+			if (!protester.isGhost()) {
+				if (Intersector.overlaps(protester.getBoundingCircle(), boundingCircle)) {
+					isAttacking = true;
 	
-				if (stateTime == 0f) {
-					punch.play();
-					protester.hurt(40);
-					stateTime += 0.001f;
-					break;
-				}
-			}		
+					if (x-protester.getX() == 0 && y-protester.getY() > 0)
+						direction = UP;
+					else if (x-protester.getX() == 0 && y-protester.getY() < 0)
+						direction = DOWN;
+					else if (x-protester.getX() > 0 && y-protester.getY() == 0)
+						direction = RIGHT;
+					else if (x-protester.getX() < 0 && y-protester.getY() == 0)
+						direction = LEFT;
+					else if (x-protester.getX() > 0 && y-protester.getY() > 0)
+						direction = DOWN_LEFT;
+					else if (x-protester.getX() > 0 && y-protester.getY() < 0)
+						direction = UP_LEFT;
+					else if (x-protester.getX() < 0 && y-protester.getY() < 0)
+						direction = UP_RIGHT;
+					else
+						direction = DOWN_RIGHT;
+		
+					if (stateTime == 0f) {
+						punch.play();
+						protester.hurt(40);
+						stateTime += 0.001f;
+						break;
+					}
+				}		
+			}
 	}
 
 }

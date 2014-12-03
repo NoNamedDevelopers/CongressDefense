@@ -35,11 +35,13 @@ public class CheckBoxActor extends Actor {
 		this.game = game;
 		this.type = type;
 		
+		this.setSize(50,50);
+		
 	}
 	
 	@Override
 	public void draw(Batch batch, float parentAlpha) {
-		circle.set(getX()+25, getY()+25, 25);
+		circle.set(getX()+25*this.getScaleX(), getY()+25*this.getScaleY(), 25*this.getScaleX());
 		Color color = getColor();
 		batch.setColor(color.r, color.g, color.b, color.a * parentAlpha);
 
@@ -64,7 +66,6 @@ public class CheckBoxActor extends Actor {
 				   getScaleX(), getScaleY(),
 				   getRotation());
 	}
-	
 	
 	public void dispose() {
 		imageOn.dispose();

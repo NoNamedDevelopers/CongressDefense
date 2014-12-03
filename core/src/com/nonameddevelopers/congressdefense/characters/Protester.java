@@ -2,12 +2,9 @@ package com.nonameddevelopers.congressdefense.characters;
 
 import java.util.Random;
 
-import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.graphics.Color;
-import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Circle;
+import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.utils.Array;
 import com.nonameddevelopers.congressdefense.CongressDefense;
 import com.nonameddevelopers.congressdefense.gameItems.GameSound;
@@ -17,18 +14,15 @@ public abstract class Protester extends GameCharacter {
 
 	private static Random r;
 
-	private int xGoal = 813;
-	private int yGoal = 369;
+	private int xGoal = 1540;
+	private int yGoal = 835;
+	
+	protected float speedFactor;
 
 	private static Array<GameSound> moans;
 	private static GameSound joy, die;
-	private static Texture lifeBarTexture, lifeBlockTexture;
-	private Sprite lifeBar, lifeBlock;
 
-	public int life;
 	protected float appearTime;
-	private boolean isHurted = false;
-	private float timeHurted = 0f;
 	private boolean isDead = false;
 
 	static {
@@ -41,51 +35,32 @@ public abstract class Protester extends GameCharacter {
 		joy = new GameSound("sounds/joy.mp3", 1150);
 		die = new GameSound("sounds/die.mp3", 670);
 		
-		lifeBarTexture = new Texture(Gdx.files.internal("sprites/lifebar.png"));
-		lifeBlockTexture = new Texture(Gdx.files.internal("sprites/lifeblock.png"));
 	}
 
 	public Protester(final CongressDefense game, float x, float y, String type, int columns, int rows,float appearTime, float frameSpeed) {
 		super(game, x, y, type, columns, rows, frameSpeed);
 
 		this.appearTime = appearTime;
-
-		life = 100;
-		lifeBar = new Sprite(lifeBarTexture);
-		lifeBlock = new Sprite(lifeBlockTexture);
+		this.speedFactor = 1f;		
 	}
-	
-	public void update(float delta) {		
+
+	@Override
+	public void update(float delta) {	
+		super.update(delta);	
 		stateTime += delta;
 		if (stateTime < appearTime)
 			return;
 
-		if (isHurted)
-			timeHurted += delta;
-		else 
-			timeHurted = 0;
 
 		approach(delta);
 		updateAnimation();
 
-		boundingCircle.set(x + 16, y + 16, 20f);
+		boundingCircle.set(x + 32, y + 32, 40f);
 	}
 
 	@Override
-	public void draw(SpriteBatch batch) {
-		if (isHurted) {
-			tint(Color.RED);
-			if (timeHurted > 0.05f)
-				isHurted = false;
-		}
+	public void draw(SpriteBatch batch) {		
 		super.draw(batch);
-				
-		lifeBar.setPosition(x+6, y+32);
-		lifeBar.draw(batch);
-		for (int i = 0; i<life/10; i++) {
-			lifeBlock.setPosition(x+6+i*2, y+32);
-			lifeBlock.draw(batch);
-		}
 	}
 
 	public void hurt(int damage) {	
@@ -129,17 +104,60 @@ public abstract class Protester extends GameCharacter {
 		return boundingCircle;
 	}
 
-	public abstract void approach(float delta);
-
-	protected void arrived() {
-		if (x>803 && x<823)
-		{
-			if (y < 379 && y >359)
-			{
-				attackCongress();
-			}
+	public void approach(float delta) {
+		arrived();
+		
+		Random random = new Random();
+		Vector2 Goal = new Vector2(getxGoal(), getyGoal());
+		Vector2 position = new Vector2(x, y);
+		Vector2 direction2 = new Vector2();
+		
+		int n = random.nextInt(100);
+		
+		if(n<60) {
+			Goal = new Vector2(getxGoal(),getyGoal());
+			direction2.set(Goal).sub(position).nor();
+		}
+		else if (n < 80) {
+			Goal = new Vector2(getxGoal(),0);
+			position = new Vector2(x, 0);
+			direction2.set(Goal).sub(position).nor();
+		}
+		else {
+			Goal = new Vector2(0, getyGoal());
+			position = new Vector2(0, y);
 		}
 		
+
+		direction2.set(Goal).sub(position).nor();
+		x += direction2.x * (random.nextInt(3)) * delta * 100 * speedFactor;
+		y += direction2.y * (random.nextInt(3)) * delta * 100 * speedFactor;
+		if (direction2.x == 0 && direction2.y >= 0)
+			this.direction = UP;
+		else if (direction2.x == 0 && direction2.y <= 0)
+			this.direction = DOWN;
+		else if (direction2.x>=0 && direction2.y == 0)
+			this.direction = RIGHT;
+		else if (direction2.x<=0 && direction2.y == 0)
+			this.direction = LEFT;
+		else if (direction2.x>=0 && direction2.y >= 0)
+			this.direction = UP_RIGHT;
+		else if (direction2.x>=0 && direction2.y< 0)
+		{
+			this.direction = DOWN_RIGHT;
+		}
+		else if (direction2.x<0 && direction2.y >= 0)
+		{
+			this.direction = UP_LEFT;
+		}
+		else
+			this.direction = DOWN_LEFT;
+	}
+
+	protected void arrived() {
+		if (x>xGoal-10 && x<xGoal+10 && y>yGoal-10 && y<yGoal+10) {
+			attackCongress();
+		}
 	}
 
 	public int getxGoal() {

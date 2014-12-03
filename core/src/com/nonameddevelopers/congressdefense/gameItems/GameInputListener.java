@@ -1,6 +1,7 @@
 package com.nonameddevelopers.congressdefense.gameItems;
 
 import com.badlogic.gdx.input.GestureDetector.GestureListener;
+import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.utils.Array;
@@ -29,11 +30,6 @@ public class GameInputListener implements GestureListener {
 		this.menu = screen.menu;
 		this.buttons = screen.buttons;
 		touchPos = new Vector3();
-	}
-
-	public void update() {
-		for (CopIcon icon : menu)
-			icon.update();
 	}
 
 	@Override
@@ -84,13 +80,22 @@ public class GameInputListener implements GestureListener {
 	@Override
 	public boolean pan(float x, float y, float deltaX, float deltaY) {
 		unproject(x, y);
-
-		if (!isAnyIconPressed())
-			if (camera.position.y + deltaY - camera.viewportHeight / 2 >= 0
-					&& camera.position.y + deltaY + camera.viewportHeight / 2 <= camera.worldHeight) {
-				camera.translate(0f, deltaY);
-				camera.update();
-			}
+		
+		float moveX = 0f;
+		float moveY = 0f;
+		if (camera.position.x - deltaX - camera.effectiveViewportWidth / 2 >= 0
+			&& camera.position.x - deltaX + camera.effectiveViewportWidth / 2 <= camera.worldWidth) {
+			moveX = -deltaX;
+		}
+		if (camera.position.y + deltaY - camera.effectiveViewportHeight / 2 >= 0
+			&& camera.position.y + deltaY + camera.effectiveViewportHeight / 2 <= camera.worldHeight) {
+			moveY = deltaY;
+		}
+		
+		if (!isAnyIconPressed()) {			
+			camera.translate(moveX, moveY);
+			camera.update();
+		}
 
 		return false;
 	}
@@ -104,7 +109,8 @@ public class GameInputListener implements GestureListener {
 
 	@Override
 	public boolean zoom(float initialDistance, float distance) {
-		// TODO Auto-generated method stub
+		camera.zoom(MathUtils.clamp((initialDistance/distance)*camera.zoom, 0.35f, 1f));
+		camera.update();
 		return false;
 	}
 

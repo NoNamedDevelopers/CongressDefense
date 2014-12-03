@@ -1,10 +1,5 @@
 package com.nonameddevelopers.congressdefense.screens;
 
-import java.net.URLDecoder;
-import java.net.URLEncoder;
-
-import jdk.nashorn.internal.runtime.URIUtils;
-
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input.Keys;
 import com.badlogic.gdx.Input.TextInputListener;

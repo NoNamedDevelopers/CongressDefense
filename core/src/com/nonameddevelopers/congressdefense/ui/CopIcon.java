@@ -5,12 +5,13 @@ import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
+import com.badlogic.gdx.graphics.glutils.ShapeRenderer.ShapeType;
 import com.badlogic.gdx.math.Circle;
 import com.nonameddevelopers.congressdefense.CongressDefense;
 import com.nonameddevelopers.congressdefense.characters.Cop;
 import com.nonameddevelopers.congressdefense.characters.cops.BazookaCop;
 import com.nonameddevelopers.congressdefense.characters.cops.MeleeCop;
-import com.nonameddevelopers.congressdefense.characters.cops.MovileCop;
 import com.nonameddevelopers.congressdefense.gameItems.GameCamera;
 
 public class CopIcon {
@@ -27,6 +28,7 @@ public class CopIcon {
 	private Texture texture;
 	private Sprite sprite;
 	
+	private float xPosition;
 	private float x;
 	private float y;
 	private int type;
@@ -36,26 +38,29 @@ public class CopIcon {
 	
 	private int cost;
 	
-	public CopIcon(CongressDefense game, GameCamera camera, int cost, float x, float y, String src, int type) {
+	private float scale;
+	
+	public CopIcon(CongressDefense game, GameCamera camera, int cost, float xPosition, String src, int type) {
 		this.game = game;
 		this.camera = camera;
 		this.cost = cost;
-		this.x = x;
-		this.y = y;
+		this.xPosition = xPosition;
+		this.x = 70;
+		this.y = 110;
 		this.type = type;
+		this.scale = 1f;
 		circle = new Circle();
 		texture = new Texture(Gdx.files.internal(src));
 		sprite = new Sprite(texture);
-		sprite.setSize(70,70);
 	}
 	
 	public void update() {
-		circle.set(camera.position.x+camera.viewportWidth/2-x+35,
-				   camera.position.y-camera.viewportHeight/2+y+35,
-				   35f);
-		
-		sprite.setPosition(camera.position.x+camera.viewportWidth/2-x, 
-				   		   camera.position.y-camera.viewportHeight/2+y);
+		circle.set(camera.position.x-camera.effectiveViewportWidth/2+(x+110*xPosition+50)*scale, 
+	   		   camera.position.y+camera.effectiveViewportHeight/2-(y-50)*scale,
+			   50f*scale);	
+		sprite.setPosition(camera.position.x-camera.effectiveViewportWidth/2+(x+110*xPosition)*scale, 
+			   camera.position.y+camera.effectiveViewportHeight/2-y*scale);
+		sprite.setSize(100*scale,100*scale);		
 	}
 	
 	public void draw(SpriteBatch batch) {
@@ -105,5 +110,9 @@ public class CopIcon {
 	
 	public int getCost() {
 		return cost;
+	}
+	
+	public void setScale(float scaleXY) {
+		this.scale = scaleXY;
 	}
 }

@@ -107,14 +107,9 @@ public class SelectLevelScreen implements Screen {
 		buttons.get("chuckNorris").setSize(200, 200);	
 		buttons.get("chuckNorris").setPosition(camera.position.x-camera.viewportWidth/2+760,  camera.position.y-camera.viewportHeight/2+100);
 			
-		buttons.put("speaker",  new CheckBoxActor("ui/speaker_normal_button.png", "ui/speaker_muted_button.png", game, CheckBoxActor.MUSIC));
-		buttons.get("speaker").setSize(50, 50);				
-	
-		buttons.put("sounds",  new CheckBoxActor("ui/note_normal_button.png", "ui/note_muted_button.png", game, CheckBoxActor.SOUND));
-		buttons.get("sounds").setSize(50, 50);
-		
+		buttons.put("speaker",  new CheckBoxActor("ui/note_normal_button.png", "ui/note_muted_button.png", game, CheckBoxActor.MUSIC));
+		buttons.put("sounds",  new CheckBoxActor("ui/speaker_normal_button.png", "ui/speaker_muted_button.png", game, CheckBoxActor.SOUND));		
 		buttons.put("back",  new CheckBoxActor("ui/back_button.png", "ui/back_button.png", game, CheckBoxActor.NORMAL));
-		buttons.get("back").setSize(50, 50);		
 	}
 	
 	

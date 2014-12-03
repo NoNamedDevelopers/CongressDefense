@@ -18,7 +18,7 @@ public class MeleeCop extends Cop {
 	public MeleeCop(CongressDefense game, float x, float y) {
 		super(game, x, y, "cop", 4, 6, 0.018f);
 		
-		boundingCircle.set(x, y, 10f);		
+		boundingCircle.set(x, y, 20f);		
 	}	
 
 	

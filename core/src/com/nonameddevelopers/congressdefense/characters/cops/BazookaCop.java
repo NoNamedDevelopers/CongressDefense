@@ -23,9 +23,9 @@ public class BazookaCop extends Cop {
 	public BazookaCop(CongressDefense game, float x, float y) {
 		super(game, x, y, "copgun", 5, 5, 0.02f);
 
-		boundingCircle.set(x, y, 10f);
+		boundingCircle.set(x, y, 20f);
 		range = new Circle();
-		range.set(x,y, 100f);
+		range.set(x,y, 200f);
 	}
 	
 	public void checkCollision(Crowd crowd) {

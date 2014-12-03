@@ -22,13 +22,14 @@ public abstract class Cop extends GameCharacter {
 	
 	protected boolean isDead = false;
 	
-	
 
 	public Cop(final CongressDefense game, float x, float y, String type, int columns, int rows, float animationSpeed) {
-		super(game, x-16, y-16, type, columns, rows, animationSpeed);		
+		super(game, x-32, y-32, type, columns, rows, animationSpeed);	
 	}
-		
+	
+	@Override
 	public void update(float delta) {
+		super.update(delta);
 		if (isAttacking || isRunning) {
 			stateTime += delta;	
 			if (stateTime>=currentAnimation.getAnimationDuration()) {
@@ -52,8 +53,8 @@ public abstract class Cop extends GameCharacter {
 	}
 	
 	public void setPosition(float x, float y) {
-		this.x = x-16;
-		this.y = y-16;
+		this.x = x-32;
+		this.y = y-32;
 		this.boundingCircle.x = x;
 		this.boundingCircle.y = y;
 	}
@@ -93,9 +94,19 @@ public abstract class Cop extends GameCharacter {
 		this.yInit = yInit;
 	}
 	
+	public void hurt(int damage) {
+
+		if (isPlanted) {
+			isHurted = true;
+			life -= damage;
+		}
+		if (life <= 0 && !isDead)
+			kill();
+	}
+	
 	public void kill() {
-		isDead = true;
-		//die.play();
+		if (isPlanted)
+			isDead = true;
 	}
 
 	public boolean isDead() {

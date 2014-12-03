@@ -4,6 +4,7 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Animation;
+import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Circle;
@@ -40,6 +41,15 @@ public abstract class GameCharacter {
 	protected float x;
 	protected float y;
 	protected short direction;
+
+	protected boolean isHurted = false;
+	protected float timeHurted = 0f;
+	
+	protected int life;
+	protected int initialLife;
+
+	private static Texture lifeBarTexture, lifeBlockTexture;
+	private Sprite lifeBar, lifeBlock;
 	
 	static {
 		textures = new ObjectMap<String, Texture>();
@@ -66,7 +76,16 @@ public abstract class GameCharacter {
 		
 	    direction = DOWN;
 		updateAnimation();
-		boundingCircle = new Circle();		
+		boundingCircle = new Circle();
+		
+		life = 100;
+		initialLife = life;
+		
+
+		lifeBarTexture = new Texture(Gdx.files.internal("sprites/lifebar.png"));
+		lifeBlockTexture = new Texture(Gdx.files.internal("sprites/lifeblock.png"));
+		lifeBar = new Sprite(lifeBarTexture);
+		lifeBlock = new Sprite(lifeBlockTexture);
 	}
 	
 	protected Animation loadAnimation(String src, int columns, int rows, float speed) {
@@ -85,6 +104,13 @@ public abstract class GameCharacter {
 		
 		return new Animation(speed, frames);
 	}	
+	
+	protected void update(float delta) {
+		if (isHurted)
+			timeHurted += delta;
+		else 
+			timeHurted = 0;
+	}
 
 	protected void updateAnimation() {
 		switch (direction) {
@@ -118,10 +144,27 @@ public abstract class GameCharacter {
 	
 	
 	public void draw(SpriteBatch batch) {
+		if (isHurted) {
+			tint(Color.RED);
+			if (timeHurted > 0.05f)
+				isHurted = false;
+		}
 		batch.setColor(tint);
 		batch.draw(currentFrame, x, y);
 		batch.setColor(Color.WHITE);
-		tint = Color.WHITE;
+		tint(Color.WHITE);
+		drawLife(batch);
+	}
+	
+	private void drawLife(SpriteBatch batch) {		
+		if (initialLife != life) {
+			lifeBar.setPosition(x+22, y+64);
+			lifeBar.draw(batch);
+			for (int i = 0; i<life/10; i++) {
+				lifeBlock.setPosition(x+22+i*2, y+64);
+				lifeBlock.draw(batch);
+			}
+		}
 	}
 		
 	public void tint(Color color) {

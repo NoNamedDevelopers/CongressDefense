@@ -61,10 +61,10 @@ public class Proyectile {
 			return;
 		}
 		direction.set(target.x, target.y).sub(this.x, this.y).nor();
-		x += direction.x * 8 * delta * 50;
-		y += direction.y * 8 * delta * 50;
+		x += direction.x * 8 * delta * 100;
+		y += direction.y * 8 * delta * 100;
 
-		boundingCircle.set(x + 16, y + 16, 10f);
+		boundingCircle.set(x + 32, y + 32, 10f);
 		
 		if (Intersector.overlaps(target.getBoundingCircle(), boundingCircle)) {
 			target.hurt(40);

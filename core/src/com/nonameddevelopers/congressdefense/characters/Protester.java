@@ -20,23 +20,33 @@ public abstract class Protester extends GameCharacter {
 	private static GameSound joy, die;
 
 	protected float appearTime;
+	
+	protected float timeInDirection = 0.2f;
+	
+
+	protected static Random random;
+	protected Vector2 goal;
+	protected Vector2 position;
+	protected Vector2 direction2;
 
 	static {		
 		joy = new GameSound("sounds/joy.mp3", 1150);
 		die = new GameSound("sounds/die.mp3", 670);		
+		random = new Random();
 	}
 
 	public Protester(final CongressDefense game, float x, float y, String type, int columns, int rows,float appearTime, float frameSpeed) {
 		super(game, x, y, type, columns, rows, frameSpeed);
 
 		this.appearTime = appearTime;
-		this.speedFactor = 1f;		
+		this.speedFactor = 1f;	
 	}
 
 	@Override
 	public void update(float delta) {	
 		super.update(delta);	
 		stateTime += delta;
+		timeInDirection += delta;
 		if (stateTime < appearTime)
 			return;
 
@@ -53,12 +63,14 @@ public abstract class Protester extends GameCharacter {
 	}
 
 	protected void attackCongress() {
-		if (game.life - 1 <= 0)
-			game.setScreen(new GameOverScreen(game));
-		else {
-			joy.play();
-			isDead = true;
-			game.life--;
+		if (!isGhost) {
+			if (game.life - 1 <= 0)
+				game.setScreen(new GameOverScreen(game));
+			else {
+				joy.play();
+				isDead = true;
+				game.life--;
+			}
 		}
 	}
 
@@ -83,49 +95,44 @@ public abstract class Protester extends GameCharacter {
 	public void approach(float delta) {
 		arrived();
 		
-		Random random = new Random();
-		Vector2 Goal = new Vector2(getxGoal(), getyGoal());
-		Vector2 position = new Vector2(x, y);
-		Vector2 direction2 = new Vector2();
+		direction2 = new Vector2();
 		
-		int n = random.nextInt(100);
-		
-		if(n<60) {
-			Goal = new Vector2(getxGoal(),getyGoal());
-			direction2.set(Goal).sub(position).nor();
-		}
-		else if (n < 80) {
-			Goal = new Vector2(getxGoal(),0);
-			position = new Vector2(x, 0);
-			direction2.set(Goal).sub(position).nor();
-		}
-		else {
-			Goal = new Vector2(0, getyGoal());
-			position = new Vector2(0, y);
+		if (timeInDirection > 0.2f) {
+			timeInDirection = 0f;
+			
+			int n = random.nextInt(100);
+			if(n<60) {
+				goal = new Vector2(getxGoal(),getyGoal());
+				position = new Vector2(x, y);
+			}
+			else if (n < 80) {
+				goal = new Vector2(getxGoal(),0);
+				position = new Vector2(x, 0);
+			}
+			else {
+				goal = new Vector2(0, getyGoal());
+				position = new Vector2(0, y);
+			}
 		}
 		
 
-		direction2.set(Goal).sub(position).nor();
+		direction2.set(goal).sub(position).nor();
 		x += direction2.x * (random.nextInt(3)) * delta * 100 * speedFactor;
 		y += direction2.y * (random.nextInt(3)) * delta * 100 * speedFactor;
-		if (direction2.x == 0 && direction2.y >= 0)
+		if (Math.abs(direction2.x) < 0.1f && direction2.y >= 0)
 			this.direction = UP;
-		else if (direction2.x == 0 && direction2.y <= 0)
+		else if (Math.abs(direction2.x) < 0.1f && direction2.y < 0)
 			this.direction = DOWN;
-		else if (direction2.x>=0 && direction2.y == 0)
+		else if (direction2.x>0 && Math.abs(direction2.y) < 0.1f)
 			this.direction = RIGHT;
-		else if (direction2.x<=0 && direction2.y == 0)
+		else if (direction2.x<0 && Math.abs(direction2.y) < 0.1f)
 			this.direction = LEFT;
-		else if (direction2.x>=0 && direction2.y >= 0)
+		else if (direction2.x > 0 && direction2.y > 0)
 			this.direction = UP_RIGHT;
-		else if (direction2.x>=0 && direction2.y< 0)
-		{
-			this.direction = DOWN_RIGHT;
-		}
-		else if (direction2.x<0 && direction2.y >= 0)
-		{
+		else if (direction2.x > 0 && direction2.y < 0)
+			this.direction = DOWN_RIGHT;		
+		else if (direction2.x<0 && direction2.y > 0)
 			this.direction = UP_LEFT;
-		}
 		else
 			this.direction = DOWN_LEFT;
 	}

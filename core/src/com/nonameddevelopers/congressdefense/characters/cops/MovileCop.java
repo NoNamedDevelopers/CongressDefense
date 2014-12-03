@@ -15,8 +15,6 @@ import com.nonameddevelopers.congressdefense.gameItems.GameSound;
 
 public class MovileCop extends Cop {
 
-	private Circle range;
-	private boolean inRange = false;
 	
 	private Animation runUAnimation,runDAnimation,runLAnimation,runRAnimation,runUlAnimation,runDlAnimation,runUrAnimation,runDrAnimation;
 
@@ -139,6 +137,10 @@ public class MovileCop extends Cop {
 				isComingBack = false;
 		}
 	
+	}
+	
+	public void attackProtester(Protester protester) {
+
 	}
 
 	private void aproachProtester(Protester protester) {

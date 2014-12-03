@@ -1,7 +1,5 @@
 package com.nonameddevelopers.congressdefense.android;
 
-import java.util.HashMap;
-
 import android.os.Bundle;
 
 import com.badlogic.gdx.backends.android.AndroidApplication;
@@ -12,7 +10,6 @@ import com.google.analytics.tracking.android.GoogleAnalytics;
 import com.google.analytics.tracking.android.Logger;
 import com.google.analytics.tracking.android.MapBuilder;
 import com.google.analytics.tracking.android.Tracker;
-import com.google.analytics.tracking.android.Logger.LogLevel;
 import com.nonameddevelopers.congressdefense.CongressDefense;
 
 public class AndroidLauncher extends AndroidApplication {

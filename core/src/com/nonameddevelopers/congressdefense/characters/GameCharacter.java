@@ -160,7 +160,7 @@ public abstract class GameCharacter {
 		if (initialLife != life) {
 			lifeBar.setPosition(x+22, y+64);
 			lifeBar.draw(batch);
-			for (int i = 0; i<life/10; i++) {
+			for (int i = 0; i<10f*life/initialLife; i++) {
 				lifeBlock.setPosition(x+22+i*2, y+64);
 				lifeBlock.draw(batch);
 			}

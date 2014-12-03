@@ -7,9 +7,9 @@ public class FatProtester extends Protester {
 
 	public FatProtester(CongressDefense game, float x, float y, float appearTime) {
 		super(game, x, y, "fat", 4, 5, appearTime, 0.02f);
-		life = 200;
+		life = 400;
 		initialLife = life;
-		speedFactor = 0.8f;
+		speedFactor = 0.9f;
 	}
 	
 	

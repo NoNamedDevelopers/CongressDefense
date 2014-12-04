@@ -71,5 +71,4 @@ public class CheckBoxActor extends Actor {
 		imageOn.dispose();
 		imageOff.dispose();
 	}
-
 }

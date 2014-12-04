@@ -16,7 +16,7 @@ public class GameSound {
 	public GameSound(String src, long duration) {
 		this.sound = Gdx.audio.newSound(Gdx.files.internal(src));
 		this.duration = duration;
-		this.playedTime = 0;
+		this.playedTime = System.currentTimeMillis() - duration;
 	}
 	
 	public long play () {

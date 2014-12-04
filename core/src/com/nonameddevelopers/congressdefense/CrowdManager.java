@@ -1,11 +1,11 @@
 package com.nonameddevelopers.congressdefense;
 
-import java.util.ArrayList;
 import java.util.Iterator;
 
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.utils.Array;
 import com.nonameddevelopers.congressdefense.characters.Crowd;
+import com.nonameddevelopers.congressdefense.characters.Plane;
 
 public class CrowdManager {
 	
@@ -48,38 +48,35 @@ public class CrowdManager {
 
 	public CrowdManager(final CongressDefense game) {
 		this.game = game;
-		wave = 1;
+		wave = 0;
 		numCrowds = 1;
-		if (game.dificulty == game.EASY)
-		{
+		switch (game.dificulty) {
+		case CongressDefense.EASY:
 			protestantsPerWave = PROTESTANTS_EASY;
 			increaseProtestant = INCREASE_EASY;
 			coef = COEF_EASY;
 			percentage = PERCENTAGE_EASY;
-		}
-		else if (game.dificulty == game.NORMAL)
-		{
+			break;
+		case CongressDefense.NORMAL:		
 			protestantsPerWave = PROTESTANTS_NORMAL;
 			increaseProtestant = INCREASE_NORMAL;
 			coef = COEF_NORMAL;
 			percentage = PERCENTAGE_NORMAL;
-		}
-		else if (game.dificulty == game.HARD)
-		{
+			break;
+		case CongressDefense.HARD:
 			protestantsPerWave = PROTESTANTS_HARD;
 			increaseProtestant = INCREASE_HARD;
 			coef = COEF_HARD;
 			percentage = PERCENTAGE_HARD;
-		}
-		else
-		{
+			break;
+		case CongressDefense.CHUCK_NORRIS:
 			protestantsPerWave = PROTESTANTS_CHUCK;
 			increaseProtestant = INCREASE_CHUCK;
 			coef = COEF_CHUCK;
 			percentage = PERCENTAGE_CHUCK;
+			break;
 		}
 		crowds = new Array<Crowd>();
-		crowds.add(new Crowd(game, protestantsPerWave, percentage));
 	}
 
 	public void update(float delta)
@@ -93,8 +90,10 @@ public class CrowdManager {
 		}
 		else
 		{
-			// esperar 1-2 segundos
 			wave++;
+			if (game.plane == null) {
+				game.plane = new Plane(game, null, "Ronda: "+wave);
+			}
 			setNumCrowds();
 			setNumProtestants();
 			setPercentage();

@@ -34,8 +34,6 @@ public class GameScreen implements Screen {
 	private GameCamera camera;
 	private Texture mapTexture, firstBuildingTexture, secondBuildingTexture;
 	private Sprite map, firstBuilding, secondBuilding;
-
-
 	
 	private EntityManager entityManager;
 
@@ -45,20 +43,21 @@ public class GameScreen implements Screen {
 
 	public GameScreen(final CongressDefense game) {
 		this.game = game;
+		game.isPaused = true;
 		camera = new GameCamera(WORLD_WIDTH, WORLD_HEIGHT);
-		if (game.dificulty == game.EASY)
+		if (game.dificulty == CongressDefense.EASY)
 		{
 			game.setLife(40);
 			game.setMoney(320);
 			game.setScore(0);
 		}
-		else if (game.dificulty == game.NORMAL)
+		else if (game.dificulty == CongressDefense.NORMAL)
 		{
 			game.setLife(25);
 			game.setMoney(280);
 			game.setScore(0);
 		}
-		else if (game.dificulty == game.HARD)
+		else if (game.dificulty == CongressDefense.HARD)
 		{
 			game.setLife(15);
 			game.setMoney(180);
@@ -107,6 +106,7 @@ public class GameScreen implements Screen {
 		copDisp = new CopDisplayer(entityManager.getCopManager(),game, inputListener);		
 		
 		game.setMusic("defense.mp3");
+		
 	}
 
 	@Override
@@ -117,9 +117,19 @@ public class GameScreen implements Screen {
 		
 		camera.update();
 
+	
+		
 		if (!game.isPaused) {
 			copDisp.update();
 			entityManager.update(delta);
+			if (game.plane != null) {
+				game.plane.setCamera(camera);
+				game.plane.setScale(camera.zoom);
+				game.plane.update(delta);
+				if (game.plane.end()) {
+					game.plane = null;
+				}					
+			}
 		}
 
 		game.batch.setProjectionMatrix(camera.combined);
@@ -131,9 +141,14 @@ public class GameScreen implements Screen {
 		
 		secondBuilding.draw(game.batch);
 
+		if (game.plane != null) {
+			game.plane.draw(game.batch);
+		}
+		
 		drawMenu(game.batch);		
 		
-		game.batch.end();	
+		game.batch.end();
+		
 	}
 
 	
@@ -165,18 +180,28 @@ public class GameScreen implements Screen {
 		game.font.scale(1f);
 		
 
-		buttons.get("pause").setPosition(camera.position.x-camera.effectiveViewportWidth/2+10*camera.zoom*2,  camera.position.y+camera.effectiveViewportHeight/2-60*camera.zoom*2);
-		
-		buttons.get("speaker").setPosition(camera.position.x-camera.effectiveViewportWidth/2+10*camera.zoom*2,  camera.position.y-camera.effectiveViewportHeight/2+10*camera.zoom*2);
-			
-		buttons.get("sounds").setPosition(camera.position.x-camera.effectiveViewportWidth/2+70*camera.zoom*2,  camera.position.y-camera.effectiveViewportHeight/2+10*camera.zoom*2);
-		
-		buttons.get("back").setPosition(camera.position.x+camera.effectiveViewportWidth/2-60*camera.zoom*2,  camera.position.y-camera.effectiveViewportHeight/2+10*camera.zoom*2);
-		
 		for (CheckBoxActor button : buttons.values()) {
 			button.setScale(camera.zoom*2);
-			button.draw(batch, 1f);
 		}
+		
+		if (game.isPaused) {
+			buttons.get("pause").setScale(camera.zoom*8f);
+			buttons.get("pause").setPosition(camera.position.x-buttons.get("pause").getWidth()*camera.zoom*4f,  camera.position.y-buttons.get("pause").getHeight()*camera.zoom*4f);
+			buttons.get("pause").draw(batch, 0.8f);
+		}
+		else {
+			buttons.get("pause").setPosition(camera.position.x-camera.effectiveViewportWidth/2+10*camera.zoom*2,  camera.position.y+camera.effectiveViewportHeight/2-60*camera.zoom*2);
+			buttons.get("pause").draw(batch, 1f);
+		}
+		
+		buttons.get("speaker").setPosition(camera.position.x-camera.effectiveViewportWidth/2+10*camera.zoom*2,  camera.position.y-camera.effectiveViewportHeight/2+10*camera.zoom*2);
+		buttons.get("speaker").draw(batch, 1f);
+		
+		buttons.get("sounds").setPosition(camera.position.x-camera.effectiveViewportWidth/2+70*camera.zoom*2,  camera.position.y-camera.effectiveViewportHeight/2+10*camera.zoom*2);
+		buttons.get("sounds").draw(batch, 1f);
+		
+		buttons.get("back").setPosition(camera.position.x+camera.effectiveViewportWidth/2-60*camera.zoom*2,  camera.position.y-camera.effectiveViewportHeight/2+10*camera.zoom*2);
+		buttons.get("back").draw(batch, 1f);
 	}
 	
 	private void loadMenu() {

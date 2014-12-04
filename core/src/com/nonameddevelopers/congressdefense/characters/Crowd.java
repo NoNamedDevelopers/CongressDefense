@@ -8,6 +8,7 @@ import com.badlogic.gdx.utils.Array;
 import com.nonameddevelopers.congressdefense.CongressDefense;
 import com.nonameddevelopers.congressdefense.characters.protesters.AnarquistProtester;
 import com.nonameddevelopers.congressdefense.characters.protesters.FatProtester;
+import com.nonameddevelopers.congressdefense.characters.protesters.PabloIglesias;
 import com.nonameddevelopers.congressdefense.characters.protesters.PacificProtester;
 
 public class Crowd {
@@ -16,11 +17,27 @@ public class Crowd {
 	private Array<Protester> crowd;
 	private int[] percentage;
 	
+	public static final short PABLO_IGLESIAS = 0;
+	
+	private int wave;
+	
 	public Crowd(final CongressDefense game, int size, int[] percentage) {
 		this.game = game;
 		crowd = new Array<Protester>(); 
 		this.percentage = percentage;
 		populateCrowd(size);
+	}
+	
+	public Crowd(final CongressDefense game, short bonusType, int wave) {
+		this.game = game;
+		this.wave = wave;
+		crowd = new Array<Protester>(); 
+		switch (bonusType) {
+		case PABLO_IGLESIAS:
+			crowd.add(new PabloIglesias(game, 0,0, 1f, wave));
+			break;
+		}
+		
 	}
 	
 	private Array<Protester> populateCrowd(int size) {
@@ -37,11 +54,11 @@ public class Crowd {
 				float y = r.nextInt(100)-50;
 				int prob = r.nextInt(2000);
 				if (prob < percentage[1])
-					crowd.insert(0,new FatProtester(game, -100 + x, otroLado + y, i*0.25f)); 	
+					crowd.add(new FatProtester(game, -100 + x, otroLado + y, i*0.25f)); 	
 				else if (prob < percentage[1]+percentage[2])
-					crowd.insert(0,new AnarquistProtester(game, -100 + x, otroLado + y, i*0.25f)); 	
+					crowd.add(new AnarquistProtester(game, -100 + x, otroLado + y, i*0.25f)); 	
 				else
-					crowd.insert(0,new PacificProtester(game, -100 + x, otroLado + y, i*0.25f)); 
+					crowd.add(new PacificProtester(game, -100 + x, otroLado + y, i*0.25f)); 
 			}
 			return crowd;
 		}
@@ -54,11 +71,11 @@ public class Crowd {
 				float y = r.nextInt(100)-50;
 				int prob = r.nextInt(2000);
 				if (prob < percentage[1])
-					crowd.insert(0,new FatProtester(game, -100 + x, otroLado + y, i*0.25f)); 	
+					crowd.add(new FatProtester(game, -100 + x, otroLado + y, i*0.25f)); 	
 				else if (prob < percentage[1]+percentage[2])
-					crowd.insert(0,new AnarquistProtester(game, -100 + x, otroLado + y, i*0.25f)); 	
+					crowd.add(new AnarquistProtester(game, -100 + x, otroLado + y, i*0.25f)); 	
 				else
-					crowd.insert(0,new PacificProtester(game, -100 + x, otroLado + y, i*0.25f)); 
+					crowd.add(new PacificProtester(game, -100 + x, otroLado + y, i*0.25f)); 
 	
 			}
 			return crowd;

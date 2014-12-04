@@ -91,14 +91,22 @@ public class CrowdManager {
 		else
 		{
 			wave++;
-			if (game.plane == null) {
-				game.plane = new Plane(game, null, "Ronda: "+wave);
+			if (wave%10 == 0) {
+				crowds.add(new Crowd(game, Crowd.PABLO_IGLESIAS, wave));
+				if (game.plane == null) {
+					game.plane = new Plane(game, null, "BONUS ROUND");
+				}
 			}
-			setNumCrowds();
-			setNumProtestants();
-			setPercentage();
-			for (int i = 0; i<numCrowds;i++)
-				crowds.add(new Crowd(game, protestantsPerWave, percentage));
+			else {
+				if (game.plane == null) {
+					game.plane = new Plane(game, null, "ROUND: "+wave);
+				}
+				setNumCrowds();
+				setNumProtestants();
+				setPercentage();
+				for (int i = 0; i<numCrowds;i++)
+					crowds.add(new Crowd(game, protestantsPerWave, percentage));
+			}
 		}
 	}
 	

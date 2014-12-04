@@ -11,7 +11,7 @@ public class Plane {
 	
 	private CongressDefense game;
 	private GameCamera camera;
-	private GameSound fly;
+	private static GameSound fly;
 	
 	private Texture planeTexture;
 	private Sprite plane;
@@ -21,10 +21,13 @@ public class Plane {
 	private float y;
 	private String text;
 	
+	static {
+		fly = new GameSound("sounds/plane.mp3", 7200);		
+	}
+	
 	public Plane(CongressDefense game, GameCamera camera, String text) {
 		this.game = game;
 		this.camera = camera;
-		fly = new GameSound("sounds/plane.mp3", 7200);
 		planeTexture = new Texture("sprites/plane.png");
 		plane = new Sprite(planeTexture);
 		x = -516;
@@ -37,7 +40,7 @@ public class Plane {
 			x += 400*delta; 
 			plane.setSize(516*scale, 128*scale);
 			plane.setPosition(x, y);
-			if (camera.worldWidth/4>x && !isPlayedSound) {
+			if (!isPlayedSound) {
 				isPlayedSound = true;
 				fly.play(0.15f);
 			}
@@ -53,7 +56,6 @@ public class Plane {
 	
 	public void dispose() {
 		planeTexture.dispose();
-		fly.dispose();
 	}
 	
 	public void setScale(float scaleXY) {

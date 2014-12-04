@@ -61,7 +61,7 @@ public class AnarquistProtester extends Protester {
 	}
 	
 	private void attack(Cop cop) {
-		if (!isAttacking) {
+		if (!isAttacking && !isGhost) {
 			cop.hurt(10);
 			isAttacking = true;
 		}

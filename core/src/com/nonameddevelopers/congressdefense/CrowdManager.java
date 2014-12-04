@@ -91,7 +91,7 @@ public class CrowdManager {
 		else
 		{
 			wave++;
-			if (wave%10 == 0) {
+			if (wave%2 == 0) {
 				crowds.add(new Crowd(game, Crowd.PABLO_IGLESIAS, wave));
 				if (game.plane == null) {
 					game.plane = new Plane(game, null, "BONUS ROUND");

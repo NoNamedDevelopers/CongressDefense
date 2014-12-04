@@ -48,6 +48,7 @@ public class MovileCop extends Cop {
 
 	@Override
 	public void checkCollision(Crowd crowd) {
+
 		range.set(xInit, yInit, 100f);
 		boundingCircle.set(x, y, 10f);
 		Protester prot = null;

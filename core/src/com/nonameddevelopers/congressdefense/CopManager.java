@@ -5,19 +5,22 @@ import java.util.Iterator;
 
 import com.nonameddevelopers.congressdefense.characters.Cop;
 import com.nonameddevelopers.congressdefense.characters.Protester;
+import com.nonameddevelopers.congressdefense.characters.cops.PoliceVan;
 
 public class CopManager {
-	
+
 	private ArrayList<Cop> cops;
+	private ArrayList<Cop> copsToAdd;
 	private Cop copToPlant;
 
 	public CopManager() {
 		this.cops = new ArrayList<Cop>();
+		this.copsToAdd = new ArrayList<Cop>();
 	}
-	
-	public void update(float delta)
-	{
+
+	public void update(float delta) {
 		Iterator<Cop> iter = cops.iterator();
+
 		while (iter.hasNext()) {
 			Cop police = iter.next();
 			police.update(delta);
@@ -26,17 +29,25 @@ public class CopManager {
 				police = null;
 			}
 		}
-	}	
-	
-	public void addCop(Cop cop) {
-		cops.add(cop);	
+		if (copsToAdd.size() > 0)
+			System.out.println("Cops size: " + copsToAdd.size());
+		System.out.println();
+		for (Cop cop : copsToAdd) {
+			cops.add(cop);
+		}
+		copsToAdd.clear();
+
 	}
-	
+
+	public void addCop(Cop cop) {
+		cops.add(cop);
+	}
+
 	public void addCopToPlant(Cop cop) {
 		copToPlant = cop;
 		cops.add(copToPlant);
 	}
-	
+
 	public void deleteCopToPlant() {
 		Iterator<Cop> iter = cops.iterator();
 		while (iter.hasNext()) {
@@ -46,9 +57,9 @@ public class CopManager {
 			}
 		}
 		copToPlant = null;
-		
+
 	}
-	
+
 	public ArrayList<Cop> getCops() {
 		return cops;
 	}
@@ -56,7 +67,9 @@ public class CopManager {
 	public void setCops(ArrayList<Cop> cops) {
 		this.cops = cops;
 	}
-	
-	
+
+	public ArrayList<Cop> getCopsToAdd() {
+		return copsToAdd;
+	}
 
 }

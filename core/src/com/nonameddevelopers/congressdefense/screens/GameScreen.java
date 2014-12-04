@@ -13,6 +13,7 @@ import com.badlogic.gdx.utils.ObjectMap;
 import com.nonameddevelopers.congressdefense.CongressDefense;
 import com.nonameddevelopers.congressdefense.CopDisplayer;
 import com.nonameddevelopers.congressdefense.EntityManager;
+import com.nonameddevelopers.congressdefense.characters.cops.PoliceVan;
 import com.nonameddevelopers.congressdefense.gameItems.GameCamera;
 import com.nonameddevelopers.congressdefense.gameItems.GameInputListener;
 import com.nonameddevelopers.congressdefense.ui.CheckBoxActor;
@@ -107,6 +108,7 @@ public class GameScreen implements Screen {
 		
 		game.setMusic("defense.mp3");
 		
+		entityManager.getCopManager().getCops().add(new PoliceVan(game, 1000, 1500, camera));
 	}
 
 	@Override

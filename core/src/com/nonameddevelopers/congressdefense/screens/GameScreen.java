@@ -51,24 +51,28 @@ public class GameScreen implements Screen {
 			game.setLife(40);
 			game.setMoney(320);
 			game.setScore(0);
+			game.setLevel("Easy");
 		}
 		else if (game.dificulty == CongressDefense.NORMAL)
 		{
 			game.setLife(25);
 			game.setMoney(280);
 			game.setScore(0);
+			game.setLevel("Normal");
 		}
 		else if (game.dificulty == CongressDefense.HARD)
 		{
 			game.setLife(15);
 			game.setMoney(180);
 			game.setScore(0);
+			game.setLevel("Hard");
 		}
 		else
 		{
 			game.setLife(1);
 			game.setMoney(70);
 			game.setScore(0);
+			game.setLevel("ChuckNorris");
 		}
 		
 

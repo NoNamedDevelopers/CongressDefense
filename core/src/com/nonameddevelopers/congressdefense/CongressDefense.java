@@ -32,7 +32,16 @@ public class CongressDefense extends Game {
 	
 	public int dificulty = 1;
 	public Plane plane;
+	public String level;
 	
+	public String getLevel() {
+		return level;
+	}
+
+	public void setLevel(String level) {
+		this.level = level;
+	}
+
 	@Override
 	public void create () {
 		Gdx.input.setCatchBackKey(true);

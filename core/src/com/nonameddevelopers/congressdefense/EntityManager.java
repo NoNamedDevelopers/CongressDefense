@@ -123,12 +123,12 @@ public class EntityManager {
 	}
 	
 	public void checkCollisions() {
-//		Random random = new Random();
-//		int cr = random.nextInt(getCrowdMan().getCrowds().size);
 		for (Crowd crowd : getCrowdMan().getCrowds())
 			for (Cop cop : getCopManager().getCops()) 
 				if (cop.isPlanted())
 					cop.checkCollision(crowd);
 	}
+
+
 
 }

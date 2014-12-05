@@ -54,17 +54,17 @@ public class ScoreScreen implements Screen {
 			}
 		});
 
-		bgTexture = new Texture(Gdx.files.internal("scores-background.jpg"));
+		bgTexture = new Texture(Gdx.files.internal("scores-background2.jpg"));
 		bg = new Sprite(bgTexture);
 		bg.setSize(WORLD_WIDTH, WORLD_HEIGHT);
 
-		bgTopTexture = new Texture(Gdx.files.internal("scores-top.png"));
+		bgTopTexture = new Texture(Gdx.files.internal("scores-top2.png"));
 		bgTop = new Sprite(bgTopTexture);
 		bgTop.setSize(WORLD_WIDTH, WORLD_HEIGHT);
 
-		headerTexture = new Texture(Gdx.files.internal("scores-header.png"));
+		headerTexture = new Texture(Gdx.files.internal("scores-header2.png"));
 		header = new Sprite(headerTexture);
-		header.setSize(592, 120);
+		header.setSize(812, 120);
 
 		puntuacion = RESTConnector.getScores();
 	}
@@ -95,28 +95,41 @@ public class ScoreScreen implements Screen {
 		bg.draw(game.batch);
 
 		sortList();
+		showLevel();
 
 		for (int i = 0; i < puntuacion.size(); i++) {
-			game.font.draw(game.batch, (i + 1) + "º- "
-					+ 			   puntuacion.get(i).Username, 325, 600 - i * 30);
-			game.font.draw(game.batch, puntuacion.get(i).Score.toString(), 600,
-					600 - i * 30);
+				game.font.draw(game.batch, (i + 1) + "º- "
+						+ puntuacion.get(i).Username, 145, 600 - i * 30);
+				game.font.draw(game.batch, puntuacion.get(i).Level, 625, 600 - i * 30);
+				game.font.draw(game.batch, puntuacion.get(i).Score.toString(),
+						750, 600 - i * 30);
+
 		}
 
 		bgTop.setPosition(camera.position.x - camera.viewportWidth / 2,
 				camera.position.y - camera.viewportHeight / 2);
 		bgTop.draw(game.batch);
 
-		header.setPosition(camera.position.x - 285, camera.position.y
+		header.setPosition(camera.position.x -400, camera.position.y
 				+ camera.viewportHeight / 2 - 70);
 		header.draw(game.batch);
-		game.font.draw(game.batch, "Name:", 325, camera.position.y
+		game.font.draw(game.batch, "Name:", 145, camera.position.y
 				+ camera.viewportHeight / 2 - 20);
-		game.font.draw(game.batch, "Points", 600, camera.position.y
+		game.font.draw(game.batch, "Level:", 625, camera.position.y
+				+ camera.viewportHeight / 2 - 20);
+		game.font.draw(game.batch, "Points", 750, camera.position.y
 				+ camera.viewportHeight / 2 - 20);
 		drawMenu(game.batch);
 
 		game.batch.end();
+	}
+
+	private void showLevel() {
+		for (User user : puntuacion) {
+			if (user.Level == null)
+				user.setLevel("Normal");
+		}
+
 	}
 
 	private void drawMenu(SpriteBatch batch) {

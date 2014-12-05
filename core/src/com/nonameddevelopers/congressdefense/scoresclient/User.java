@@ -10,6 +10,9 @@ public class User {
 	@SerializedName("Score")
 	public Integer Score;
 
+	@SerializedName("Level")
+	public String Level;
+	
 	public User() {
 
 	}
@@ -30,10 +33,21 @@ public class User {
 		Score = score;
 	}
 
+	public String getLevel() {
+		return Level;
+	}
+
+	public void setLevel(String level) {
+		Level = level;
+	}
+
 	@Override
 	public String toString() {
-		return "User [Username=" + Username + ", Score=" + Score + "]";
+		return "User [Username=" + Username + ", Score=" + Score + ", Level="
+				+ Level + "]";
 	}
+
+	
 	
 	
 

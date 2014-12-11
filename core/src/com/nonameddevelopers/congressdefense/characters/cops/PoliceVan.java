@@ -134,7 +134,7 @@ public class PoliceVan extends Cop {
 	// }
 
 	private void releaseCops() {
-	//	EntityManager.getInstance().getCopManager().getCopsToAdd().add(new SwatCop(game,x,y,xInit,yInit));
+		EntityManager.getInstance().getCopManager().getCopsToAdd().add(new MeleeCop(game,x,y));
 		placed=true;
 		
 	}

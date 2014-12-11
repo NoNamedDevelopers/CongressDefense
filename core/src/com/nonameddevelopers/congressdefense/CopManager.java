@@ -26,8 +26,6 @@ public class CopManager {
 				police = null;
 			}
 		}
-		//if (copsToAdd.size() > 0)
-			//System.out.println("Cops size: " + copsToAdd.size());
 		for (Cop cop : copsToAdd) {
 			cops.add(cop);
 		}

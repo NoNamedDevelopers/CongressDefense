@@ -45,6 +45,13 @@ public class SwatCop extends Cop {
 		range = new Circle();
 		range.set(xInit + 16, yInit + 16, 100f);
 
+		loadsAnimations();
+
+		direction2 = new Vector2();
+
+	}
+
+	private void loadsAnimations() {
 		runUAnimation = loadAnimation("sprites/coprun/up.png", 4, 5, 0.018f);
 		runDAnimation = loadAnimation("sprites/coprun/down.png", 4, 5, 0.018f);
 		runLAnimation = loadAnimation("sprites/coprun/left.png", 4, 5, 0.018f);
@@ -57,9 +64,6 @@ public class SwatCop extends Cop {
 				0.018f);
 		runDrAnimation = loadAnimation("sprites/coprun/down_right.png", 4, 5,
 				0.018f);
-
-		direction2 = new Vector2();
-
 	}
 
 	@Override

@@ -39,74 +39,64 @@ public class MainMenuScreen extends Actor implements Screen {
 		bgImage = new ImageActor("backgrounds/cityintro.jpg");
 		bgImage.setSize(1000, 750);
 
-		musicButton = new CheckBoxActor("ui/speaker_normal_button.png",
-				"ui/speaker_muted_button.png", game, CheckBoxActor.MUSIC);
-		
-		
-		musicButton = new CheckBoxActor("ui/note_normal_button.png", "ui/note_muted_button.png", game, CheckBoxActor.MUSIC);
-		musicButton.setSize(60, 60);
-		musicButton.setPosition(60, 100);
-		musicButton.addListener(new InputListener() {
+		musicButtonAction(game);
 
+		soundsButtonAction(game);
+
+		startButtonAction(game);
+
+		scoresButtonAction(game);
+
+		optionsButtonAction();
+	
+
+		rateButtonAction();
+
+		stage.addActor(bgImage);
+		stage.addActor(musicButton);
+		stage.addActor(soundsButton);
+		stage.addActor(startButton);
+		stage.addActor(scoresButton);
+		stage.addActor(rateButton);
+		stage.addActor(optionsButton);
+	}
+
+	private void rateButtonAction() {
+		rateButton = new ImageActor("ui/rate_button.png");
+		rateButton.setSize(250, 80);
+		rateButton.setPosition(70, 350);
+		rateButton.addListener(new InputListener(){
+			
 			@Override
 			public boolean touchDown(InputEvent event, float x, float y,
 					int pointer, int button) {
 				game.playTouch();
 				return true;
 			}
-
+			
 			public void touchUp(InputEvent event, float x, float y,
 					int pointer, int button) {
-				game.toggleMusic();
-				dispose();
-			}
-
-		});
-
-		soundsButton = new CheckBoxActor("ui/note_normal_button.png",
-				"ui/note_muted_button.png", game, CheckBoxActor.SOUND);
-
-		soundsButton = new CheckBoxActor("ui/speaker_normal_button.png", "ui/speaker_muted_button.png", game, CheckBoxActor.SOUND);
-		soundsButton.setSize(60, 60);
-		soundsButton.setPosition(140, 100);
-		soundsButton.addListener(new InputListener() {
-
-			@Override
-			public boolean touchDown(InputEvent event, float x, float y,
-					int pointer, int button) {
-				game.playTouch();
-				return true;
-			}
-
-			public void touchUp(InputEvent event, float x, float y,
-					int pointer, int button) {
-				game.toggleSound();
-				dispose();
-			}
-
-		});
-
-		startButton = new ImageActor("ui/start_button.png");
-		startButton.setSize(250, 80);
-		startButton.setPosition(70, 500);
-		startButton.addListener(new InputListener() {
-
-			@Override
-			public boolean touchDown(InputEvent event, float x, float y,
-					int pointer, int button) {
-				game.playTouch();
-				return true;
-			}
-
-			public void touchUp(InputEvent event, float x, float y,
-					int pointer, int button) {
+				Gdx.net.openURI("https://play.google.com/store/apps/details?id=com.nonamedevelopers.congressdefense.android&hl=es");
 				stage.dispose();
-				game.setScreen(new SelectLevelScreen(game));
+				game.setScreen(new MainMenuScreen(game));
 				dispose();
 			}
-
+			
+			
 		});
+		
+		
+		
+		
+	}
 
+	private void optionsButtonAction() {
+		optionsButton = new ImageActor("ui/options_button.png");
+		optionsButton.setSize(250, 80);
+		optionsButton.setPosition(350, 350);
+	}
+
+	private void scoresButtonAction(final CongressDefense game) {
 		scoresButton = new ImageActor("ui/scores_button.png");
 		scoresButton.setSize(250, 80);
 		scoresButton.setPosition(350, 500);
@@ -130,23 +120,80 @@ public class MainMenuScreen extends Actor implements Screen {
 			}
 
 		});
+	}
 
-		optionsButton = new ImageActor("ui/options_button.png");
-		optionsButton.setSize(250, 80);
-		optionsButton.setPosition(350, 350);
-	
+	private void startButtonAction(final CongressDefense game) {
+		startButton = new ImageActor("ui/start_button.png");
+		startButton.setSize(250, 80);
+		startButton.setPosition(70, 500);
+		startButton.addListener(new InputListener() {
 
-		rateButton = new ImageActor("ui/rate_button.png");
-		rateButton.setSize(250, 80);
-		rateButton.setPosition(70, 350);
+			@Override
+			public boolean touchDown(InputEvent event, float x, float y,
+					int pointer, int button) {
+				game.playTouch();
+				return true;
+			}
 
-		stage.addActor(bgImage);
-		stage.addActor(musicButton);
-		stage.addActor(soundsButton);
-		stage.addActor(startButton);
-		stage.addActor(scoresButton);
-		stage.addActor(rateButton);
-		//stage.addActor(optionsButton);
+			public void touchUp(InputEvent event, float x, float y,
+					int pointer, int button) {
+				stage.dispose();
+				game.setScreen(new SelectLevelScreen(game));
+				dispose();
+			}
+
+		});
+	}
+
+	private void soundsButtonAction(final CongressDefense game) {
+		soundsButton = new CheckBoxActor("ui/note_normal_button.png",
+				"ui/note_muted_button.png", game, CheckBoxActor.SOUND);
+
+		soundsButton = new CheckBoxActor("ui/speaker_normal_button.png", "ui/speaker_muted_button.png", game, CheckBoxActor.SOUND);
+		soundsButton.setSize(60, 60);
+		soundsButton.setPosition(140, 100);
+		soundsButton.addListener(new InputListener() {
+
+			@Override
+			public boolean touchDown(InputEvent event, float x, float y,
+					int pointer, int button) {
+				game.playTouch();
+				return true;
+			}
+
+			public void touchUp(InputEvent event, float x, float y,
+					int pointer, int button) {
+				game.toggleSound();
+				dispose();
+			}
+
+		});
+	}
+
+	private void musicButtonAction(final CongressDefense game) {
+		musicButton = new CheckBoxActor("ui/speaker_normal_button.png",
+				"ui/speaker_muted_button.png", game, CheckBoxActor.MUSIC);
+		
+		
+		musicButton = new CheckBoxActor("ui/note_normal_button.png", "ui/note_muted_button.png", game, CheckBoxActor.MUSIC);
+		musicButton.setSize(60, 60);
+		musicButton.setPosition(60, 100);
+		musicButton.addListener(new InputListener() {
+
+			@Override
+			public boolean touchDown(InputEvent event, float x, float y,
+					int pointer, int button) {
+				game.playTouch();
+				return true;
+			}
+
+			public void touchUp(InputEvent event, float x, float y,
+					int pointer, int button) {
+				game.toggleMusic();
+				dispose();
+			}
+
+		});
 	}
 
 	@Override

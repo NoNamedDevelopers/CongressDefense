@@ -17,7 +17,8 @@ public class CrowdManager {
 	private int protestantsPerWave;
 	private int coef;
 	private int [] percentage;
-	
+
+	public final static int PROTESTANTS_TUTORIAL = 1;
 	public final static int PROTESTANTS_EASY = 4;
 	public final static int PROTESTANTS_NORMAL = 8; 
 	public final static int PROTESTANTS_HARD = 12;
@@ -28,6 +29,8 @@ public class CrowdManager {
 	public final static int[] PERCENTAGE_HARD = {1900, 40, 20};
 	public final static int[] PERCENTAGE_CHUCK = {1500, 150, 100};
 	
+
+	public final static int COEF_TUTORIAL = 6;
 	public final static int COEF_EASY = 6;
 	public final static int COEF_NORMAL = 4; 
 	public final static int COEF_HARD = 2;
@@ -51,6 +54,12 @@ public class CrowdManager {
 		wave = 0;
 		numCrowds = 1;
 		switch (game.dificulty) {
+		case CongressDefense.TUTORIAL:
+			protestantsPerWave = PROTESTANTS_TUTORIAL;
+			increaseProtestant = INCREASE_EASY;
+			coef = COEF_TUTORIAL;
+			percentage = PERCENTAGE_EASY;
+			break;
 		case CongressDefense.EASY:
 			protestantsPerWave = PROTESTANTS_EASY;
 			increaseProtestant = INCREASE_EASY;
@@ -81,31 +90,33 @@ public class CrowdManager {
 
 	public void update(float delta)
 	{
-		if (!isCrowdsDead())
-		{
-			for (Crowd crowd: crowds)
+		if (!game.isCrowdPaused) {
+			if (!isCrowdsDead())
 			{
-				crowd.update(delta);
-			}
-		}
-		else
-		{
-			wave++;
-			if (wave%2 == 0) {
-				crowds.add(new Crowd(game, Crowd.PABLO_IGLESIAS, wave));
-				if (game.plane == null) {
-					game.plane = new Plane(game, null, "BONUS ROUND");
+				for (Crowd crowd: crowds)
+				{
+					crowd.update(delta);
 				}
 			}
-			else {
-				if (game.plane == null) {
-					game.plane = new Plane(game, null, "ROUND: "+wave);
+			else
+			{
+				wave++;
+				if (wave%10 == 0) {
+					crowds.add(new Crowd(game, Crowd.PABLO_IGLESIAS, wave));
+					if (game.plane == null) {
+						game.plane = new Plane(game, null, "BONUS ROUND");
+					}
 				}
-				setNumCrowds();
-				setNumProtestants();
-				setPercentage();
-				for (int i = 0; i<numCrowds;i++)
-					crowds.add(new Crowd(game, protestantsPerWave, percentage));
+				else {
+					if (game.plane == null) {
+						game.plane = new Plane(game, null, "ROUND: "+wave);
+					}
+					setNumCrowds();
+					setNumProtestants();
+					setPercentage();
+					for (int i = 0; i<numCrowds;i++)
+						crowds.add(new Crowd(game, protestantsPerWave, percentage));
+				}
 			}
 		}
 	}
@@ -159,7 +170,11 @@ public class CrowdManager {
 	
 	public void setNumProtestants()
 	{
-		if (game.dificulty == game.EASY)
+		if (game.dificulty == game.TUTORIAL)
+		{
+			protestantsPerWave = PROTESTANTS_TUTORIAL;
+		}
+		else if (game.dificulty == game.EASY)
 		{
 			protestantsPerWave = PROTESTANTS_EASY + wave*INCREASE_EASY/2;
 		}

@@ -16,6 +16,7 @@ public class CongressDefense extends Game {
 	public final static int NORMAL = 1;
 	public final static int HARD = 2;
 	public final static int CHUCK_NORRIS = 3;
+	public final static int TUTORIAL= 4;
 	
 	public SpriteBatch batch;
 	public BitmapFont font;
@@ -26,6 +27,8 @@ public class CongressDefense extends Game {
 	public boolean isMusicPlayed = true;
 	public boolean isSoundOn = true;
 	public boolean isPaused = false;
+	
+	public boolean isCrowdPaused = false;
 	
 	public int life;
 	public int score;

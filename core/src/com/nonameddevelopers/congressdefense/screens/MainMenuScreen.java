@@ -91,9 +91,26 @@ public class MainMenuScreen extends Actor implements Screen {
 	}
 
 	private void optionsButtonAction() {
-		optionsButton = new ImageActor("ui/options_button.png");
+		optionsButton = new ImageActor("ui/tutorial_button.png");
 		optionsButton.setSize(250, 80);
 		optionsButton.setPosition(350, 350);
+		optionsButton.addListener(new InputListener() {
+
+			@Override
+			public boolean touchDown(InputEvent event, float x, float y,
+					int pointer, int button) {
+				game.playTouch();
+				return true;
+			}
+
+			public void touchUp(InputEvent event, float x, float y,
+					int pointer, int button) {
+				stage.dispose();
+				game.setScreen(new TutorialScreen(game));
+				dispose();
+			}
+
+		});
 	}
 
 	private void scoresButtonAction(final CongressDefense game) {

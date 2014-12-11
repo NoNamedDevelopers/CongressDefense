@@ -9,8 +9,8 @@ import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.utils.Array;
 import com.nonameddevelopers.congressdefense.CongressDefense;
 import com.nonameddevelopers.congressdefense.CopManager;
-import com.nonameddevelopers.congressdefense.characters.cops.BazookaCop;
 import com.nonameddevelopers.congressdefense.screens.GameScreen;
+import com.nonameddevelopers.congressdefense.screens.TutorialScreen;
 import com.nonameddevelopers.congressdefense.ui.CopIcon;
 
 public class CopSetter {
@@ -46,8 +46,8 @@ public class CopSetter {
 
 		icons.add(new CopIcon(game, this, 60, x, y, "ui/meleecopicon.png", CopIcon.MELEE, 1));
 		icons.add(new CopIcon(game, this, 180, x, y, "ui/bazookacopicon.png", CopIcon.BAZOOKA, 2));
-		icons.add(new CopIcon(game, this, 60, x, y, "ui/meleecopicon.png", CopIcon.MELEE, 3));
-		icons.add(new CopIcon(game, this, 60, x, y, "ui/meleecopicon.png", CopIcon.MELEE, 4));
+		//icons.add(new CopIcon(game, this, 60, x, y, "ui/meleecopicon.png", CopIcon.MELEE, 3));
+		//icons.add(new CopIcon(game, this, 60, x, y, "ui/meleecopicon.png", CopIcon.MELEE, 4));
 	}
 	
 	public void update(float delta, GameCamera camera) {
@@ -93,6 +93,12 @@ public class CopSetter {
 	public void release() {
 		if (game.getScreen() instanceof GameScreen) {
 			((GameScreen) game.getScreen()).copSetter = null;
+		}
+		if (game.getScreen() instanceof TutorialScreen) {
+			((TutorialScreen) game.getScreen()).copSetter = null;
+			if (copManager.getCops().size()>0) {
+				((TutorialScreen) game.getScreen()).nextTip();
+			}
 		}
 	}
 	

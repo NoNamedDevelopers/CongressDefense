@@ -8,16 +8,16 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.input.GestureDetector;
+import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.ObjectMap;
 import com.nonameddevelopers.congressdefense.CongressDefense;
 import com.nonameddevelopers.congressdefense.EntityManager;
-import com.nonameddevelopers.congressdefense.characters.cops.PoliceVan;
 import com.nonameddevelopers.congressdefense.gameItems.CopSetter;
 import com.nonameddevelopers.congressdefense.gameItems.GameCamera;
-import com.nonameddevelopers.congressdefense.gameItems.GameInputListener;
+import com.nonameddevelopers.congressdefense.gameItems.TutorialInputListener;
 import com.nonameddevelopers.congressdefense.ui.CheckBoxActor;
 
-public class GameScreen implements Screen {
+public class TutorialScreen implements Screen {
 	private static final int WORLD_WIDTH = 1000*2;
 	private static final int WORLD_HEIGHT = 750*2;
 
@@ -30,52 +30,39 @@ public class GameScreen implements Screen {
 	private Sprite starBoard, coinsBoard, voteBoard;
 
 	private GameCamera camera;
-	private Texture mapTexture, firstBuildingTexture, secondBuildingTexture;
-	private Sprite map, firstBuilding, secondBuilding;
+	private Texture mapTexture, firstBuildingTexture, secondBuildingTexture, helpTexture;
+	private Sprite map, firstBuilding, secondBuilding, helpSprite;
 	
 	private EntityManager entityManager;
 	
-	private GameInputListener inputListener;
+	private TutorialInputListener inputListener;
 	
 	public CopSetter copSetter;
+	
+	public String[] tip;
+	private Array<String[]> tips;
+	private int tipIndex;
 
-	public GameScreen(final CongressDefense game) {
+	public TutorialScreen(final CongressDefense game) {
 		this.game = game;
 		game.isPaused = true;
 		camera = new GameCamera(WORLD_WIDTH, WORLD_HEIGHT);
-		if (game.dificulty == CongressDefense.EASY)
-		{
-			game.setLife(40);
-			game.setMoney(320);
-			game.setScore(0);
-			game.setLevel("Easy");
-		}
-		else if (game.dificulty == CongressDefense.NORMAL)
-		{
-			game.setLife(25);
-			game.setMoney(280);
-			game.setScore(0);
-			game.setLevel("Normal");
-		}
-		else if (game.dificulty == CongressDefense.HARD)
-		{
-			game.setLife(15);
-			game.setMoney(180);
-			game.setScore(0);
-			game.setLevel("Hard");
-		}
-		else
-		{
-			game.setLife(1);
-			game.setMoney(70);
-			game.setScore(0);
-			game.setLevel("ChuckNorris");
-		}
 		
-
+		game.setDificulty(CongressDefense.TUTORIAL);
+		game.setLife(2);
+		game.setMoney(60);
+		game.setScore(0);
+		game.setLevel("Tutorial");
+		
+		game.isCrowdPaused = true;
+		
+		setUpTips();
+		tip = tips.first();
+		
 		loadMenu();
+		loadHelpFrame();
 		
-		inputListener = new GameInputListener(game, this, camera);
+		inputListener = new TutorialInputListener(game, this, camera);
 		Gdx.input.setInputProcessor(new GestureDetector(inputListener) {			
 			@Override
 			   public boolean keyDown(int keycode) {
@@ -87,7 +74,7 @@ public class GameScreen implements Screen {
 			   }
 		});
 
-		mapTexture = new Texture(Gdx.files.internal("lastmap.jpg"));
+		mapTexture = new Texture(Gdx.files.internal("tutorialmap.jpg"));
 		map = new Sprite(mapTexture);
 		map.setPosition(0, 0);
 		map.setSize(WORLD_WIDTH, WORLD_HEIGHT);
@@ -108,8 +95,6 @@ public class GameScreen implements Screen {
 		CopSetter.setCopManager(entityManager.getCopManager());	
 		
 		game.setMusic("defense.mp3");
-		
-		entityManager.getCopManager().getCops().add(new PoliceVan(game, 1000, 1500, camera));
 	}
 
 	@Override
@@ -154,9 +139,40 @@ public class GameScreen implements Screen {
 			game.plane.draw(game.batch);
 		}
 		
+		if (tip.length>1) {
+			drawTip(game.batch, tip);
+		}
+		
 		drawMenu(game.batch);		
 		
 		game.batch.end();	
+		
+		
+		switch(tipIndex) {
+		case 3:
+			game.isPaused = false;
+			break;
+		case 5:
+			game.isCrowdPaused = false;
+			break;
+		case 7:
+		case 9:
+			game.loadMenu();
+			break;
+		}
+		
+		if (game.score>0) {
+			game.isPaused = true;
+			tipIndex = 5;
+			nextTip();
+		}
+		
+		if (game.life<2) {
+			game.isPaused = true;
+			tipIndex = 7;
+			nextTip();
+		}
+		
 	}
 
 	
@@ -185,17 +201,7 @@ public class GameScreen implements Screen {
 		for (CheckBoxActor button : buttons.values()) {
 			button.setScale(camera.zoom*2);
 		}
-		
-		if (game.isPaused) {
-			buttons.get("pause").setScale(camera.zoom*8f);
-			buttons.get("pause").setPosition(camera.position.x-buttons.get("pause").getWidth()*camera.zoom*4f,  camera.position.y-buttons.get("pause").getHeight()*camera.zoom*4f);
-			buttons.get("pause").draw(batch, 0.8f);
-		}
-		else {
-			buttons.get("pause").setPosition(camera.position.x-camera.effectiveViewportWidth/2+10*camera.zoom*2,  camera.position.y+camera.effectiveViewportHeight/2-60*camera.zoom*2);
-			buttons.get("pause").draw(batch, 1f);
-		}
-		
+			
 		buttons.get("speaker").setPosition(camera.position.x-camera.effectiveViewportWidth/2+10*camera.zoom*2,  camera.position.y-camera.effectiveViewportHeight/2+10*camera.zoom*2);
 		buttons.get("speaker").draw(batch, 1f);
 		
@@ -218,12 +224,52 @@ public class GameScreen implements Screen {
 		
 		buttons = new ObjectMap<String, CheckBoxActor>();
 		
-		buttons.put("pause", new CheckBoxActor("ui/pause_button.png", "ui/play_button.png", game, CheckBoxActor.PAUSE));
+	
 		buttons.put("speaker",  new CheckBoxActor("ui/note_normal_button.png", "ui/note_muted_button.png", game, CheckBoxActor.MUSIC));
 		buttons.put("sounds",  new CheckBoxActor("ui/speaker_normal_button.png", "ui/speaker_muted_button.png", game, CheckBoxActor.SOUND));		
 		buttons.put("back",  new CheckBoxActor("ui/back_button.png", "ui/back_button.png", game, CheckBoxActor.NORMAL));
 	}
 	
+	private void loadHelpFrame() {
+		helpTexture = new Texture(Gdx.files.internal("ui/frametutorial.png"));
+		helpSprite = new Sprite(helpTexture);
+	}
+	
+	private void drawTip(SpriteBatch batch, String[] lines) {
+		helpSprite.setSize(1966*0.8f*camera.zoom, 855*0.8f*camera.zoom);
+		helpSprite.setCenter(camera.position.x, camera.position.y);
+		helpSprite.draw(batch);		
+		game.font.setScale(camera.zoom*2f);
+		for (int i=0; i<lines.length ; i++) {
+			if (i!=0) {
+				game.font.setScale(camera.zoom*1.5f);
+			}
+			game.font.draw(batch, lines[i], camera.position.x-470*0.8f*camera.zoom,  camera.position.y+(200-i*75)*0.8f*camera.zoom);
+		}
+		game.font.setScale(camera.zoom*1.2f);
+		game.font.draw(batch,"Tap to continue", camera.position.x+550*0.8f*camera.zoom,  camera.position.y-320*0.8f*camera.zoom);
+		game.font.setScale(1f);
+	}
+	
+	private void setUpTips() {
+		tips = new Array<String[]>();
+		tips.add(new String[]{"Welcome!","","Right now we are in trouble, could you help us?"});
+		tips.add(new String[]{"This is Spain...","","Elections are closer and the government is", "stealing time and money from spanish people.", "We agree with masses, but our job is to take orders", "from those thieves."});
+		tips.add(new String[]{"How do you could help?","","You can place us by tapping the screen. Then you", "will choose one of us, if you have money enough,", "and the cost will be withdrawn from your budget.","", "Let's start placing a cop in the mark!"});
+		tips.add(new String[]{""});
+		tips.add(new String[]{"Well done!","","Let's see what happens.", "", "You can zoom for more detail."});
+		tips.add(new String[]{""});
+		tips.add(new String[]{"Great job!","","Now you can join us in our defense of the congress.", "The next time, you will be able to buy other cops","and cool things, but you will be alone. Be careful!","", "See you soon :)"});
+		tips.add(new String[]{""});
+		tips.add(new String[]{"Ouch!","","One protester is getting into the congress", "and the government is losing votes. Place the cop", "better the next time :(, otherwise a better country", "would come."});
+		tips.add(new String[]{""});
+	}
+	
+	public void nextTip() {
+		if (++tipIndex<tips.size) {
+			tip = tips.get(tipIndex);
+		}
+	}
 	
 	@Override
 	public void resize(int width, int height) {
@@ -257,6 +303,7 @@ public class GameScreen implements Screen {
 	@Override
 	public void dispose() {
 		mapTexture.dispose();
+		helpTexture.dispose();
 	}
 
 	

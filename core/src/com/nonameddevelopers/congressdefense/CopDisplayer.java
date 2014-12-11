@@ -16,9 +16,6 @@ public class CopDisplayer {
 	private Circle availableCircle;
 	private boolean available;
 
-	private Cop copToPlant;
-	private boolean copAvailable;
-
 	public CopDisplayer(CopManager copMan, CongressDefense game,
 			GameInputListener inputListener) {
 		this.game = game;
@@ -27,87 +24,26 @@ public class CopDisplayer {
 	}
 
 	public void update() {
-		for (CopIcon icon : inputListener.menu) {
-			if (icon.isPressed() && icon.canBuy()) {
-				if (copToPlant == null) {
-					copToPlant = icon.newCop(game, inputListener.getX(),
-							inputListener.getY() + 40);
-					copMan.addCopToPlant(copToPlant);
-					availableCircle = new Circle();
-				}
-				available = true;
+		/*if (inputListener.menu.get(CopIcon.getIconSelected()) != null
+			&& inputListener.menu.get(CopIcon.getIconSelected()).isSetting()) {
+			availableCircle = new Circle();
+			available = true;
 
-				copToPlant.setPosition(inputListener.getX(),
-						inputListener.getY() + 40);
-				
-
-				availableCircle.set(inputListener.getX(),
-						inputListener.getY() + 40, 20f);
-
-				copToPlant.tint(Color.GREEN);
-
-				if (!Intersector.overlaps(icon.circle, availableCircle)) {
-					for (Cop cop : copMan.getCops())
-						if (cop != copToPlant
-								&& Intersector.overlaps(
-										cop.getBoundingCircle(),
-										availableCircle)) {
-							available = false;
-							copToPlant.tint(Color.RED);
-							break;
-						}
-				}
-
-			}
-
-			if (icon.wasPressed()) {
-				if (available && icon.canBuy()) {
-					game.money -= icon.getCost();
-					copToPlant.plant();
-					copToPlant.setxInit(copToPlant.getX());
-					copToPlant.setyInit(copToPlant.getY());
-				} 
-				else {
-					copMan.deleteCopToPlant();
-				}
-				copToPlant = null;
-			}
+			availableCircle.set(inputListener.getX(),
+								inputListener.getY(), 20f);
 			
-		}
-		//moveCop();
-	}
-
-	//Método que mueve polícia pero va dejando rastro...y al moverlos no disparan.
-	private void moveCop() {
-		for (Cop cop : copMan.getCops()) {
-			if (cop.isPressed()) {
-
-				copAvailable = true;
-
-				cop.setPosition(inputListener.getX(), inputListener.getY() + 40);
-
-				cop.getBoundingCircle().set(inputListener.getX(),
-						inputListener.getY() + 40, 20f);
-
-				cop.tint(Color.GREEN);
-
-				for (Cop police : copMan.getCops())
-					if (police != cop
-							&& Intersector.overlaps(police.getBoundingCircle(),
-									availableCircle)) {
-						copAvailable = false;
-						cop.tint(Color.RED);
-						break;
-					}
-
+			for (Cop cop : copMan.getCops()) {
+				if (Intersector.overlaps(cop.getBoundingCircle(),
+								availableCircle)) {
+					available = false;
+					break;
+				}
 			}
-
-			if (copAvailable) {
-				cop.plant();
-				cop.setPressed(false);
-			}
-			copToPlant = null;
-		}
+			if (available && inputListener.menu.get(CopIcon.getIconSelected()).canBuy()) {
+				inputListener.menu.get(CopIcon.getIconSelected()).newCopSetter(copMan, inputListener.getX(),
+								  inputListener.getY());
+			}				
+		}*/
 	}
 
 }

@@ -125,8 +125,7 @@ public class EntityManager {
 	public void checkCollisions() {
 		for (Crowd crowd : getCrowdMan().getCrowds())
 			for (Cop cop : getCopManager().getCops()) 
-				if (cop.isPlanted())
-					cop.checkCollision(crowd);
+				cop.checkCollision(crowd);
 	}
 
 

@@ -4,21 +4,17 @@ import com.badlogic.gdx.input.GestureDetector.GestureListener;
 import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.math.Vector3;
-import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.ObjectMap;
 import com.nonameddevelopers.congressdefense.CongressDefense;
-import com.nonameddevelopers.congressdefense.EntityManager;
-import com.nonameddevelopers.congressdefense.characters.Cop;
 import com.nonameddevelopers.congressdefense.screens.GameScreen;
 import com.nonameddevelopers.congressdefense.ui.CheckBoxActor;
-import com.nonameddevelopers.congressdefense.ui.CopIcon;
 
 public class GameInputListener implements GestureListener {
 
 	private float x, y;
 
 	private final CongressDefense game;
-	public Array<CopIcon> menu;
+	private GameScreen screen;
 	private ObjectMap<String, CheckBoxActor> buttons;
 	private GameCamera camera;
 	private Vector3 touchPos;
@@ -27,7 +23,7 @@ public class GameInputListener implements GestureListener {
 			GameCamera camera) {
 		this.game = game;
 		this.camera = camera;
-		this.menu = screen.menu;
+		this.screen = screen;
 		this.buttons = screen.buttons;
 		touchPos = new Vector3();
 	}
@@ -36,32 +32,45 @@ public class GameInputListener implements GestureListener {
 	public boolean touchDown(float x, float y, int pointer, int button) {
 		unproject(x, y);
 
-		if (buttons.get("speaker").circle.contains(this.x, this.y))
-			game.toggleMusic();
-		if (buttons.get("sounds").circle.contains(this.x, this.y))
-			game.toggleSound();
-		if (buttons.get("pause").circle.contains(this.x, this.y))
-			game.togglePause();
-		if (buttons.get("back").circle.contains(this.x, this.y)) {
-			game.loadMenu();
-
-			return false;
-		}
-
-		for (CopIcon icon : menu)
-			icon.setPressed(this.x, this.y);
 		
-		for(Cop cop : EntityManager.getInstance().getCopManager().getCops()){
-			cop.wasPressed(this.x, this.y);
-		}
-
+		
 		return false;
 	}
 
 	@Override
 	public boolean tap(float x, float y, int count, int button) {
 		unproject(x, y);
-		releaseIcons();
+		if (buttons.get("speaker").circle.contains(this.x, this.y)) {
+			game.toggleMusic();
+			game.playTouch();
+			return false;
+		}
+		if (buttons.get("sounds").circle.contains(this.x, this.y)) {
+			game.toggleSound();
+			game.playTouch();
+			return false;
+		}
+		if (buttons.get("pause").circle.contains(this.x, this.y)) {
+			game.togglePause();
+			game.playTouch();
+			return false;
+		}
+		if (buttons.get("back").circle.contains(this.x, this.y)) {
+			game.loadMenu();
+			game.playTouch();
+			return false;
+		}
+		
+		if (!game.isPaused) {
+			if (screen.copSetter == null) {
+				game.playTouch();
+				screen.copSetter = new CopSetter(game, this.x, this.y);
+			}
+			else {
+				screen.copSetter.click(this.x, this.y);
+			}
+		}
+
 		return false;
 	}
 
@@ -91,11 +100,9 @@ public class GameInputListener implements GestureListener {
 			&& camera.position.y + deltaY + camera.effectiveViewportHeight / 2 <= camera.worldHeight) {
 			moveY = deltaY;
 		}
-		
-		if (!isAnyIconPressed()) {			
-			camera.translate(moveX, moveY);
-			camera.update();
-		}
+			
+		camera.translate(moveX, moveY);
+		camera.update();
 
 		return false;
 	}
@@ -103,7 +110,6 @@ public class GameInputListener implements GestureListener {
 	@Override
 	public boolean panStop(float x, float y, int pointer, int button) {
 		unproject(x, y);
-		releaseIcons();
 		return false;
 	}
 
@@ -119,18 +125,6 @@ public class GameInputListener implements GestureListener {
 			Vector2 pointer1, Vector2 pointer2) {
 		// TODO Auto-generated method stub
 		return false;
-	}
-
-	private boolean isAnyIconPressed() {
-		for (CopIcon icon : menu)
-			if (icon.isPressed())
-				return true;
-		return false;
-	}
-
-	private void releaseIcons() {
-		for (CopIcon icon : menu)
-			icon.release();
 	}
 
 	public float getX() {

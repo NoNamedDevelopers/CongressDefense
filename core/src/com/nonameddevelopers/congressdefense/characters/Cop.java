@@ -6,9 +6,7 @@ import com.nonameddevelopers.congressdefense.CongressDefense;
 
 
 public abstract class Cop extends GameCharacter {
-		
-	private boolean isPlanted = false;
-	
+			
 	protected boolean isAttacking = false;
 	
 	protected boolean isRunning = false;
@@ -97,25 +95,6 @@ public abstract class Cop extends GameCharacter {
 		range.y = y;
 	}
 	
-	public void plant() {
-		isPlanted = true;
-	}
-	
-	public boolean isPlanted() {
-		return isPlanted;
-	}
-	
-	public void wasPressed(float x, float y) {
-		isPressed = boundingCircle.contains(x,y);
-	}
-
-	public void setPressed(boolean isPressed) {
-		this.isPressed = isPressed;
-	}
-
-	public boolean isPressed() {
-		return isPressed;
-	}
 	public float getxInit() {
 		return xInit;
 	}
@@ -134,16 +113,13 @@ public abstract class Cop extends GameCharacter {
 	
 	@Override
 	public void hurt(int damage) {
-		if (isPlanted) {
-			super.hurt(damage);
-		}
+		super.hurt(damage);
 	}
 	
 	@Override
 	public void kill() {
-		if (isPlanted) {
-			super.kill();
-		}
+		super.kill();
+		
 	}
 
 	public boolean isDead() {

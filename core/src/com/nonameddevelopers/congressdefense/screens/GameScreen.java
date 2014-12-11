@@ -14,6 +14,7 @@ import com.nonameddevelopers.congressdefense.CongressDefense;
 import com.nonameddevelopers.congressdefense.CopDisplayer;
 import com.nonameddevelopers.congressdefense.EntityManager;
 import com.nonameddevelopers.congressdefense.characters.cops.PoliceVan;
+import com.nonameddevelopers.congressdefense.gameItems.CopSetter;
 import com.nonameddevelopers.congressdefense.gameItems.GameCamera;
 import com.nonameddevelopers.congressdefense.gameItems.GameInputListener;
 import com.nonameddevelopers.congressdefense.ui.CheckBoxActor;
@@ -26,7 +27,6 @@ public class GameScreen implements Screen {
 
 	private final CongressDefense game;
 	
-	public Array<CopIcon> menu;
 	public ObjectMap<String, CheckBoxActor> buttons;
 	
 	private Texture starBoardTexture, coinsBoardTexture, voteBoardTexture;
@@ -41,6 +41,8 @@ public class GameScreen implements Screen {
 	private CopDisplayer copDisp;
 	
 	private GameInputListener inputListener;
+	
+	public CopSetter copSetter;
 
 	public GameScreen(final CongressDefense game) {
 		this.game = game;
@@ -108,6 +110,7 @@ public class GameScreen implements Screen {
 		
 		EntityManager.empty();
 		entityManager = EntityManager.getInstance(game,camera);
+		CopSetter.setCopManager(entityManager.getCopManager());
 		copDisp = new CopDisplayer(entityManager.getCopManager(),game, inputListener);		
 		
 		game.setMusic("defense.mp3");
@@ -121,13 +124,15 @@ public class GameScreen implements Screen {
 		Gdx.gl.glClearColor(0, 0, 0, 1);
 		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 		
-		camera.update();
-
-	
+		camera.update();	
+		
 		
 		if (!game.isPaused) {
 			copDisp.update();
 			entityManager.update(delta);
+			if (copSetter!=null) {
+				copSetter.update(delta, camera);
+			}
 			if (game.plane != null) {
 				game.plane.setCamera(camera);
 				game.plane.setScale(camera.zoom);
@@ -147,24 +152,22 @@ public class GameScreen implements Screen {
 		
 		secondBuilding.draw(game.batch);
 
+
+		if (copSetter!=null) {
+			copSetter.draw(game.batch);
+		}
+		
 		if (game.plane != null) {
 			game.plane.draw(game.batch);
 		}
 		
 		drawMenu(game.batch);		
 		
-		game.batch.end();
-		
+		game.batch.end();	
 	}
 
 	
 	private void drawMenu(SpriteBatch batch) {
-		for (CopIcon icon : menu) {
-			icon.setScale(camera.zoom*2f);
-			icon.update();
-			icon.draw(batch);
-		}
-
 		game.font.setScale(camera.zoom*2);
 		starBoard.setSize(181*camera.zoom*2, 50*camera.zoom*2);
 		starBoard.setPosition(camera.position.x, camera.position.y+camera.effectiveViewportHeight/2-50*camera.zoom*2);
@@ -210,12 +213,7 @@ public class GameScreen implements Screen {
 		buttons.get("back").draw(batch, 1f);
 	}
 	
-	private void loadMenu() {
-		menu = new Array<CopIcon>(); 		
-		menu.add(new CopIcon(game, camera, 60, 0, "ui/meleecopicon2.png", CopIcon.MELEE));
-		menu.add(new CopIcon(game, camera, 180, 1, "ui/bazookacopicon2.png", CopIcon.BAZOOKA));
-		
-		
+	private void loadMenu() {		
 		starBoardTexture = new Texture(Gdx.files.internal("ui/starboard.png"));
 		starBoard = new Sprite(starBoardTexture);
 		

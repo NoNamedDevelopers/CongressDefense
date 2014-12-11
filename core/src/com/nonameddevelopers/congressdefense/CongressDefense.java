@@ -21,6 +21,7 @@ public class CongressDefense extends Game {
 	public BitmapFont font;
 	private Music bgMusic;
 	private GameSound touchSound;
+	private GameSound coinSound;
 	
 	public boolean isMusicPlayed = true;
 	public boolean isSoundOn = true;
@@ -49,6 +50,7 @@ public class CongressDefense extends Game {
 		GameSound.GAME = this;
 		 
 		touchSound = new GameSound("sounds/punch.mp3", 330);
+		coinSound = new GameSound("sounds/coin.mp3", 330);
 		
 
 		batch = new SpriteBatch();
@@ -75,6 +77,7 @@ public class CongressDefense extends Game {
 		font.dispose();
 		bgMusic.dispose();
 		touchSound.dispose();
+		coinSound.dispose();
 	}
 	
 	public void setMusic(String src) {
@@ -104,6 +107,10 @@ public class CongressDefense extends Game {
 	
 	public void playTouch() {
 		touchSound.play(0.3f);
+	}
+	
+	public void playCoin() {
+		coinSound.play();
 	}
 	
 	public void toggleMusic() {

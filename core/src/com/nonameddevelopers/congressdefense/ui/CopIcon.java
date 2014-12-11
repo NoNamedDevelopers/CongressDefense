@@ -5,62 +5,74 @@ import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
-import com.badlogic.gdx.graphics.glutils.ShapeRenderer.ShapeType;
 import com.badlogic.gdx.math.Circle;
 import com.nonameddevelopers.congressdefense.CongressDefense;
-import com.nonameddevelopers.congressdefense.characters.Cop;
 import com.nonameddevelopers.congressdefense.characters.cops.BazookaCop;
 import com.nonameddevelopers.congressdefense.characters.cops.MeleeCop;
-import com.nonameddevelopers.congressdefense.gameItems.GameCamera;
+import com.nonameddevelopers.congressdefense.gameItems.CopSetter;
 
 public class CopIcon {
 	private static final Color TRANSPARENT = new Color(1,1,1,0.5f);
 
-	public static final int MELEE = 0;
-	public static final int BAZOOKA = 1;
+	public static final float RADIUS = 80;
+	public static final short MELEE = 0;
+	public static final short BAZOOKA = 1;
 	
+	private static int quadrantSelected;
+	
+
 	private CongressDefense game;
-	private GameCamera camera;
 	
 	public Circle circle;
 	
-	private Texture texture;
+	private Texture textureSelected;
+	private Texture textureNoSelected;
 	private Sprite sprite;
 	
-	private float xPosition;
-	private float x;
-	private float y;
-	private int type;
-	
-	private boolean isPressed;
-	private boolean wasPressed;
-	
+	private int quadrant;
+	private float centerX;
+	private float centerY;
+	private short type;
 	private int cost;
-	
 	private float scale;
+	private CopSetter parent;	
 	
-	public CopIcon(CongressDefense game, GameCamera camera, int cost, float xPosition, String src, int type) {
+	public CopIcon(CongressDefense game, CopSetter parent, int cost, float centerX, float centerY,String src, short type, int quadrant) {
 		this.game = game;
-		this.camera = camera;
+		this.parent = parent;
 		this.cost = cost;
-		this.xPosition = xPosition;
-		this.x = 70;
-		this.y = 110;
+		this.centerX = centerX;
+		this.centerY = centerY;
+		this.quadrant = quadrant;
 		this.type = type;
 		this.scale = 1f;
 		circle = new Circle();
-		texture = new Texture(Gdx.files.internal(src));
-		sprite = new Sprite(texture);
+		textureSelected = new Texture(Gdx.files.internal("ui/iconselected.png"));
+		textureNoSelected = new Texture(Gdx.files.internal(src));
+		sprite = new Sprite(textureNoSelected);
+		quadrantSelected = 0;
 	}
 	
-	public void update() {
-		circle.set(camera.position.x-camera.effectiveViewportWidth/2+(x+110*xPosition+50)*scale, 
-	   		   camera.position.y+camera.effectiveViewportHeight/2-(y-50)*scale,
-			   50f*scale);	
-		sprite.setPosition(camera.position.x-camera.effectiveViewportWidth/2+(x+110*xPosition)*scale, 
-			   camera.position.y+camera.effectiveViewportHeight/2-y*scale);
-		sprite.setSize(100*scale,100*scale);		
+	public void update(float delta, float currentRadius) {
+		float auxX = centerX;
+		float auxY = centerY;
+		switch (quadrant) {
+		case 1:
+			auxX -= (currentRadius-RADIUS/2)*scale;
+			break;
+		case 2:
+			auxY += (currentRadius-RADIUS/2)*scale;
+			break;
+		case 3:
+			auxX += (currentRadius-RADIUS/2)*scale;
+			break;
+		case 4:
+			auxY -= (currentRadius-RADIUS/2)*scale;
+			break;
+		}
+		sprite.setSize(RADIUS*2*scale,RADIUS*2*scale);
+		circle.set(auxX, auxY, RADIUS*scale);	
+		sprite.setCenter(auxX, auxY);	
 	}
 	
 	public void draw(SpriteBatch batch) {
@@ -68,40 +80,46 @@ public class CopIcon {
 			sprite.setColor(TRANSPARENT);
 		else
 			sprite.setColor(Color.WHITE);
+		if (isSelected()) {
+			sprite.setTexture(textureSelected);
+		}
+		else {
+			sprite.setTexture(textureNoSelected);
+		}
 		sprite.draw(batch);	
 	}
 	
-	public Cop newCop(CongressDefense game, float x, float y) {
-		switch(type) {
-		case (BAZOOKA):
-			return new BazookaCop(game,x,y);
-		case (MELEE):
-		default:
-			return new MeleeCop(game,x,y);
-
-			//return new MovileCop(game,x,y);
+	
+	public void click(float x, float y) {
+		if (circle.contains(x,y)
+			&& canBuy()) {
+			if (!isSelected()) {
+				game.playTouch();
+				setSelected();				
+			}
+			else {
+				switch (type) {
+				case (CopIcon.BAZOOKA):
+					parent.getCopManager().addCop(new BazookaCop(game,centerX,centerY));
+					break;
+				case (CopIcon.MELEE):
+				default:
+					parent.getCopManager().addCop(new MeleeCop(game,centerX,centerY));
+				}
+				parent.release();
+				game.playCoin();
+				game.money -= getCost();				
+			}
 		}
 	}
 	
-	public void setPressed(float x, float y) {
-		isPressed = circle.contains(x,y);
+	
+	public void setSelected() {
+		quadrantSelected = quadrant;
 	}
 	
-	public boolean isPressed() {
-		return isPressed;
-	}
-	
-	public void release() {
-		wasPressed = isPressed;
-		isPressed = false;		
-	}
-	
-	public boolean wasPressed() {
-		if (wasPressed) {
-			wasPressed = false;
-			return true;
-		}
-		return false;
+	public boolean isSelected() {
+		return quadrantSelected == quadrant;
 	}
 	
 	public boolean canBuy() {
@@ -112,7 +130,20 @@ public class CopIcon {
 		return cost;
 	}
 	
+	public float getScale() {
+		return scale;
+	}
+	
 	public void setScale(float scaleXY) {
 		this.scale = scaleXY;
+	}
+	
+	public short getType() {
+		return type;
+	}
+	
+	public void dispose() {
+		textureSelected.dispose();
+		textureNoSelected.dispose();
 	}
 }

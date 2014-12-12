@@ -11,11 +11,11 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.input.GestureDetector;
 import com.badlogic.gdx.utils.ObjectMap;
 import com.nonameddevelopers.congressdefense.CongressDefense;
-import com.nonameddevelopers.congressdefense.EntityManager;
 import com.nonameddevelopers.congressdefense.gameItems.GameCamera;
 import com.nonameddevelopers.congressdefense.gameItems.GameOverInputListener;
 import com.nonameddevelopers.congressdefense.scoresclient.RESTConnector;
 import com.nonameddevelopers.congressdefense.ui.CheckBoxActor;
+import com.nonameddevelopers.congressdefense.ui.RectangleButton;
 
 public class GameOverScreen implements Screen {
 
@@ -28,11 +28,13 @@ public class GameOverScreen implements Screen {
 	private GameCamera camera;
 	private Texture bgTexture;
 	private Sprite bg;
+	public RectangleButton tweet;
 
 	private GameOverInputListener inputListener;
 
 	public GameOverScreen(final CongressDefense game) {
 		this.game = game;
+		game.isPaused = true;
 		camera = new GameCamera(WORLD_WIDTH, WORLD_HEIGHT);
 
 		loadMenu();
@@ -57,9 +59,14 @@ public class GameOverScreen implements Screen {
 		game.setMusic("gameover.mp3");
 		game.setMusicLooping(false);
 
+		
+
+		
+		
+		
 		NameInputListener listener = new NameInputListener();
-		Gdx.input.getTextInput(listener, "Write here your name:", "Player 1");
 		Gdx.input.setOnscreenKeyboardVisible(true);
+		Gdx.input.getTextInput(listener, "Write here your name:", "Player 1");
 	}
 
 	@Override
@@ -95,6 +102,9 @@ public class GameOverScreen implements Screen {
 				camera.position.x + camera.viewportWidth / 2 - 60,
 				camera.position.y - camera.viewportHeight / 2 + 10);
 
+
+		tweet.setPosition(camera.position.x - tweet.getWidth()/2, 130);
+		tweet.draw(game.batch, 1f);
 		for (CheckBoxActor button : buttons.values())
 			button.draw(batch, 1f);
 	}
@@ -114,6 +124,10 @@ public class GameOverScreen implements Screen {
 		buttons.put("back", new CheckBoxActor("ui/back_button.png",
 				"ui/back_button.png", game, CheckBoxActor.NORMAL));
 		buttons.get("back").setSize(50, 50);
+
+		tweet = new RectangleButton("ui/tweet_button.png",
+				"ui/tweet_button.png", 300, 105);	
+		tweet.setSize(300, 105);
 	}
 
 	@Override
@@ -165,6 +179,7 @@ public class GameOverScreen implements Screen {
 			} catch (Exception e) {
 				e.printStackTrace();
 			}
+			
 		}
 
 		@Override

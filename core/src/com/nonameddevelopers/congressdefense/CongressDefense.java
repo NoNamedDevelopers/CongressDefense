@@ -26,7 +26,7 @@ public class CongressDefense extends Game {
 	
 	public boolean isMusicPlayed = true;
 	public boolean isSoundOn = true;
-	public boolean isPaused = false;
+	public boolean isPaused = true;
 	
 	public boolean isCrowdPaused = false;
 	

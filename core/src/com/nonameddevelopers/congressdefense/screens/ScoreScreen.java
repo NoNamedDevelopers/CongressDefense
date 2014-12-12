@@ -38,7 +38,9 @@ public class ScoreScreen implements Screen {
 
 	public ScoreScreen(final CongressDefense game) throws Exception {
 		this.game = game;
+		game.font.setScale(0.9f);
 		camera = new GameCamera(WORLD_WIDTH, WORLD_HEIGHT);
+		camera.inResizeGoTop = true;
 
 		loadMenu();
 
@@ -67,6 +69,7 @@ public class ScoreScreen implements Screen {
 		header.setSize(812, 120);
 
 		puntuacion = RESTConnector.getScores();
+
 	}
 
 	private void sortList() {
@@ -99,10 +102,10 @@ public class ScoreScreen implements Screen {
 
 		for (int i = 0; i < puntuacion.size(); i++) {
 				game.font.draw(game.batch, (i + 1) + "º- "
-						+ puntuacion.get(i).Username, 145, 600 - i * 30);
-				game.font.draw(game.batch, puntuacion.get(i).Level, 625, 600 - i * 30);
+						+ puntuacion.get(i).Username, 145, 675 - i * 34);
+				game.font.draw(game.batch, puntuacion.get(i).Level, 625, 675 - i * 34);
 				game.font.draw(game.batch, puntuacion.get(i).Score.toString(),
-						750, 600 - i * 30);
+						750, 675 - i * 34);
 
 		}
 
@@ -127,7 +130,7 @@ public class ScoreScreen implements Screen {
 	private void showLevel() {
 		for (User user : puntuacion) {
 			if (user.Level == null)
-				user.setLevel("Normal");
+				user.setLevel("Easy");
 		}
 
 	}

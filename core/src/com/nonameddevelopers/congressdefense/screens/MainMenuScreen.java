@@ -76,7 +76,7 @@ public class MainMenuScreen extends Actor implements Screen {
 			
 			public void touchUp(InputEvent event, float x, float y,
 					int pointer, int button) {
-				Gdx.net.openURI("https://play.google.com/store/apps/details?id=com.nonamedevelopers.congressdefense.android&hl=es");
+				Gdx.net.openURI("https://play.google.com/store/apps/details?id=com.nonamedevelopers.congressdefense.android");
 				stage.dispose();
 				game.setScreen(new MainMenuScreen(game));
 				dispose();

@@ -9,6 +9,8 @@ public class GameCamera extends OrthographicCamera {
 
 	public float effectiveViewportWidth;
     public float effectiveViewportHeight;
+    
+    public boolean inResizeGoTop = false; 
 	
 	public GameCamera(float worldWidth, float worldHeight) {
 		this.viewportWidth = worldWidth;
@@ -25,7 +27,12 @@ public class GameCamera extends OrthographicCamera {
 	public void resize(int width, int height) {
 		this.viewportWidth = this.worldWidth;
 		this.viewportHeight = this.viewportWidth * height/width;
-		this.position.set(this.viewportWidth/2f, this.worldHeight/2f, 0);
+		if (inResizeGoTop) {
+			this.position.set(this.viewportWidth/2f, this.worldHeight - this.viewportHeight/2f, 0);
+		}
+		else {
+			this.position.set(this.viewportWidth/2f, this.worldHeight/2f, 0);
+		}
 		this.update();
 	}
 	

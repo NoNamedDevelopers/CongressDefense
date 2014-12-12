@@ -1,5 +1,6 @@
 package com.nonameddevelopers.congressdefense.gameItems;
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.input.GestureDetector.GestureListener;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.math.Vector3;
@@ -7,6 +8,7 @@ import com.badlogic.gdx.utils.ObjectMap;
 import com.nonameddevelopers.congressdefense.CongressDefense;
 import com.nonameddevelopers.congressdefense.screens.GameOverScreen;
 import com.nonameddevelopers.congressdefense.ui.CheckBoxActor;
+import com.nonameddevelopers.congressdefense.ui.RectangleButton;
 
 public class GameOverInputListener implements GestureListener {
 
@@ -16,11 +18,13 @@ public class GameOverInputListener implements GestureListener {
 	private ObjectMap<String, CheckBoxActor> buttons;
 	private GameCamera camera;
 	private Vector3 touchPos;
+	private RectangleButton tweet;
 	
 	public GameOverInputListener(final CongressDefense game, GameOverScreen screen, GameCamera camera) {
 		this.game = game;
 		this.camera = camera;
 		this.buttons = screen.buttons;
+		this.tweet = screen.tweet;
 		touchPos = new Vector3();
 	}
 		
@@ -34,6 +38,10 @@ public class GameOverInputListener implements GestureListener {
 			game.toggleSound();
 		if (buttons.get("back").circle.contains(this.x, this.y)) {
 			game.loadMenu();
+			return false;
+		}
+		if (tweet.rectangle.contains(this.x, this.y)) {
+			Gdx.net.openURI("https://twitter.com/share?text=I+have+reached+"+game.score+"+points+in+level+"+game.getLevel()+"+defending+our+awful+congress.+Join+the+fight%21&hashtags=CongressDefense&url=https%3A%2F%2Fplay.google.com%2Fstore%2Fapps%2Fdetails%3Fid%3Dcom.nonamedevelopers.congressdefense.android");
 			return false;
 		}
 		return false;

@@ -51,6 +51,7 @@ public class CrowdManager {
 
 	public CrowdManager(final CongressDefense game) {
 		this.game = game;
+		game.plane = null;
 		wave = 0;
 		numCrowds = 1;
 		switch (game.dificulty) {

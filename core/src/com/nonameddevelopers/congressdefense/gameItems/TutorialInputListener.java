@@ -51,8 +51,8 @@ public class TutorialInputListener implements GestureListener {
 			return false;
 		}
 		if (buttons.get("back").circle.contains(this.x, this.y)) {
-			game.loadMenu();
 			game.playTouch();
+			game.loadMenu();
 			return false;
 		}
 		

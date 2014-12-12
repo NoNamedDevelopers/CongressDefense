@@ -60,13 +60,19 @@ public class CongressDefense extends Game {
 		font = new BitmapFont(Gdx.files.internal("opensans.fnt"));
 		font.setColor(new Color(255,255,255, 1f));
 		font.setScale(0.9f);
-		loadMenu();
+
+		this.setScreen(new MainMenuScreen(this));
 	}
 	
 	public void loadMenu() {
-		if (this.getScreen()!=null)
-			this.getScreen().dispose();
-		this.setScreen(new MainMenuScreen(this));		
+		if (isPaused) {
+			if (this.getScreen()!=null)
+				this.getScreen().dispose();
+			this.setScreen(new MainMenuScreen(this));
+		}
+		else {
+			isPaused = true;
+		}
 	}
 
 	@Override

@@ -72,12 +72,7 @@ public class EntityManager {
 		for (Cop cop : copManager.getCops())
 			elementsToRender.add(cop);		
 		
-		elementsToRender.sort(new Comparator<GameCharacter>() {
-			@Override
-			public int compare(GameCharacter gm0, GameCharacter gm1) {		
-				return (int) (gm1.getY()-gm0.getY());
-			}			
-		});
+		elementsToRender.sort();
 		
 		proyectileL.draw(batch);
 		

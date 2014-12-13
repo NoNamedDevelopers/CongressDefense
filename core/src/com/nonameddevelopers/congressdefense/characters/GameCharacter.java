@@ -15,7 +15,7 @@ import com.badlogic.gdx.utils.ObjectMap;
 import com.nonameddevelopers.congressdefense.CongressDefense;
 import com.nonameddevelopers.congressdefense.gameItems.GameSound;
 
-public abstract class GameCharacter {
+public abstract class GameCharacter implements Comparable<GameCharacter> {
 
 	protected static final short UP_LEFT = 1;
 	protected static final short DOWN_LEFT = 2;
@@ -245,6 +245,11 @@ public abstract class GameCharacter {
 	
 	public boolean isGhost() {
 		return isGhost;
+	}
+	
+	@Override
+	public int compareTo(GameCharacter gc) {
+		return (int) (gc.y-y);
 	}
 	
 }

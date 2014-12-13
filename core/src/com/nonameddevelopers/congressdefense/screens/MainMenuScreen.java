@@ -18,7 +18,7 @@ public class MainMenuScreen extends Actor implements Screen {
 	private final CongressDefense game;
 
 	private Stage stage;
-	private ImageActor bgImage, startButton, scoresButton, optionsButton,
+	private ImageActor bgImage, startButton, scoresButton, tutorialButton,
 			rateButton;
 	private CheckBoxActor musicButton, soundsButton;
 
@@ -47,9 +47,8 @@ public class MainMenuScreen extends Actor implements Screen {
 
 		scoresButtonAction(game);
 
-		optionsButtonAction();
+		tutorialButtonAction();
 	
-
 		rateButtonAction();
 
 		stage.addActor(bgImage);
@@ -58,7 +57,7 @@ public class MainMenuScreen extends Actor implements Screen {
 		stage.addActor(startButton);
 		stage.addActor(scoresButton);
 		stage.addActor(rateButton);
-		stage.addActor(optionsButton);
+		stage.addActor(tutorialButton);
 	}
 
 	private void rateButtonAction() {
@@ -90,11 +89,11 @@ public class MainMenuScreen extends Actor implements Screen {
 		
 	}
 
-	private void optionsButtonAction() {
-		optionsButton = new ImageActor("ui/tutorial_button.png");
-		optionsButton.setSize(250, 80);
-		optionsButton.setPosition(350, 350);
-		optionsButton.addListener(new InputListener() {
+	private void tutorialButtonAction() {
+		tutorialButton = new ImageActor("ui/tutorial_button.png");
+		tutorialButton.setSize(250, 80);
+		tutorialButton.setPosition(350, 350);
+		tutorialButton.addListener(new InputListener() {
 
 			@Override
 			public boolean touchDown(InputEvent event, float x, float y,

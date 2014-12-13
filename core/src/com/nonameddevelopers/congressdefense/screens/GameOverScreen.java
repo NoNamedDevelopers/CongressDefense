@@ -174,6 +174,7 @@ public class GameOverScreen implements Screen {
 			//Falta incluir el game.level en el cliente REST
 			RESTConnector.updateUserScore(text.replaceAll(" ", "%20"),
 					game.score);
+			
 			try {
 				game.setScreen(new ScoreScreen(game));
 			} catch (Exception e) {

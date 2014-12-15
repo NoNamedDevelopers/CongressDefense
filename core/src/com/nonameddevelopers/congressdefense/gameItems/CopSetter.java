@@ -46,8 +46,8 @@ public class CopSetter {
 
 		icons.add(new CopIcon(game, this, 60, x, y, "ui/meleecopicon.png", CopIcon.MELEE, 1));
 		icons.add(new CopIcon(game, this, 180, x, y, "ui/bazookacopicon.png", CopIcon.BAZOOKA, 2));
-		icons.add(new CopIcon(game, this, 10, x, y, "ui/swaticon.png", CopIcon.SWAT, 3));
-		//icons.add(new CopIcon(game, this, 60, x, y, "ui/meleecopicon.png", CopIcon.MELEE, 4));
+		icons.add(new CopIcon(game, this, 300, x, y, "ui/swaticon.png", CopIcon.SWAT, 3));
+		icons.add(new CopIcon(game, this, 800, x, y, "ui/bombicon.png", CopIcon.BOMB, 4));
 	}
 	
 	public void update(float delta, GameCamera camera) {

@@ -8,6 +8,7 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Circle;
 import com.nonameddevelopers.congressdefense.CongressDefense;
 import com.nonameddevelopers.congressdefense.characters.cops.BazookaCop;
+import com.nonameddevelopers.congressdefense.characters.cops.Bomb;
 import com.nonameddevelopers.congressdefense.characters.cops.MeleeCop;
 import com.nonameddevelopers.congressdefense.characters.cops.PoliceVan;
 import com.nonameddevelopers.congressdefense.gameItems.CopSetter;
@@ -19,6 +20,7 @@ public class CopIcon {
 	public static final short MELEE = 0;
 	public static final short BAZOOKA = 1;
 	public static final short SWAT = 2;
+	public static final short BOMB = 3;
 	
 	private static int quadrantSelected;
 	
@@ -101,6 +103,9 @@ public class CopIcon {
 			}
 			else {
 				switch (type) {
+				case (CopIcon.BOMB):
+					parent.getCopManager().addCop(new Bomb(game, centerX, centerY));
+					break;
 				case (CopIcon.SWAT):
 					parent.getCopManager().addCop(new PoliceVan(game, 190, 1500, centerX, centerY));
 					break;

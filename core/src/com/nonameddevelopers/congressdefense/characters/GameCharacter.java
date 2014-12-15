@@ -87,15 +87,16 @@ public abstract class GameCharacter implements Comparable<GameCharacter> {
 		
 		stateTime = 0f;
 
-		uAnimation = loadAnimation("sprites/"+type+"/up.png", columns, rows, animationSpeed);
-		dAnimation = loadAnimation("sprites/"+type+"/down.png", columns, rows, animationSpeed);
-		lAnimation = loadAnimation("sprites/"+type+"/left.png", columns, rows, animationSpeed);
-		rAnimation = loadAnimation("sprites/"+type+"/right.png", columns, rows, animationSpeed);
-		ulAnimation = loadAnimation("sprites/"+type+"/up_left.png", columns, rows, animationSpeed);
-		dlAnimation = loadAnimation("sprites/"+type+"/down_left.png", columns, rows, animationSpeed);	
-		urAnimation = loadAnimation("sprites/"+type+"/up_right.png", columns, rows, animationSpeed);	
-		drAnimation = loadAnimation("sprites/"+type+"/down_right.png", columns, rows, animationSpeed);	
-		
+		if (type != "") {
+			uAnimation = loadAnimation("sprites/"+type+"/up.png", columns, rows, animationSpeed);
+			dAnimation = loadAnimation("sprites/"+type+"/down.png", columns, rows, animationSpeed);
+			lAnimation = loadAnimation("sprites/"+type+"/left.png", columns, rows, animationSpeed);
+			rAnimation = loadAnimation("sprites/"+type+"/right.png", columns, rows, animationSpeed);
+			ulAnimation = loadAnimation("sprites/"+type+"/up_left.png", columns, rows, animationSpeed);
+			dlAnimation = loadAnimation("sprites/"+type+"/down_left.png", columns, rows, animationSpeed);	
+			urAnimation = loadAnimation("sprites/"+type+"/up_right.png", columns, rows, animationSpeed);	
+			drAnimation = loadAnimation("sprites/"+type+"/down_right.png", columns, rows, animationSpeed);	
+		}
 		
 	    direction = DOWN;
 		updateAnimation();

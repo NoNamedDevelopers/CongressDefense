@@ -11,6 +11,7 @@ import com.badlogic.gdx.input.GestureDetector;
 import com.badlogic.gdx.utils.ObjectMap;
 import com.nonameddevelopers.congressdefense.CongressDefense;
 import com.nonameddevelopers.congressdefense.EntityManager;
+import com.nonameddevelopers.congressdefense.characters.cops.Bomb;
 import com.nonameddevelopers.congressdefense.gameItems.CopSetter;
 import com.nonameddevelopers.congressdefense.gameItems.GameCamera;
 import com.nonameddevelopers.congressdefense.gameItems.GameInputListener;
@@ -107,8 +108,6 @@ public class GameScreen implements Screen {
 		CopSetter.setCopManager(entityManager.getCopManager());	
 		
 		game.setMusic("defense.mp3");
-		
-		//entityManager.getCopManager().getCops().add(new PoliceVan(game, 190, 1500, 1200, 700));
 	}
 
 	@Override

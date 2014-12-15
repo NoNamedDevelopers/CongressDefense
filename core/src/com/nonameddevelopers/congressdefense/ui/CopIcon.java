@@ -6,6 +6,7 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Circle;
+import com.badlogic.gdx.utils.ObjectMap;
 import com.nonameddevelopers.congressdefense.CongressDefense;
 import com.nonameddevelopers.congressdefense.characters.cops.BazookaCop;
 import com.nonameddevelopers.congressdefense.characters.cops.Bomb;
@@ -29,7 +30,8 @@ public class CopIcon {
 	
 	public Circle circle;
 	
-	private Texture textureSelected;
+	private static ObjectMap<String, Texture> textures;
+	private static Texture textureSelected;
 	private Texture textureNoSelected;
 	private Sprite sprite;
 	
@@ -41,6 +43,11 @@ public class CopIcon {
 	private float scale;
 	private CopSetter parent;	
 	
+	static {
+		textures = new ObjectMap<String,Texture>();
+		textureSelected = new Texture(Gdx.files.internal("ui/iconselected.png"));
+	}
+	
 	public CopIcon(CongressDefense game, CopSetter parent, int cost, float centerX, float centerY,String src, short type, int quadrant) {
 		this.game = game;
 		this.parent = parent;
@@ -51,8 +58,11 @@ public class CopIcon {
 		this.type = type;
 		this.scale = 1f;
 		circle = new Circle();
-		textureSelected = new Texture(Gdx.files.internal("ui/iconselected.png"));
-		textureNoSelected = new Texture(Gdx.files.internal(src));
+		if (!textures.containsKey(src)) {			
+			textures.put(src, new Texture(Gdx.files.internal(src)));
+		}
+		textureNoSelected = textures.get(src);
+		
 		sprite = new Sprite(textureNoSelected);
 		quadrantSelected = 0;
 	}
@@ -150,10 +160,5 @@ public class CopIcon {
 	
 	public short getType() {
 		return type;
-	}
-	
-	public void dispose() {
-		textureSelected.dispose();
-		textureNoSelected.dispose();
 	}
 }

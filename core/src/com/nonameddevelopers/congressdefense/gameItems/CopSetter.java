@@ -24,7 +24,7 @@ public class CopSetter {
 	private float stateTime;
 	private float scale;
 	
-	private Texture backgroundTexture;
+	private static Texture backgroundTexture;
 	private Sprite backgroundSprite;
 	
 	private Circle circle;
@@ -33,13 +33,16 @@ public class CopSetter {
 	
 	private Array<CopIcon> icons;
 	
+	static {
+		backgroundTexture = new Texture(Gdx.files.internal("ui/copsetter.png"));
+	}
+	
 	public CopSetter(CongressDefense game, float x, float y) {
 		this.game = game;
 		this.x = x;	
 		this.y = y;
 		this.scale = 1f;
 		currentRadius = 1f;
-		backgroundTexture = new Texture(Gdx.files.internal("ui/copsetter.png"));
 		backgroundSprite = new Sprite(backgroundTexture);
 		circle = new Circle();
 		icons = new Array<CopIcon>();
@@ -100,10 +103,6 @@ public class CopSetter {
 				((TutorialScreen) game.getScreen()).nextTip();
 			}
 		}
-	}
-	
-	public void dispose() {
-		backgroundTexture.dispose();
 	}
 	
 	public static void setCopManager(CopManager copManager) {

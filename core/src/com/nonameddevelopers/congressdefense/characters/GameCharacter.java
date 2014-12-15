@@ -10,6 +10,7 @@ import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Circle;
+import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.ObjectMap;
 import com.nonameddevelopers.congressdefense.CongressDefense;
@@ -250,7 +251,14 @@ public abstract class GameCharacter implements Comparable<GameCharacter> {
 	
 	@Override
 	public int compareTo(GameCharacter gc) {
-		return (int) (gc.y-y);
+		int ownY = 0;
+		int gcY = 0;
+		if (gc!=null) {
+			ownY = MathUtils.floor(y);
+			gcY = MathUtils.floor(gc.y);
+			return gcY-ownY;
+		}
+		return 0;
 	}
 	
 }

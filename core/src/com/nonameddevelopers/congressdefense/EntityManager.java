@@ -1,8 +1,6 @@
 package com.nonameddevelopers.congressdefense;
 
-import java.util.Comparator;
 import java.util.Iterator;
-import java.util.Random;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
@@ -59,8 +57,8 @@ public class EntityManager {
 
 	public void update(float delta) {
 		crowdMan.update(delta);
-		checkCollisions();
 		copManager.update(delta);
+		checkCollisions();
 		proyectileL.update(delta);
 	}
 
@@ -118,9 +116,8 @@ public class EntityManager {
 	}
 	
 	public void checkCollisions() {
-		for (Crowd crowd : getCrowdMan().getCrowds())
 			for (Cop cop : getCopManager().getCops()) 
-				cop.checkCollision(crowd);
+				cop.checkCollision(getCrowdMan().getCrowds());
 	}
 
 

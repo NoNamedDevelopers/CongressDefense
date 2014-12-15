@@ -109,7 +109,7 @@ public class GameScreen implements Screen {
 		
 		game.setMusic("defense.mp3");
 		
-		entityManager.getCopManager().getCops().add(new PoliceVan(game, 1000, 1500, camera));
+		//entityManager.getCopManager().getCops().add(new PoliceVan(game, 190, 1500, 1200, 700));
 	}
 
 	@Override

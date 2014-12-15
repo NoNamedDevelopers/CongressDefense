@@ -16,7 +16,7 @@ public class BazookaCop extends Cop {
 	}
 	
 	public BazookaCop(CongressDefense game, float x, float y) {
-		super(game, x, y, "copgun", 5, 5, 0.02f);
+		super(game, x-32, y-32, "copgun", 5, 5, 0.02f);
 		range.set(x,y, 200f);
 	}
 		

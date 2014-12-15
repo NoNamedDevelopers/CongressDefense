@@ -2,6 +2,7 @@ package com.nonameddevelopers.congressdefense.characters;
 
 import com.badlogic.gdx.math.Circle;
 import com.badlogic.gdx.math.Intersector;
+import com.badlogic.gdx.utils.Array;
 import com.nonameddevelopers.congressdefense.CongressDefense;
 
 
@@ -13,64 +14,68 @@ public abstract class Cop extends GameCharacter {
 	
 	protected boolean isPressed = false;
 	
-	protected boolean isComingBack = false;
-	
 	protected float xInit;
 	
 	protected float yInit;
 	
 	protected Circle range;
-	protected boolean inRange = false;	
 
 	public Cop(final CongressDefense game, float x, float y, String type, int columns, int rows, float animationSpeed) {
-		super(game, x-32, y-32, type, columns, rows, animationSpeed);
-		boundingCircle.set(x, y, 20f);			
+		super(game, x, y, type, columns, rows, animationSpeed);	
 		range = new Circle();
 	}
 	
 	@Override
 	public void update(float delta) {
 		super.update(delta);
-		if (isAttacking || isRunning) {
+		boundingCircle.set(x+32,y+32, 20f);
+		range.setPosition(x+32,y+32);
+		if (isAttacking) {
 			stateTime += delta;	
 			if (stateTime>=currentAnimation.getAnimationDuration()) {
 				stateTime = 0;
 				isAttacking = false;
+			}
+			if (isRunning) {
+				stateTime = 0;
 				isRunning = false;
 			}
+		}	
+		else if (isRunning) {
+			stateTime += delta;	
 		}
-		
 		updateAnimation();
 	}
 	
-	public void checkCollision(Crowd crowd) {
-		for (Protester protester : crowd.getProtesters()) {
-			if (!protester.isGhost()) {
-				if (Intersector.overlaps(protester.getBoundingCircle(), range)) {
-					isAttacking = true;
-					if (stateTime == 0f) {
-					
-					if ( Math.abs(x-protester.getX()) < 20 && y-protester.getY() < 0)
-						direction = UP;
-					else if (  Math.abs(x-protester.getX()) < 20 && y-protester.getY() > 0)
-						direction = DOWN;
-					else if (x-protester.getX() < 0 && Math.abs(y-protester.getY()) < 20)
-						direction = RIGHT;
-					else if (x-protester.getX() > 0 &&  Math.abs(y-protester.getY()) < 20)
-						direction = LEFT;
-					else if (x-protester.getX() > 0 && y-protester.getY() > 0)
-						direction = DOWN_LEFT;
-					else if (x-protester.getX() > 0 && y-protester.getY() < 0)
-						direction = UP_LEFT;
-					else if (x-protester.getX() < 0 && y-protester.getY() < 0)
-						direction = UP_RIGHT;
-					else
-						direction = DOWN_RIGHT;
-					
-						attackProtester(protester);
-						break;
+	public void checkCollision(Array<Crowd> crowds) {
+		for (Crowd crowd : crowds) {
+			for (Protester protester : crowd.getProtesters()) {
+				if (!protester.isGhost()) {
+					if (Intersector.overlaps(protester.getBoundingCircle(), range)) {
+						isAttacking = true;
+						if (stateTime == 0f) {
+							if ( Math.abs(x-protester.getX()) < 20 && y-protester.getY() < 0)
+								direction = UP;
+							else if (  Math.abs(x-protester.getX()) < 20 && y-protester.getY() > 0)
+								direction = DOWN;
+							else if (x-protester.getX() < 0 && Math.abs(y-protester.getY()) < 20)
+								direction = RIGHT;
+							else if (x-protester.getX() > 0 &&  Math.abs(y-protester.getY()) < 20)
+								direction = LEFT;
+							else if (x-protester.getX() > 0 && y-protester.getY() > 0)
+								direction = DOWN_LEFT;
+							else if (x-protester.getX() > 0 && y-protester.getY() < 0)
+								direction = UP_LEFT;
+							else if (x-protester.getX() < 0 && y-protester.getY() < 0)
+								direction = UP_RIGHT;
+							else
+								direction = DOWN_RIGHT;
+						
+							attackProtester(protester);
+							break;
+						}
+						
 					}
-					
 				}
 			}
 		}

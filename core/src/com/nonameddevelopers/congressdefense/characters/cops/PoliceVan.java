@@ -1,6 +1,7 @@
 package com.nonameddevelopers.congressdefense.characters.cops;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Vector2;
 import com.nonameddevelopers.congressdefense.CongressDefense;
 import com.nonameddevelopers.congressdefense.CopManager;
@@ -35,7 +36,7 @@ public class PoliceVan extends Cop {
 		this.targetX = targetX;
 		this.targetY = targetY;
 		placed = false;
-		speed = 2.5f;
+		speed = 8f;
 		direction2 = new Vector2();
 	}
 
@@ -51,7 +52,9 @@ public class PoliceVan extends Cop {
 		isRunning = true;
 		if (!placed) {
 			if (Math.abs(targetY-y) > 5f) {
-				//speed -= 0.2f*delta;
+				speed = MathUtils.clamp(direction2.set(new Vector2((1600-targetY)*1.5f, targetY))
+										.sub(new Vector2(x, y))
+										.len()*delta, 1f, 8f);
 				direction2.set(new Vector2((1600-targetY)*1.5f, targetY)).sub(new Vector2(x, y))
 				.nor();
 				x += direction2.x * 100 * speed*Gdx.graphics.getDeltaTime();
@@ -70,12 +73,14 @@ public class PoliceVan extends Cop {
 				placedTime += delta;
 			}
 			else {
-				//speed += 0.05f;
+				speed = MathUtils.clamp(direction2.set(new Vector2((1600-targetY)*1.5f, targetY))
+										.sub(new Vector2(x, y))
+										.len()*delta, 1f, 8f);
 				direction2.set(new Vector2(2000, 190)).sub(new Vector2(x, y))
 				.nor();
 				x += direction2.x * 100 * speed*Gdx.graphics.getDeltaTime();
 				y += direction2.y * 100 * speed*Gdx.graphics.getDeltaTime();
-				if (Math.abs(0-y) <5f) {
+				if (Math.abs(0-y) <200f) {
 					isDead = true;
 				}
 			}

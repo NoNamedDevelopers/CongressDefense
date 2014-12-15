@@ -46,7 +46,7 @@ public class CopSetter {
 
 		icons.add(new CopIcon(game, this, 60, x, y, "ui/meleecopicon.png", CopIcon.MELEE, 1));
 		icons.add(new CopIcon(game, this, 180, x, y, "ui/bazookacopicon.png", CopIcon.BAZOOKA, 2));
-		icons.add(new CopIcon(game, this, 10, x, y, "ui/meleecopicon.png", CopIcon.SWAT, 3));
+		icons.add(new CopIcon(game, this, 10, x, y, "ui/swaticon.png", CopIcon.SWAT, 3));
 		//icons.add(new CopIcon(game, this, 60, x, y, "ui/meleecopicon.png", CopIcon.MELEE, 4));
 	}
 	

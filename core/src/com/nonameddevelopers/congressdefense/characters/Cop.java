@@ -127,7 +127,4 @@ public abstract class Cop extends GameCharacter {
 		
 	}
 
-	public boolean isDead() {
-		return isDead;
-	}
 }

@@ -34,7 +34,7 @@ public class Crowd {
 		crowd = new Array<Protester>(); 
 		switch (bonusType) {
 		case PABLO_IGLESIAS:
-			crowd.add(new PabloIglesias(game, 0,0, 1f, wave));
+			crowd.add(new PabloIglesias(game, 0,1500, 1f, wave));
 			break;
 		}
 		

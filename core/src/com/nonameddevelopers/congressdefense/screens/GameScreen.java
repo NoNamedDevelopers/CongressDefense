@@ -11,7 +11,6 @@ import com.badlogic.gdx.input.GestureDetector;
 import com.badlogic.gdx.utils.ObjectMap;
 import com.nonameddevelopers.congressdefense.CongressDefense;
 import com.nonameddevelopers.congressdefense.EntityManager;
-import com.nonameddevelopers.congressdefense.characters.cops.PoliceVan;
 import com.nonameddevelopers.congressdefense.gameItems.CopSetter;
 import com.nonameddevelopers.congressdefense.gameItems.GameCamera;
 import com.nonameddevelopers.congressdefense.gameItems.GameInputListener;

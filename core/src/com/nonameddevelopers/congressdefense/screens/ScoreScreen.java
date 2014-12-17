@@ -98,16 +98,16 @@ public class ScoreScreen implements Screen {
 		bg.draw(game.batch);
 
 		sortList();
-		fixNullLevel();
+		// fixNullLevel();
 
 		for (int i = 0; i < puntuacion.size(); i++) {
-			if(puntuacion.get(i).Level != "Normal"){
-				game.font.draw(game.batch, (i + 1) + "º- "
-						+ puntuacion.get(i).Username, 145, 675 - i * 34);
-				game.font.draw(game.batch, puntuacion.get(i).Level, 625, 675 - i * 34);
-				game.font.draw(game.batch, puntuacion.get(i).Score.toString(),
-						750, 675 - i * 34);
-			}
+
+			game.font.draw(game.batch, (i + 1) + "º- "
+					+ puntuacion.get(i).Username, 145, 675 - i * 34);
+//			game.font.draw(game.batch, puntuacion.get(i).Level, 625,
+//					675 - i * 34);
+			game.font.draw(game.batch, puntuacion.get(i).Score.toString(), 750,
+					675 - i * 34);
 
 		}
 
@@ -115,13 +115,13 @@ public class ScoreScreen implements Screen {
 				camera.position.y - camera.viewportHeight / 2);
 		bgTop.draw(game.batch);
 
-		header.setPosition(camera.position.x -400, camera.position.y
+		header.setPosition(camera.position.x - 400, camera.position.y
 				+ camera.viewportHeight / 2 - 70);
 		header.draw(game.batch);
 		game.font.draw(game.batch, "Name:", 145, camera.position.y
 				+ camera.viewportHeight / 2 - 20);
-		game.font.draw(game.batch, "Level:", 625, camera.position.y
-				+ camera.viewportHeight / 2 - 20);
+//		game.font.draw(game.batch, "Level:", 625, camera.position.y
+//				+ camera.viewportHeight / 2 - 20);
 		game.font.draw(game.batch, "Points", 750, camera.position.y
 				+ camera.viewportHeight / 2 - 20);
 		drawMenu(game.batch);

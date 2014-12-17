@@ -26,6 +26,7 @@ public class Bomb extends Cop{
 	private float targetX;
 	private float targetY;
 	
+	private boolean secondTime;	
 	private boolean inTarget;
 	
 	private float alpha = 1f;
@@ -44,7 +45,7 @@ public class Bomb extends Cop{
 	
 	public Bomb(CongressDefense game, float x, float y) {
 		super(game, x-32, y-32, "", 0, 0, 0);
-		range.set(x,y, 500f);
+		range.set(x,y, 300f);
 		this.x = 2000;
 		this.y = 1500;
 		this.targetX = x;
@@ -105,7 +106,7 @@ public class Bomb extends Cop{
 	
 	@Override
 	public void checkCollision(Array<Crowd> crowds) {
-		if (inTarget) {
+		if (inTarget && !secondTime) {
 			for (Crowd crowd : crowds) {
 				for (Protester protester : crowd.getProtesters()) {
 					if (!protester.isGhost()) {
@@ -115,12 +116,13 @@ public class Bomb extends Cop{
 					}
 				}
 			}
+			secondTime = true;
 		}
 					
 	}
 	
 	public void attackProtester(Protester protester) {
-		protester.hurt(1000);		
+		protester.hurt(70);		
 	}
 
 }

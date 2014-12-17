@@ -45,6 +45,8 @@ public class SwatCop extends Cop {
 		this.yDestino = yDestino;
 		speed = 1.8f;
 		
+		life = 200;
+		initialLife = life;
 		range.set(x,y, 25f);
 		attackCircle = new Circle();
 		attackCircle.set(xDestino, yDestino, 200f);
@@ -159,7 +161,7 @@ public class SwatCop extends Cop {
 
 	public void attackProtester(Protester protester) {
 		punch.play();
-		protester.hurt(80);
+		protester.hurt(200);
 		stateTime += 0.001f;
 	}
 

@@ -86,7 +86,7 @@ public abstract class Protester extends GameCharacter {
 
 	public void addScoreAndMoney() {
 		game.score += 5;
-		game.money += 10;
+		game.money += 2;
 	}
 
 	public Circle getBoundingCircle() {

@@ -11,7 +11,6 @@ import com.badlogic.gdx.input.GestureDetector;
 import com.badlogic.gdx.utils.ObjectMap;
 import com.nonameddevelopers.congressdefense.CongressDefense;
 import com.nonameddevelopers.congressdefense.EntityManager;
-import com.nonameddevelopers.congressdefense.characters.cops.Bomb;
 import com.nonameddevelopers.congressdefense.gameItems.CopSetter;
 import com.nonameddevelopers.congressdefense.gameItems.GameCamera;
 import com.nonameddevelopers.congressdefense.gameItems.GameInputListener;
@@ -45,29 +44,29 @@ public class GameScreen implements Screen {
 		camera = new GameCamera(WORLD_WIDTH, WORLD_HEIGHT);
 		if (game.dificulty == CongressDefense.EASY)
 		{
-			game.setLife(40);
-			game.setMoney(320);
+			game.setLife(4);
+			game.setMoney(800);
 			game.setScore(0);
 			game.setLevel("Easy");
 		}
 		else if (game.dificulty == CongressDefense.NORMAL)
 		{
-			game.setLife(25);
-			game.setMoney(280);
+			game.setLife(3);
+			game.setMoney(580);
 			game.setScore(0);
 			game.setLevel("Normal");
 		}
 		else if (game.dificulty == CongressDefense.HARD)
 		{
-			game.setLife(15);
-			game.setMoney(180);
+			game.setLife(2);
+			game.setMoney(200);
 			game.setScore(0);
 			game.setLevel("Hard");
 		}
 		else
 		{
 			game.setLife(1);
-			game.setMoney(70);
+			game.setMoney(100);
 			game.setScore(0);
 			game.setLevel("ChuckNorris");
 		}

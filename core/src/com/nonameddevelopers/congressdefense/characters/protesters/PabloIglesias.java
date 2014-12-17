@@ -24,6 +24,7 @@ public class PabloIglesias extends Protester {
 	@Override
 	public void addScoreAndMoney() {
 		game.score += 500*wave;		
+		game.money += 2*wave;
 	}	
 
 }

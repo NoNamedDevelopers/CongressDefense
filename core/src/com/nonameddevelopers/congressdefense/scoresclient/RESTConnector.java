@@ -50,9 +50,10 @@ public class RESTConnector {
 		
 	}
 
-	public static void updateUserScore(String username, Integer score) {
+	public static void updateUserScore(String username, Integer score, String difficult) {
+		System.out.println(difficult);
 		UpdateOrInsertScore updateOrInsertScore = new UpdateOrInsertScore(
-				username, score);
+				username, score,difficult);
 		Thread t = new Thread(updateOrInsertScore);
 		t.start();
 	}

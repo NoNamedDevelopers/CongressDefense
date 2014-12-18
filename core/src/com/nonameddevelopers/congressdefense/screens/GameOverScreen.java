@@ -13,6 +13,7 @@ import com.badlogic.gdx.utils.ObjectMap;
 import com.nonameddevelopers.congressdefense.CongressDefense;
 import com.nonameddevelopers.congressdefense.gameItems.GameCamera;
 import com.nonameddevelopers.congressdefense.gameItems.GameOverInputListener;
+import com.nonameddevelopers.congressdefense.scoresclient.DifficultyValues;
 import com.nonameddevelopers.congressdefense.scoresclient.RESTConnector;
 import com.nonameddevelopers.congressdefense.ui.CheckBoxActor;
 import com.nonameddevelopers.congressdefense.ui.RectangleButton;
@@ -173,7 +174,7 @@ public class GameOverScreen implements Screen {
 					+ game.score + " puntos.");
 			//Falta incluir el game.level en el cliente REST
 			RESTConnector.updateUserScore(text.replaceAll(" ", "%20"),
-					game.score);
+					game.score,DifficultyValues.getDifficultyString(game.dificulty));
 			
 			try {
 				game.setScreen(new ScoreScreen(game));

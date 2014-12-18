@@ -174,7 +174,7 @@ public class GameOverScreen implements Screen {
 					+ game.score + " puntos.");
 			//Falta incluir el game.level en el cliente REST
 			RESTConnector.updateUserScore(text.replaceAll(" ", "%20"),
-					game.score,DifficultyValues.getDifficultyString(game.dificulty));
+					game.score, DifficultyValues.getDifficultyString(game.dificulty));
 			
 			try {
 				game.setScreen(new ScoreScreen(game));

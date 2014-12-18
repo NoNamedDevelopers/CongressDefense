@@ -98,14 +98,14 @@ public class ScoreScreen implements Screen {
 		bg.draw(game.batch);
 
 		sortList();
-		// fixNullLevel();
+		fixNullLevel();
 
 		for (int i = 0; i < puntuacion.size(); i++) {
 
 			game.font.draw(game.batch, (i + 1) + "º- "
 					+ puntuacion.get(i).Username, 145, 675 - i * 34);
-//			game.font.draw(game.batch, puntuacion.get(i).Level, 625,
-//					675 - i * 34);
+			game.font.draw(game.batch, puntuacion.get(i).Level, 625,
+					675 - i * 34);
 			game.font.draw(game.batch, puntuacion.get(i).Score.toString(), 750,
 					675 - i * 34);
 
@@ -120,8 +120,8 @@ public class ScoreScreen implements Screen {
 		header.draw(game.batch);
 		game.font.draw(game.batch, "Name:", 145, camera.position.y
 				+ camera.viewportHeight / 2 - 20);
-//		game.font.draw(game.batch, "Level:", 625, camera.position.y
-//				+ camera.viewportHeight / 2 - 20);
+		game.font.draw(game.batch, "Level:", 625, camera.position.y
+				+ camera.viewportHeight / 2 - 20);
 		game.font.draw(game.batch, "Points", 750, camera.position.y
 				+ camera.viewportHeight / 2 - 20);
 		drawMenu(game.batch);

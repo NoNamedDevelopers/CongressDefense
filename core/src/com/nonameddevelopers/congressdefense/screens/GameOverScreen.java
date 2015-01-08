@@ -168,20 +168,8 @@ public class GameOverScreen implements Screen {
 	public class NameInputListener implements TextInputListener {
 		@Override
 		public void input(String text) {
-			System.out.println("!!!!! El usuario "
-					+ text.replaceAll(" ", "%20") + " ha jugado en nivel "
-					+ game.level + " : "
-					+ game.score + " puntos.");
-			//Falta incluir el game.level en el cliente REST
 			RESTConnector.updateUserScore(text.replaceAll(" ", "%20"),
-					game.score, DifficultyValues.getDifficultyString(game.dificulty));
-			
-			try {
-				game.setScreen(new ScoreScreen(game));
-			} catch (Exception e) {
-				e.printStackTrace();
-			}
-			
+					game.score, DifficultyValues.getDifficultyString(game.dificulty));			
 		}
 
 		@Override
